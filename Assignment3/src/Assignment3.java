@@ -21,7 +21,41 @@ public class Assignment3
 
       Card card3 = new Card('X', Card.Suit.CLUBS);
       System.out.println(card3);
-
+      
+      card3 = new Card('3', Card.Suit.CLUBS);
+      Card card4 = new Card('4', Card.Suit.DIAMONDS);
+      Card card5 = new Card('5', Card.Suit.SPADES);
+      
+      Hand hand1 = new Hand(); 
+            
+      while (hand1.numCards()<hand1.MAX_CARDS) 
+      {
+         //TODO It looks like we can use a function here
+         boolean isBreak = false; 
+         isBreak = !hand1.takeCard(card1);
+         if (isBreak) break; 
+         isBreak = !hand1.takeCard(card2);
+         if (isBreak) break; 
+         isBreak = !hand1.takeCard(card3);
+         if (isBreak) break; 
+         isBreak = !hand1.takeCard(card4);
+         if (isBreak) break; 
+         isBreak = !hand1.takeCard(card5);
+         if (isBreak) break; 
+      }
+      System.out.println("Hand full");
+      System.out.println("After deal");
+      System.out.println("Hand =  ( "+hand1.toString()+" )");      
+      System.out.println("Testing inspectCard()");
+      System.out.println(hand1.inspectCard(0));
+      System.out.println(hand1.inspectCard(1));
+      System.out.println(hand1.inspectCard(22));
+      System.out.println(hand1.inspectCard(51));
+      while(hand1.numCards()>0) {
+         System.out.println("Playing "+hand1.playCard().toString());
+      }
+      System.out.println("After playing all cards");
+      System.out.println("Hand =  ( "+hand1.toString()+" )");      
    }
 
 }
@@ -250,20 +284,29 @@ class Hand {
    //a stringizer that the client can use prior to displaying the entire hand.
    public String toString() 
    {
-      return null; 
+      String strLocal = ""; 
+      for (int i = 0; i<this.numCards;i++) 
+      {
+         strLocal+= this.myCards[i].toString()+", ";
+      }
+      if (strLocal.length()>2) return strLocal.substring(0,strLocal.length()-2);
+      else return strLocal; 
    }
 
    //Accessor for numCards.
    public int numCards() 
    {
-      return 0;
+      return this.numCards;
    }
 
    //Accessor for an individual card.  
    //Returns a card with errorFlag = true if k is bad.
    public Card inspectCard(int k) 
    {
-      return null; 
+      if (k<=this.numCards && k>0) {
+      return this.myCards[k-1]; 
+      }
+      return new Card('0',Card.Suit.HEARTS); 
    }
 }
 
