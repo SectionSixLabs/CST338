@@ -315,7 +315,39 @@ class Hand {
  */
 
 //TODO Code for Phase 3
-
+class Deck {
+   //initialize it to allow a maximum of six packs
+   public static int MAX_CARDS = 6*52; 
+   
+   /*This is a private static Card array, masterPack[], 
+    * containing exactly 52 card references, which point to all 
+    * the standard cards.   It will enable us to avoid capriciously and 
+    * repeatedly declaring the same 52 cards which are needed 
+    * as the game proceeds.  In other words, once we have, say, 
+    * a ('6', spades) Card constructed and stored (inside this masterPack[]),
+    * we use that same instance whenever we need it as a source to copy in 
+    * various places, notably during a re-initialization of the Deck object;
+    * it will always be in the masterPack[] array for us to copy.*/
+   private static Card[] masterPack ;
+   
+   private Card[] cards; 
+   private int topCard;
+   private int numPacks;
+   
+   /* this is a private method that will be called by the constructor.  
+    * However, it has to be done with a very simple twist:  
+    * even if many Deck objects are constructed in a given program, 
+    * this static method will not allow itself to be executed more than once. 
+    * ince masterPack[] is a static, unchanging, entity, it need not be built
+    * every time a new Deck is instantiated.  So this method needs to be able
+    * to ask itself, "Have I been here before?", and if the answer is "yes", 
+    * it will immediately return without doing anything;  it has already built 
+    * masterPack[] in a previous invocation.*/
+   private static void allocateMasterPack() {
+      
+   }
+   
+   } 
 
 /**
  * Phase 4
