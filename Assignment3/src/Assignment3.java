@@ -347,15 +347,25 @@ class Deck {
     * it will always be in the masterPack[] array for us to copy.*/
    private static Card[] masterPack  = new Card[52];
    
-   private Card[] cards; 
+   private Card[] cards = new Card[MAX_CARDS]; 
    private int topCard;
    private int numPacks;
    
    /*a constructor that populates the arrays and assigns initial 
     * values to members.  Overload so that if no parameters are passed, 
     * 1 pack is assumed.*/
+   public Deck() {
+      allocateMasterPack();
+      System.arraycopy(masterPack, 0, cards, 0, masterPack.length);
+      cards = masterPack.clone(); 
+   }
+   //Overload Deck() with one parameter 
    public Deck(int numPacks) {
-      
+      allocateMasterPack();
+      for (int i=0; i<numPacks;i++) {
+        System.arraycopy(masterPack, 0, cards, i*masterPack.length, 
+              masterPack.length);
+      }
    }
    
    /*re-populate cards[] with the standard 52 × numPacks cards.  
