@@ -110,6 +110,7 @@ class Card
       this.value = value;
    }
    
+   //Accessors for  value
    public char getValue()
    {
       return this.value;
@@ -120,16 +121,19 @@ class Card
       this.suit = suit;
    }
    
+   //Accessors for suit 
    public Suit getSuit()
    {
       return suit;
    }
    
+   //Accessor for errorFlag.
    public boolean getErrorFlag()
    {
       return errorFlag;
    }
    
+   //returns true if all the fields (members) are identical and false, otherwise.
    public boolean equals(Card card)
    {
       return(suit.equals(card.suit) && value == card.value);
