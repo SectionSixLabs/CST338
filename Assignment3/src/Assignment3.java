@@ -16,14 +16,22 @@ public class Assignment3
       Card card1 = new Card();
       System.out.println(card1);
 
+      Card card3 = new Card('X', Card.Suit.CLUBS);
+      System.out.println(card3);
+
       Card card2 = new Card('2', Card.Suit.HEARTS);
       System.out.println(card2);
+      
+      card1.set('0',Card.Suit.CLUBS);
+      System.out.println(card1);
 
-      Card card3 = new Card('X', Card.Suit.CLUBS);
+      System.out.println(card2);
+
+      card3.set('2', Card.Suit.CLUBS);
       System.out.println(card3);
      
       // Test of Hand Class
-      card3 = new Card('3', Card.Suit.CLUBS);
+      card1.set('A',Card.Suit.SPADES);
       Card card4 = new Card('4', Card.Suit.DIAMONDS);
       Card card5 = new Card('5', Card.Suit.SPADES);
       
@@ -98,8 +106,8 @@ class Card
     *  default card (no parameters passed) is the ('A', spades).*/
    public Card()
    {
-      setValue('A');
-      setSuit(Suit.SPADES);
+      this.value = 'A';
+      this.suit= Suit.SPADES;
       errorFlag = false;
    }
 
@@ -135,24 +143,24 @@ class Card
     *  Make use of the private helper, listed below.*/
    public boolean set(char value, Suit suit)
    {
+      this.value = value;
+      this.suit = suit;
       if(isValid(value, suit))
       {
          errorFlag = false;
-         this.value = value;
-         this.suit = suit;
          return true;
       }
       else 
       {
-         errorFlag = true;
+         this.errorFlag = true;
          return false;
       }
    }
 
-   public void setValue(char value)
+   /*public void setValue(char value)
    {
       this.value = value;
-   }
+   }*/
 
    //Accessors for  value
    public char getValue()
@@ -160,10 +168,10 @@ class Card
       return this.value;
    }
 
-   public void setSuit(Suit suit)
+  /* public void setSuit(Suit suit)
    {
       this.suit = suit;
-   }
+   }*/
 
    //Accessors for suit 
    public Suit getSuit()
