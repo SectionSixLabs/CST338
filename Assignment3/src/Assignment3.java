@@ -196,9 +196,10 @@ class Card
 
 //TODO Code for Phase 2
 class Hand {
+	//public int value like MAX_CARDS and set it to something like 50 or 100 so a runaway program can't try to create a monster array
 	public int MAX_CARDS  = 50; 
 	
-	private  Card[] myCards;
+	private  Card[] myCards; 
 	private  int numCards;
 
 	// a default constructor.
