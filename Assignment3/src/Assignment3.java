@@ -22,7 +22,6 @@ public class Assignment3
       Card card3 = new Card('X', Card.Suit.CLUBS);
       System.out.println(card3);
       
-      
    }
 
 }
@@ -43,7 +42,7 @@ class Card
    
    public Card()
    {
-      setValue('J');
+      setValue('A');
       setSuit(Suit.SPADES);
       errorFlag = false;
    }
@@ -56,9 +55,10 @@ class Card
    
    public String toString()
    {
-      if(isValid(value, suit))
+	   boolean isValidCard = isValid(value, suit);
+      if(isValidCard)
       {
-         return(value+" of "+suit);
+         return(Character.toString(value)+" of "+suit.toString());
       }
       else
       {
@@ -89,7 +89,7 @@ class Card
    
    public char getValue()
    {
-      return value;
+      return this.value;
    }
    
    public void setSuit(Suit suit)
@@ -112,19 +112,32 @@ class Card
       return(suit.equals(card.suit) && value == card.value);
    }
    
-   private boolean isValid(char value, Suit suit)
+   private boolean isValid(char valueLocal, Suit suitLocal)
    {
-      boolean validValue;
-      boolean validSuit;
-      
+     
       //Using Strings for Value
       String values = "A23456789TJQK";
-      String stringValue = Character.toString(value);
+      String stringValue = Character.toString(valueLocal);
       
-      //See if value is in the String 
-      validValue = values.contains(stringValue);
-        
+      //See if value is in the String if not return false
+      // No need to look farther
+      if (! values.contains(stringValue))
+      {
+    	  return false;
+      }
       //check suit
+      switch (suitLocal) 
+      {
+      // case statements
+      // values must be of same type of expression
+      case HEARTS:
+      case SPADES:
+      case CLUBS:
+      case DIAMONDS:  return true;
+
+      default: return false;
+      }
+      /* we could use switch statement instead as we already use enumerators 
       if(suit == Suit.HEARTS)
       {
          validSuit = true;
@@ -145,8 +158,11 @@ class Card
       {
          validSuit = false;
       }
-      
-      return(validValue && validSuit);
+      */
+     // System.out.println(validValue);
+     // System.out.println(validSuit);
+     // System.out.println(validValue && validSuit);
+     // return(validValue && validSuit);
    }
    
 }
