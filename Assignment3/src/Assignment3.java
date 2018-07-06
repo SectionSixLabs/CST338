@@ -2,7 +2,7 @@
  * Deck Of Cards
  * CST338
  * Module3
- * @author Sergiy Zarubin, Lacey Sikes, Rockey Moreno, Danny Tran
+ * @author Sergiy Zarubin, Lacey Sikes, Rocky Moreno, Danny Tran
  *
  */
 
@@ -39,7 +39,7 @@ class Card
    
    private char value;
    private Suit suit;
-   boolean errorFlag;
+   private boolean errorFlag;
    
    public Card()
    {
@@ -48,7 +48,7 @@ class Card
       errorFlag = false;
    }
    
-   public Card(char value, Card.Suit suit)
+   public Card(char value, Suit suit)
    {
       set(value, suit);
    }
