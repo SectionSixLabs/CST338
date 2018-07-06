@@ -34,12 +34,26 @@ public class Assignment3
 
 class Card
 {
-  public enum Suit {HEARTS, CLUBS, SPADES, DIAMONDS};
+  
+	//A Public enum Type 
+   public enum Suit {HEARTS, CLUBS, SPADES, DIAMONDS};
    
+   //Private Member Data
    private char value;
    private Suit suit;
    private boolean errorFlag;
    
+   
+   /*The constructor should call the proper mutator(s).  
+    * Overload this to cope with a client that wants to instantiate 
+    * without parameters and use 'A' and 'spades' as the default value 
+    * and suit when not supplied.  Provide at least two constructors -- 
+    * no parameters and all parameters -- or more if you wish.  
+    * Because we have the errorFlag member, the constuctor (via the mutator),
+    *  can set that member when it gets bad data; 
+    *  it does not have to assign default values upon receipt of bad data.  
+    *  This is a new technique for us.  Again, 
+    *  default card (no parameters passed) is the ('A', spades).*/
    public Card()
    {
       setValue('A');
@@ -47,16 +61,20 @@ class Card
       errorFlag = false;
    }
    
+   
    public Card(char value, Suit suit)
    {
       set(value, suit);
    }
    
    
+   /*a stringizer that the client can use prior to displaying the card.  
+    * It provides a clean representation of the card.  If errorFlag == true, it should return correspondingly reasonable reflection of this fact (something like "[ invalid ]" rather than a suit and value).(non-Javadoc)
+    * @see java.lang.Object#toString()
+    */
    public String toString()
    {
-	   boolean isValidCard = isValid(value, suit);
-      if(isValidCard)
+      if(isValid(value, suit))
       {
          return(Character.toString(value)+" of "+suit.toString());
       }
@@ -66,6 +84,11 @@ class Card
       }
    }
    
+   /*a mutator that accepts the legal values established in the earlier section. 
+    *  When bad values are passed, errorFlag is set to true and other values can be 
+    *  left in any state (even partially set). If good values are passed, they are 
+    *  stored and errorFlag is set to false.  
+    *  Make use of the private helper, listed below.*/
    public boolean set(char value, Suit suit)
    {
       if(isValid(value, suit))
@@ -172,7 +195,54 @@ class Card
  */
 
 //TODO Code for Phase 2
+class Hand {
+	public int MAX_CARDS  = 50; 
+	
+	private  Card[] myCards;
+	private  int numCards;
 
+	// a default constructor.
+	public Hand()
+	   {
+
+	   }
+	
+	//remove all cards from the hand (in the simplest way).
+	public void resetHand() {
+
+	}
+	
+	/*adds a card to the next available position in the myCards array.  
+	 * This is an object copy, not a reference copy, since the source 
+	 * of the Card might destroy or change its data after our Hand gets it
+	 *  -- we want our local data to be exactly as it was when we received it.*/
+	public boolean takeCard(Card card) 
+	{
+		return false;
+	}
+	//returns and removes the card in the top occupied position of the array.
+	public Card playCard() {
+		return null; 
+	}
+	
+	//a stringizer that the client can use prior to displaying the entire hand.
+	public String toString() 
+	{
+		return null; 
+	}
+	
+	//Accessor for numCards.
+	public int numCards() 
+	{
+		return 0;
+	}
+	
+	//Accessor for an individual card.  Returns a card with errorFlag = true if k is bad.
+	public Card inspectCard(int k) 
+	{
+		return null; 
+	}
+}
 
 /**
  * Phase 3
