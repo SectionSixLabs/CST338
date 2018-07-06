@@ -212,12 +212,14 @@ class Hand {
    // a default constructor.
    public Hand()
    {
-
+      myCards =new Card [MAX_CARDS];
+      numCards= 0;
    }
 
    //remove all cards from the hand (in the simplest way).
    public void resetHand() {
-
+      this.myCards =null;
+      this.numCards = 0;
    }
 
    /*adds a card to the next available position in the myCards array.  
@@ -226,12 +228,24 @@ class Hand {
     *  -- we want our local data to be exactly as it was when we received it.*/
    public boolean takeCard(Card card) 
    {
-      return false;
+      if (this.numCards <= MAX_CARDS) 
+      {
+      this.myCards[this.numCards] = card; 
+      numCards +=1;
+      return true; 
+      } else return false;
    }
+   
    //returns and removes the card in the top occupied position of the array.
-   public Card playCard() {
-      return null; 
-   }
+   public Card playCard() 
+   {
+      if (this.numCards>0) {
+      Card cardLocal = this.myCards[this.numCards-1]; 
+      this.myCards[this.numCards-1] = null; 
+      this.numCards-=1;
+      return cardLocal; 
+      } else return null; 
+   } //If hand is empty return NULL
 
    //a stringizer that the client can use prior to displaying the entire hand.
    public String toString() 
