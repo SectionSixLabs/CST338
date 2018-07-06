@@ -371,7 +371,8 @@ class Deck {
       return this.topCard; 
    }
    
-   /*Accessor for an individual card.  Returns a card with errorFlag = true if k is bad.*/
+   /*Accessor for an individual card.  Returns a card with errorFlag = true 
+    *if k is bad.*/
    public Card inspectCard(int k) {
       return null;
    }
