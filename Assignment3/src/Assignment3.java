@@ -342,6 +342,40 @@ class Deck {
    private int topCard;
    private int numPacks;
    
+   /*a constructor that populates the arrays and assigns initial 
+    * values to members.  Overload so that if no parameters are passed, 
+    * 1 pack is assumed.*/
+   public Deck(int numPacks) {
+      
+   }
+   
+   /*re-populate cards[] with the standard 52 × numPacks cards.  
+    * We should not repopulate the static array,masterPack[], since that was 
+    * done once, in the (first-invoked) constructor and  never changes. */
+   public void init(int numPacks) {
+      
+   }
+   
+  /*mixes up the cards with the help of the standard random number generator.*/
+   public void shuffle() {
+      
+   }
+   
+   /*returns and removes the card in the top occupied position of cards[].*/
+   public Card dealCard() {
+      return null; 
+   }
+   
+   /*An accessor for the int, topCard (no mutator.)*/
+   public int topCard() {
+      return this.topCard; 
+   }
+   
+   /*Accessor for an individual card.  Returns a card with errorFlag = true if k is bad.*/
+   public Card inspectCard(int k) {
+      return null;
+   }
+   
    /* this is a private method that will be called by the constructor.  
     * However, it has to be done with a very simple twist:  
     * even if many Deck objects are constructed in a given program, 
