@@ -345,7 +345,7 @@ class Deck {
     * we use that same instance whenever we need it as a source to copy in 
     * various places, notably during a re-initialization of the Deck object;
     * it will always be in the masterPack[] array for us to copy.*/
-   private static Card[] masterPack ;
+   private static Card[] masterPack  = new Card[52];
    
    private Card[] cards; 
    private int topCard;
@@ -396,6 +396,15 @@ class Deck {
     * it will immediately return without doing anything;  it has already built 
     * masterPack[] in a previous invocation.*/
    private static void allocateMasterPack() {
+      if (masterPack.length>0) return; 
+      int i = 0;
+      for(Card.Suit suit : Card.Suit.values()) {
+         for (char value : Card.cardValues.toCharArray()) {
+            Card localCard = new Card(value,suit);
+            masterPack[i]=localCard; 
+            i++; 
+         }
+      }
       
    }
    
