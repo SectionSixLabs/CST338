@@ -15,13 +15,13 @@ public class Assignment3
       // Test of Card Class
       Card card1 = new Card();
       System.out.println(card1);
-      
+
       Card card2 = new Card('2', Card.Suit.HEARTS);
       System.out.println(card2);
-      
+
       Card card3 = new Card('X', Card.Suit.CLUBS);
       System.out.println(card3);
-      
+
    }
 
 }
@@ -34,16 +34,16 @@ public class Assignment3
 
 class Card
 {
-  
-	//A Public enum Type 
+
+   //A Public enum Type 
    public enum Suit {HEARTS, CLUBS, SPADES, DIAMONDS};
-   
+
    //Private Member Data
    private char value;
    private Suit suit;
    private boolean errorFlag;
-   
-   
+
+
    /*The constructor should call the proper mutator(s).  
     * Overload this to cope with a client that wants to instantiate 
     * without parameters and use 'A' and 'spades' as the default value 
@@ -60,14 +60,14 @@ class Card
       setSuit(Suit.SPADES);
       errorFlag = false;
    }
-   
-   
+
+
    public Card(char value, Suit suit)
    {
       set(value, suit);
    }
-   
-   
+
+
    /*a stringizer that the client can use prior to displaying the card.  
     * It provides a clean representation of the card.  If errorFlag == true, it should return correspondingly reasonable reflection of this fact (something like "[ invalid ]" rather than a suit and value).(non-Javadoc)
     * @see java.lang.Object#toString()
@@ -83,7 +83,7 @@ class Card
          return("** illegal **");
       }
    }
-   
+
    /*a mutator that accepts the legal values established in the earlier section. 
     *  When bad values are passed, errorFlag is set to true and other values can be 
     *  left in any state (even partially set). If good values are passed, they are 
@@ -104,53 +104,53 @@ class Card
          return false;
       }
    }
-   
+
    public void setValue(char value)
    {
       this.value = value;
    }
-   
+
    //Accessors for  value
    public char getValue()
    {
       return this.value;
    }
-   
+
    public void setSuit(Suit suit)
    {
       this.suit = suit;
    }
-   
+
    //Accessors for suit 
    public Suit getSuit()
    {
       return suit;
    }
-   
+
    //Accessor for errorFlag.
    public boolean getErrorFlag()
    {
       return errorFlag;
    }
-   
+
    //returns true if all the fields (members) are identical and false, otherwise.
    public boolean equals(Card card)
    {
       return(suit.equals(card.suit) && value == card.value);
    }
-   
+
    private boolean isValid(char valueLocal, Suit suitLocal)
    {
-     
+
       //Using Strings for Value
       String values = "A23456789TJQK";
       String stringValue = Character.toString(valueLocal);
-      
+
       //See if value is in the String if not return false
       // No need to look farther
       if (! values.contains(stringValue))
       {
-    	  return false;
+         return false;
       }
       //check suit
       switch (suitLocal) 
@@ -185,13 +185,13 @@ class Card
       {
          validSuit = false;
       }
-      */
-     // System.out.println(validValue);
-     // System.out.println(validSuit);
-     // System.out.println(validValue && validSuit);
-     // return(validValue && validSuit);
+       */
+      // System.out.println(validValue);
+      // System.out.println(validSuit);
+      // System.out.println(validValue && validSuit);
+      // return(validValue && validSuit);
    }
-   
+
 }
 
 /**
@@ -200,53 +200,53 @@ class Card
 
 //TODO Code for Phase 2
 class Hand {
-	//public int value like MAX_CARDS and set it to something like 50 or 100 so a runaway program can't try to create a monster array
-	public int MAX_CARDS  = 50; 
-	
-	private  Card[] myCards; 
-	private  int numCards;
+   //public int value like MAX_CARDS and set it to something like 50 or 100 so a runaway program can't try to create a monster array
+   public int MAX_CARDS  = 50; 
 
-	// a default constructor.
-	public Hand()
-	   {
+   private  Card[] myCards; 
+   private  int numCards;
 
-	   }
-	
-	//remove all cards from the hand (in the simplest way).
-	public void resetHand() {
+   // a default constructor.
+   public Hand()
+   {
 
-	}
-	
-	/*adds a card to the next available position in the myCards array.  
-	 * This is an object copy, not a reference copy, since the source 
-	 * of the Card might destroy or change its data after our Hand gets it
-	 *  -- we want our local data to be exactly as it was when we received it.*/
-	public boolean takeCard(Card card) 
-	{
-		return false;
-	}
-	//returns and removes the card in the top occupied position of the array.
-	public Card playCard() {
-		return null; 
-	}
-	
-	//a stringizer that the client can use prior to displaying the entire hand.
-	public String toString() 
-	{
-		return null; 
-	}
-	
-	//Accessor for numCards.
-	public int numCards() 
-	{
-		return 0;
-	}
-	
-	//Accessor for an individual card.  Returns a card with errorFlag = true if k is bad.
-	public Card inspectCard(int k) 
-	{
-		return null; 
-	}
+   }
+
+   //remove all cards from the hand (in the simplest way).
+   public void resetHand() {
+
+   }
+
+   /*adds a card to the next available position in the myCards array.  
+    * This is an object copy, not a reference copy, since the source 
+    * of the Card might destroy or change its data after our Hand gets it
+    *  -- we want our local data to be exactly as it was when we received it.*/
+   public boolean takeCard(Card card) 
+   {
+      return false;
+   }
+   //returns and removes the card in the top occupied position of the array.
+   public Card playCard() {
+      return null; 
+   }
+
+   //a stringizer that the client can use prior to displaying the entire hand.
+   public String toString() 
+   {
+      return null; 
+   }
+
+   //Accessor for numCards.
+   public int numCards() 
+   {
+      return 0;
+   }
+
+   //Accessor for an individual card.  Returns a card with errorFlag = true if k is bad.
+   public Card inspectCard(int k) 
+   {
+      return null; 
+   }
 }
 
 /**
