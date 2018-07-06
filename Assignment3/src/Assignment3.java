@@ -21,7 +21,8 @@ public class Assignment3
 
       Card card3 = new Card('X', Card.Suit.CLUBS);
       System.out.println(card3);
-      
+     
+      // Test of Hand Class
       card3 = new Card('3', Card.Suit.CLUBS);
       Card card4 = new Card('4', Card.Suit.DIAMONDS);
       Card card5 = new Card('5', Card.Suit.SPADES);
@@ -55,7 +56,14 @@ public class Assignment3
          System.out.println("Playing "+hand1.playCard().toString());
       }
       System.out.println("After playing all cards");
-      System.out.println("Hand =  ( "+hand1.toString()+" )");      
+      System.out.println("Hand =  ( "+hand1.toString()+" )");  
+      
+      
+      /**
+       * Phase 4
+       */
+
+      //TODO Code for Phase 4
    }
 
 }
@@ -349,8 +357,3 @@ class Deck {
    
    } 
 
-/**
- * Phase 4
- */
-
-//TODO Code for Phase 4
