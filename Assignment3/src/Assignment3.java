@@ -69,7 +69,9 @@ class Card
 
 
    /*a stringizer that the client can use prior to displaying the card.  
-    * It provides a clean representation of the card.  If errorFlag == true, it should return correspondingly reasonable reflection of this fact (something like "[ invalid ]" rather than a suit and value).(non-Javadoc)
+    * It provides a clean representation of the card.  If errorFlag == true, it
+    *  should return correspondingly reasonable reflection of this fact 
+    *  (something like "[ invalid ]" rather than a suit and value).(non-Javadoc)
     * @see java.lang.Object#toString()
     */
    public String toString()
@@ -85,9 +87,9 @@ class Card
    }
 
    /*a mutator that accepts the legal values established in the earlier section. 
-    *  When bad values are passed, errorFlag is set to true and other values can be 
-    *  left in any state (even partially set). If good values are passed, they are 
-    *  stored and errorFlag is set to false.  
+    *  When bad values are passed, errorFlag is set to true and other values can
+    *  be left in any state (even partially set). If good values are passed, 
+    *  they are stored and errorFlag is set to false.  
     *  Make use of the private helper, listed below.*/
    public boolean set(char value, Suit suit)
    {
@@ -133,7 +135,7 @@ class Card
       return errorFlag;
    }
 
-   //returns true if all the fields (members) are identical and false, otherwise.
+   //returns true if all the fields (members) are identical and false,otherwise.
    public boolean equals(Card card)
    {
       return(suit.equals(card.suit) && value == card.value);
@@ -200,7 +202,8 @@ class Card
 
 //TODO Code for Phase 2
 class Hand {
-   //public int value like MAX_CARDS and set it to something like 50 or 100 so a runaway program can't try to create a monster array
+   //public int value like MAX_CARDS and set it to something like 50 or 100 so
+   //a runaway program can't try to create a monster array
    public int MAX_CARDS  = 50; 
 
    private  Card[] myCards; 
@@ -242,7 +245,8 @@ class Hand {
       return 0;
    }
 
-   //Accessor for an individual card.  Returns a card with errorFlag = true if k is bad.
+   //Accessor for an individual card.  
+   //Returns a card with errorFlag = true if k is bad.
    public Card inspectCard(int k) 
    {
       return null; 
