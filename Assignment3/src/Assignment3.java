@@ -361,10 +361,9 @@ class Hand {
    //TODO Make it more elegant see Deck
    public Card inspectCard(int k) 
    {
-      if (k<=this.numCards && k>0) {
-      return this.myCards[k-1]; 
-      }
-      return new Card('0',Card.Suit.HEARTS); 
+      Card localCard = new Card('0',Card.Suit.HEARTS);
+      if (k<=this.numCards && k>0) localCard=this.myCards[k-1];
+      return localCard; 
    }
 }
 
