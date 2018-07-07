@@ -461,7 +461,8 @@ class Deck {
    }
    
    /*Accessor for an individual card.  Returns a card with errorFlag = true 
-    *if k is bad.*/
+    *if k is bad.
+    *We are not useing it anywhere though*/
    public Card inspectCard(int k) {
       Card localCard = new Card('0',Card.Suit.CLUBS); 
       if (k<cards.length) localCard = cards[k]; 
