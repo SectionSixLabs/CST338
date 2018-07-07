@@ -15,6 +15,7 @@ public class Assignment3
    public static void main(String[] args)
    {
       // Test of Card Class
+      //TODO Consider using an array for cards 
       Card card1 = new Card();
       System.out.println(card1);
 
@@ -112,6 +113,7 @@ public class Assignment3
        */
 
       //TODO Code for Phase 4
+      /*Consider creating an array for Hands dealt.*/
    }
 
 }
@@ -128,7 +130,7 @@ class Card
 
    //A Public enum Type 
    public enum Suit {HEARTS, CLUBS, SPADES, DIAMONDS};
-   //One addition to be used in Deck class
+   //One addition to be used externally in Deck class
    public static String cardValues = "A23456789TJQK";
 
    //Private Member Data
