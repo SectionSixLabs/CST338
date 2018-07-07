@@ -66,6 +66,14 @@ public class Assignment3
       System.out.println("After playing all cards");
       System.out.println("Hand =  ( "+hand1.toString()+" )");  
       
+      // Test of Deck Class
+      Deck myDeck = new Deck(2); 
+      System.out.println("Dealing Cards:");
+      while(myDeck.topCard()>0) {
+         System.out.println("Dealing "+myDeck.dealCard().toString());
+      }
+      System.out.println("Re-Initialising Deck:");
+      myDeck.init(2);
       
       /**
        * Phase 4
@@ -347,7 +355,7 @@ class Deck {
     * it will always be in the masterPack[] array for us to copy.*/
    private static Card[] masterPack  = new Card[52];
    
-   private Card[] cards = new Card[MAX_CARDS]; 
+   private Card[] cards; 
    private int topCard;
    private int numPacks;
    
@@ -356,33 +364,46 @@ class Deck {
     * 1 pack is assumed.*/
    public Deck() {
       allocateMasterPack();
+      cards = new Card[52];
       System.arraycopy(masterPack, 0, cards, 0, masterPack.length);
-      cards = masterPack.clone(); 
+      topCard = cards.length-1;
    }
+   
    //Overload Deck() with one parameter 
    public Deck(int numPacks) {
       allocateMasterPack();
+      this.numPacks = numPacks;
+      cards = new Card[52*numPacks]; 
       for (int i=0; i<numPacks;i++) {
         System.arraycopy(masterPack, 0, cards, i*masterPack.length, 
               masterPack.length);
       }
+      topCard = cards.length-1;
    }
    
    /*re-populate cards[] with the standard 52 × numPacks cards.  
     * We should not repopulate the static array,masterPack[], since that was 
     * done once, in the (first-invoked) constructor and  never changes. */
    public void init(int numPacks) {
-      
+      this.numPacks = numPacks;
+      cards = new Card[52*numPacks]; 
+      for (int i=0; i<numPacks;i++) {
+        System.arraycopy(masterPack, 0, cards, i*masterPack.length, 
+              masterPack.length);
+      }
+      topCard = cards.length-1;
    }
    
-  /*mixes up the cards with the help of the standard random number generator.*/
+/*mixes up the cards with the help of the standard random number generator.*/
    public void shuffle() {
       
    }
    
    /*returns and removes the card in the top occupied position of cards[].*/
    public Card dealCard() {
-      return null; 
+      Card localCard = cards[topCard()];
+      this.topCard--; 
+      return localCard; 
    }
    
    /*An accessor for the int, topCard (no mutator.)*/
@@ -393,7 +414,9 @@ class Deck {
    /*Accessor for an individual card.  Returns a card with errorFlag = true 
     *if k is bad.*/
    public Card inspectCard(int k) {
-      return null;
+      Card localCard = new Card('0',Card.Suit.CLUBS); 
+      if (k<cards.length) localCard = cards[k]; 
+      return localCard;
    }
    
    /* this is a private method that will be called by the constructor.  
@@ -406,12 +429,13 @@ class Deck {
     * it will immediately return without doing anything;  it has already built 
     * masterPack[] in a previous invocation.*/
    private static void allocateMasterPack() {
-      if (masterPack.length>0) return; 
+      if (masterPack[0]!=null) return; 
       int i = 0;
       for(Card.Suit suit : Card.Suit.values()) {
          for (char value : Card.cardValues.toCharArray()) {
             Card localCard = new Card(value,suit);
             masterPack[i]=localCard; 
+            //System.out.println(masterPack[i].toString());
             i++; 
          }
       }
