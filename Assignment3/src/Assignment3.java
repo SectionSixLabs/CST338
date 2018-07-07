@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * Deck Of Cards
  * CST338
@@ -67,13 +69,43 @@ public class Assignment3
       System.out.println("Hand =  ( "+hand1.toString()+" )");  
       
       // Test of Deck Class
+      //two packs of cards
       Deck myDeck = new Deck(2); 
       System.out.println("Dealing Cards:");
-      while(myDeck.topCard()>0) {
+      while(myDeck.topCard()>=0) {
          System.out.println("Dealing "+myDeck.dealCard().toString());
       }
-      System.out.println("Re-Initialising Deck:");
+      
+      System.out.println("Re-Initialising Deck: 2Packs");
       myDeck.init(2);
+      
+      System.out.println("Evryday I'm shuffeling:");
+      myDeck.shuffle();
+      
+      System.out.println("Dealing Cards:");
+      
+      while(myDeck.topCard()>=0) {
+         System.out.println("Dealing "+myDeck.dealCard().toString());
+      }
+      
+      //one packs of cards
+      System.out.println("Re-Initialising Deck:1Pack");
+      myDeck.init(1);
+      
+      System.out.println("Dealing Cards:");
+      while(myDeck.topCard()>=0) {
+         System.out.println("Dealing "+myDeck.dealCard().toString());
+      }
+      System.out.println("Re-Initialising Deck:1Pack");
+      myDeck.init(1);
+      
+      System.out.println("Evryday I'm shuffeling:");
+      myDeck.shuffle();
+      
+      System.out.println("Dealing Cards:");
+      while(myDeck.topCard()>=0) {
+         System.out.println("Dealing "+myDeck.dealCard().toString());
+      }
       
       /**
        * Phase 4
@@ -396,7 +428,14 @@ class Deck {
    
 /*mixes up the cards with the help of the standard random number generator.*/
    public void shuffle() {
-      
+      int localDeckSize =this.cards.length; 
+      Card[] localDeck = new Card[localDeckSize]; 
+      Random rgen = new Random();
+      for (int i=0;i<localDeckSize; i++) {
+         int randomIndex = rgen.nextInt(localDeckSize);
+         localDeck[i] = inspectCard(randomIndex); 
+      }
+      System.arraycopy(localDeck, 0, this.cards,0,localDeckSize);
    }
    
    /*returns and removes the card in the top occupied position of cards[].*/
