@@ -122,6 +122,7 @@ public class Assignment3
  *
  */
 
+//TODO Add distractor and garbage collector to Card Class
 class Card
 {
 
@@ -291,7 +292,7 @@ class Card
 /**
  * Phase 2
  */
-
+//TODO Add distractor and  garbage collector to Hand Class
 //TODO Code for Phase 2
 class Hand {
    //public int value like MAX_CARDS and set it to something like 50 or 100 so
@@ -359,7 +360,6 @@ class Hand {
 
    //Accessor for an individual card.  
    //Returns a card with errorFlag = true if k is bad.
-   //TODO Make it more elegant see Deck
    public Card inspectCard(int k) 
    {
       Card localCard = new Card('0',Card.Suit.HEARTS);
@@ -373,8 +373,10 @@ class Hand {
  */
 
 //TODO Code for Phase 3
+//TODO Add distractor and garbage collector to Deck Class
 class Deck {
    //initialize it to allow a maximum of six packs
+   //TODO Add validation to not allow more then 6 packs.
    public static int MAX_CARDS = 6*52; 
    
    /*This is a private static Card array, masterPack[], 
