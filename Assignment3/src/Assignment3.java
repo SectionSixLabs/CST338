@@ -1,4 +1,4 @@
-import java.util.Random;
+import java.util.*;
 
 /**
  * Deck Of Cards
@@ -432,11 +432,17 @@ class Deck {
       int localDeckSize =this.cards.length; 
       Card[] localDeck = new Card[localDeckSize]; 
       Random rgen = new Random();
-      for (int i=0;i<localDeckSize; i++) {
-         int randomIndex = rgen.nextInt(localDeckSize);
-         localDeck[i] = inspectCard(randomIndex); 
+      while (this.topCard>=0) {
+         int randomIndex = -1;
+         do {
+            randomIndex=rgen.nextInt(localDeckSize);
+            //System.out.println(""+randomIndex);
+         } while (localDeck[randomIndex]!=null); 
+         localDeck[randomIndex] = dealCard();
       }
+      
       System.arraycopy(localDeck, 0, this.cards,0,localDeckSize);
+      this.topCard = this.cards.length-1;
    }
    
    /*returns and removes the card in the top occupied position of cards[].*/
