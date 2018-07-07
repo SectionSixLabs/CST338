@@ -57,7 +57,7 @@ public class Assignment3
       }
       System.out.println("Hand full");
       System.out.println("After deal");
-      System.out.println("Hand =  ( "+hand1.toString()+" )");      
+      System.out.println("Hand =  ( "+hand1.toString()+" )");  //Issue of repeating values    
       System.out.println("Testing inspectCard()");
       System.out.println(hand1.inspectCard(0));
       System.out.println(hand1.inspectCard(1));
@@ -322,9 +322,9 @@ class Hand {
     *  -- we want our local data to be exactly as it was when we received it.*/
    public boolean takeCard(Card card) 
    {
-      if (this.numCards <= MAX_CARDS) 
-      {
-      this.myCards[this.numCards] = card; 
+      if (this.numCards <= MAX_CARDS) //Change to object copy
+      {                      //TODO should we add a copy constructor?             
+      this.myCards[this.numCards] = new Card(card.getValue(), card.getSuit()); 
       numCards +=1;
       return true; 
       } else return false;
@@ -362,7 +362,7 @@ class Hand {
    //Accessor for an individual card.  
    //Returns a card with errorFlag = true if k is bad.
    public Card inspectCard(int k) 
-   {
+   { //Uncertain about method
       Card localCard = new Card('0',Card.Suit.HEARTS);
       if (k<=this.numCards && k>0) localCard=this.myCards[k-1];
       return localCard; 
