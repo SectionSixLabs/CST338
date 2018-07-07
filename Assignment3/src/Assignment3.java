@@ -390,7 +390,7 @@ class Deck {
    
    private Card[] cards; 
    private int topCard;
-   private int numPacks;
+   private int numPacks;//not sure why we need this var?
    
    /*a constructor that populates the arrays and assigns initial 
     * values to members.  Overload so that if no parameters are passed, 
@@ -432,8 +432,11 @@ class Deck {
       int localDeckSize =this.cards.length; 
       Card[] localDeck = new Card[localDeckSize]; 
       Random rgen = new Random();
+      //While there cards in the deck deal card and assign it to the rendom 
+      //place in the new array
       while (this.topCard>=0) {
          int randomIndex = -1;
+         //Make sure that space is empty before assignment
          do {
             randomIndex=rgen.nextInt(localDeckSize);
             //System.out.println(""+randomIndex);
