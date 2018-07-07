@@ -251,7 +251,6 @@ class Card
       switch (suitLocal) 
       {
       // case statements
-      // values must be of same type of expression
       case HEARTS:
       case SPADES:
       case CLUBS:
@@ -376,9 +375,14 @@ class Hand {
 //TODO Add distractor and garbage collector to Deck Class
 class Deck {
    //initialize it to allow a maximum of six packs
-   //TODO Add validation to not allow more then 6 packs.
-   public static int MAX_CARDS = 6*52; 
+
+   private static int MAX_PACKS = 6;
+   private static int PACK_SIZE = 52;
+   //It is more efficient to use number of packs and pack size separately
+   //So we are not doing calculations inside of the deck class
    
+   //We might use it outside of the class
+   public static int MAX_CARDS = MAX_PACKS*PACK_SIZE;     
    /*This is a private static Card array, masterPack[], 
     * containing exactly 52 card references, which point to all 
     * the standard cards.   It will enable us to avoid capriciously and 
@@ -388,40 +392,31 @@ class Deck {
     * we use that same instance whenever we need it as a source to copy in 
     * various places, notably during a re-initialization of the Deck object;
     * it will always be in the masterPack[] array for us to copy.*/
-   private static Card[] masterPack  = new Card[52];
+   private static Card[] masterPack  = new Card[PACK_SIZE];
    
    private Card[] cards; 
    private int topCard;
-   private int numPacks;//not sure why we need this var?
+   private int numPacks=1;//default value for number of packs
    
    /*a constructor that populates the arrays and assigns initial 
     * values to members.  Overload so that if no parameters are passed, 
     * 1 pack is assumed.*/
    public Deck() {
       allocateMasterPack();
-      cards = new Card[52];
-      System.arraycopy(masterPack, 0, cards, 0, masterPack.length);
-      topCard = cards.length-1;
+      init(this.numPacks);
    }
    
    //Overload Deck() with one parameter 
    public Deck(int numPacks) {
       allocateMasterPack();
-      this.numPacks = numPacks;
-      cards = new Card[52*numPacks]; 
-      for (int i=0; i<numPacks;i++) {
-        System.arraycopy(masterPack, 0, cards, i*masterPack.length, 
-              masterPack.length);
-      }
-      topCard = cards.length-1;
+      if(numPacks>MAX_PACKS) init(MAX_PACKS); else init(numPacks);
    }
    
    /*re-populate cards[] with the standard 52 × numPacks cards.  
     * We should not repopulate the static array,masterPack[], since that was 
     * done once, in the (first-invoked) constructor and  never changes. */
    public void init(int numPacks) {
-      this.numPacks = numPacks;
-      cards = new Card[52*numPacks]; 
+      cards = new Card[PACK_SIZE*numPacks]; 
       for (int i=0; i<numPacks;i++) {
         System.arraycopy(masterPack, 0, cards, i*masterPack.length, 
               masterPack.length);
