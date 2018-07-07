@@ -358,6 +358,7 @@ class Hand {
 
    //Accessor for an individual card.  
    //Returns a card with errorFlag = true if k is bad.
+   //TODO Make it more elegant see Deck
    public Card inspectCard(int k) 
    {
       if (k<=this.numCards && k>0) {
