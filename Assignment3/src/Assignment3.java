@@ -59,6 +59,7 @@ public class Assignment3
       System.out.println("After deal");
       System.out.println("Hand =  ( "+hand1.toString()+" )");      
       System.out.println("Testing inspectCard()");
+      //TODO Make it in to Function using Random method
       System.out.println(hand1.inspectCard(0));
       System.out.println(hand1.inspectCard(1));
       System.out.println(hand1.inspectCard(22));
@@ -114,6 +115,50 @@ public class Assignment3
 
       //TODO Code for Phase 4
       /*Consider creating an array for Hands dealt.*/
+      System.out.println("Everything above this is testing phase stuff");
+      System.out.println("Things below are phase 4 stuff");
+      System.out.println("");
+      //TODO Comment them out when finalizing and submitting
+      
+      Scanner scannerObject = new Scanner(System.in);
+      //boolean repeatLoop = true;
+      int numHands;
+      do {
+         System.out.print("How many hands? (1 - 10, please): ");
+         numHands = scannerObject.nextInt();
+
+      }while(!(numHands >=1 && numHands <=10));
+
+      System.out.println("Number of hands is: "+numHands);
+      
+      //Creating hand Objects
+      Hand[] handArr = new Hand[numHands];
+      for(int i=0; i<numHands; i++)
+      {
+         handArr[i] = new Hand();
+      }
+      
+      //Reinitializing deck to 1 pack not shuffled 
+      myDeck.init(6);
+      
+      System.out.println("Distributing cards:");
+      //TODO Make it in to Function distributeCards()
+      int playerNum = 0;
+      while(myDeck.topCard()>=0) {
+         //We need to deal with MAX card number mismatch between hand and deck
+         if(handArr[playerNum].numCards()<handArr[playerNum].MAX_CARDS) {
+            handArr[playerNum].takeCard(myDeck.dealCard());
+            playerNum++; 
+            if(playerNum == numHands) playerNum = 0;
+         } else break; 
+        
+      }
+      System.out.println("Here are our hands, from unshuffled deck:");
+      for (Hand playerHand : handArr) {
+
+         System.out.println("Hand = ("+" "+playerHand.toString() +" )");
+         
+      }
    }
 
 }
@@ -124,7 +169,7 @@ public class Assignment3
  *
  */
 
-//TODO Add distractor and garbage collector to Card Class
+//TODO Add destractor and garbage collector to Card Class
 class Card
 {
 
