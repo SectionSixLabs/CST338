@@ -23,10 +23,14 @@ public class Assignment3
       testCards[4] = new Card('5', Card.Suit.SPADES);
       showCards(testCards);
       
+      pauseUntillKeyPress();
+      
       testCards[0].set('0',Card.Suit.CLUBS);
       testCards[1].set('2', Card.Suit.CLUBS);
 
       showCards(testCards);
+      
+      pauseUntillKeyPress();
       
       // Test of Hand Class
       testCards[0].set('A',Card.Suit.SPADES);
@@ -41,14 +45,17 @@ public class Assignment3
 
       showRandomCardFromHand(hand1,10);
       playAllCards(hand1); 
-
+      
+      pauseUntillKeyPress();
       
       // Test of Deck Class
       //two packs of cards
       Deck myDeck = new Deck(2); 
       dealAllCards(myDeck);
       
-      System.out.println("Re-Initialising Deck: 2Packs");
+      pauseUntillKeyPress();
+      
+      System.out.println("Re-Initialising Deck with 2 Packs");
       myDeck.init(2);
       
       System.out.println("Evryday I'm shuffeling:");
@@ -56,19 +63,25 @@ public class Assignment3
       
       dealAllCards(myDeck);
       
+      pauseUntillKeyPress();
+      
       //one packs of cards
-      System.out.println("Re-Initialising Deck:1Pack");
+      System.out.println("Re-Initialising Deck:1 Pack");
       myDeck.init(1);
       
       dealAllCards(myDeck);
       
-      System.out.println("Re-Initialising Deck:1Pack");
+      pauseUntillKeyPress();
+      
+      System.out.println("Re-Initialising Deck:1 Pack");
       myDeck.init(1);
       
       System.out.println("Evryday I'm shuffeling:");
       myDeck.shuffle();
       
       dealAllCards(myDeck);
+      
+      pauseUntillKeyPress();
       
       /**
        * Phase 4
@@ -91,13 +104,27 @@ public class Assignment3
       }
       
       //Reinitializing deck to 1 pack not shuffled 
-      myDeck.init(6);
+      myDeck.init(1);
 
       distributeCards(handArr,myDeck,numHands); 
       showHands(handArr);
+      
+      pauseUntillKeyPress();
+      
+      myDeck.init(1);
+      resetAllHands(handArr);
+      System.out.println("Evryday I'm shuffeling:");
+      myDeck.shuffle();
+
+      
+      distributeCards(handArr,myDeck,numHands); 
+      showHands(handArr);
+      
+      pauseUntillKeyPress();
 
    }
 
+   //Function to distribute 
    public static void distributeCards(Hand[] handArr, Deck myDeck, int numHands)
    {
       System.out.println("Distributing cards:");
@@ -138,6 +165,13 @@ public class Assignment3
       return numHands; 
    }
    
+   @SuppressWarnings("resource")
+   public static void pauseUntillKeyPress() {
+      Scanner scannerObject = new Scanner(System.in);
+      System.out.print("Press any key to continue . . .");
+      scannerObject.hasNext();
+   }
+   
    public static void showCards (Card[] cardsArray) {
       for (Card localCard :cardsArray) {
       System.out.println("Showing: "+ localCard.toString());
@@ -159,9 +193,12 @@ public class Assignment3
    public static void showRandomCardFromHand(Hand myHand, int n) {
       System.out.println("Testing inspectCard()");
       Random rgen = new Random();
+      System.out.println(myHand.inspectCard(1));
       for (int i=0;i<n;i++) {
       System.out.println(myHand.inspectCard(rgen.nextInt(myHand.MAX_CARDS+3)));
       }
+      System.out.println(myHand.inspectCard(52));
+      System.out.println(myHand.inspectCard(100));
    }
    
    public static void playAllCards (Hand myHand) {
@@ -178,6 +215,12 @@ public class Assignment3
          System.out.println("Dealing "+myDeck.dealCard().toString());
       }
    }
+   
+   public static void resetAllHands(Hand[] handArr) {
+      for (int i=0; i<handArr.length;i++) {
+         handArr[i].resetHand();
+      }
+   } 
    
 }
 
@@ -375,7 +418,7 @@ class Hand {
 
    //remove all cards from the hand (in the simplest way).
    public void resetHand() {
-      this.myCards =null;
+      this.myCards =new Card [MAX_CARDS];
       this.numCards = 0;
    }
 
