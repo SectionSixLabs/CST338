@@ -15,68 +15,38 @@ public class Assignment3
    public static void main(String[] args)
    {
       // Test of Card Class
-      //TODO Consider using an array for cards 
-      Card card1 = new Card();
-      System.out.println(card1);
-
-      Card card3 = new Card('X', Card.Suit.CLUBS);
-      System.out.println(card3);
-
-      Card card2 = new Card('2', Card.Suit.HEARTS);
-      System.out.println(card2);
+      Card[] testCards = new Card[5]; 
+      testCards[0] = new Card(); 
+      testCards[1] = new Card('X', Card.Suit.CLUBS);
+      testCards[2] = new Card('2', Card.Suit.HEARTS);
+      testCards[3] = new Card('4', Card.Suit.DIAMONDS);
+      testCards[4] = new Card('5', Card.Suit.SPADES);
+      showCards(testCards);
       
-      card1.set('0',Card.Suit.CLUBS);
-      System.out.println(card1);
+      testCards[0].set('0',Card.Suit.CLUBS);
+      testCards[1].set('2', Card.Suit.CLUBS);
 
-      System.out.println(card2);
-
-      card3.set('2', Card.Suit.CLUBS);
-      System.out.println(card3);
-     
+      showCards(testCards);
+      
       // Test of Hand Class
-      card1.set('A',Card.Suit.SPADES);
-      Card card4 = new Card('4', Card.Suit.DIAMONDS);
-      Card card5 = new Card('5', Card.Suit.SPADES);
+      testCards[0].set('A',Card.Suit.SPADES);
       
+      //TODO Write testHand Function
       Hand hand1 = new Hand(); 
-            
-      while (hand1.numCards()<hand1.MAX_CARDS) 
-      {
-         //TODO It looks like we can use a function here
-         boolean isBreak = false; 
-         isBreak = !hand1.takeCard(card1);
-         if (isBreak) break; 
-         isBreak = !hand1.takeCard(card2);
-         if (isBreak) break; 
-         isBreak = !hand1.takeCard(card3);
-         if (isBreak) break; 
-         isBreak = !hand1.takeCard(card4);
-         if (isBreak) break; 
-         isBreak = !hand1.takeCard(card5);
-         if (isBreak) break; 
-      }
-      System.out.println("Hand full");
+      testHand(hand1,testCards);       
+
+      
       System.out.println("After deal");
       System.out.println("Hand =  ( "+hand1.toString()+" )");      
-      System.out.println("Testing inspectCard()");
-      //TODO Make it in to Function using Random method
-      System.out.println(hand1.inspectCard(0));
-      System.out.println(hand1.inspectCard(1));
-      System.out.println(hand1.inspectCard(22));
-      System.out.println(hand1.inspectCard(51));
-      while(hand1.numCards()>0) {
-         System.out.println("Playing "+hand1.playCard().toString());
-      }
-      System.out.println("After playing all cards");
-      System.out.println("Hand =  ( "+hand1.toString()+" )");  
+
+      showRandomCardFromHand(hand1,10);
+      playAllCards(hand1); 
+
       
       // Test of Deck Class
       //two packs of cards
       Deck myDeck = new Deck(2); 
-      System.out.println("Dealing Cards:");
-      while(myDeck.topCard()>=0) {
-         System.out.println("Dealing "+myDeck.dealCard().toString());
-      }
+      dealAllCards(myDeck);
       
       System.out.println("Re-Initialising Deck: 2Packs");
       myDeck.init(2);
@@ -84,30 +54,21 @@ public class Assignment3
       System.out.println("Evryday I'm shuffeling:");
       myDeck.shuffle();
       
-      System.out.println("Dealing Cards:");
-      
-      while(myDeck.topCard()>=0) {
-         System.out.println("Dealing "+myDeck.dealCard().toString());
-      }
+      dealAllCards(myDeck);
       
       //one packs of cards
       System.out.println("Re-Initialising Deck:1Pack");
       myDeck.init(1);
       
-      System.out.println("Dealing Cards:");
-      while(myDeck.topCard()>=0) {
-         System.out.println("Dealing "+myDeck.dealCard().toString());
-      }
+      dealAllCards(myDeck);
+      
       System.out.println("Re-Initialising Deck:1Pack");
       myDeck.init(1);
       
       System.out.println("Evryday I'm shuffeling:");
       myDeck.shuffle();
       
-      System.out.println("Dealing Cards:");
-      while(myDeck.topCard()>=0) {
-         System.out.println("Dealing "+myDeck.dealCard().toString());
-      }
+      dealAllCards(myDeck);
       
       /**
        * Phase 4
@@ -120,16 +81,7 @@ public class Assignment3
       System.out.println("");
       //TODO Comment them out when finalizing and submitting
       
-      Scanner scannerObject = new Scanner(System.in);
-      //boolean repeatLoop = true;
-      int numHands;
-      do {
-         System.out.print("How many hands? (1 - 10, please): ");
-         numHands = scannerObject.nextInt();
-
-      }while(!(numHands >=1 && numHands <=10));
-
-      System.out.println("Number of hands is: "+numHands);
+      int numHands = getNumberOfHands();
       
       //Creating hand Objects
       Hand[] handArr = new Hand[numHands];
@@ -140,15 +92,10 @@ public class Assignment3
       
       //Reinitializing deck to 1 pack not shuffled 
       myDeck.init(6);
-      
+
       distributeCards(handArr,myDeck,numHands); 
+      showHands(handArr);
 
-      System.out.println("Here are our hands, from unshuffled deck:");
-      for (Hand playerHand : handArr) {
-
-         System.out.println("Hand = ("+" "+playerHand.toString() +" )");
-         
-      }
    }
 
    public static void distributeCards(Hand[] handArr, Deck myDeck, int numHands)
@@ -166,6 +113,72 @@ public class Assignment3
         
       }
    }
+   
+   public static void showHands(Hand[] handArr) {
+      System.out.println("Here are our "+handArr.length+" hands:");
+      for (Hand playerHand : handArr) {
+
+         System.out.println("Hand = ("+" "+playerHand.toString() +" )");
+         
+      }
+   }
+   
+   @SuppressWarnings("resource")
+   public static int getNumberOfHands() {
+      Scanner scannerObject = new Scanner(System.in);
+      //boolean repeatLoop = true;
+      int numHands=0;
+      do {
+         System.out.print("How many hands? (1 - 10, please): ");
+         numHands = scannerObject.nextInt();
+
+      }while(!(numHands >=1 && numHands <=10));
+
+      System.out.println("Number of hands is: "+numHands);
+      return numHands; 
+   }
+   
+   public static void showCards (Card[] cardsArray) {
+      for (Card localCard :cardsArray) {
+      System.out.println("Showing: "+ localCard.toString());
+      }
+   }
+   
+   public static void testHand(Hand myHand, Card[] cardsArray) {
+      while (myHand.numCards()<myHand.MAX_CARDS) 
+      {
+         boolean isBreak = false; 
+         for (Card localCard: cardsArray) {
+            isBreak = !myHand.takeCard(localCard);
+            if (isBreak) break;
+         }
+         if (isBreak) break; 
+      }
+      System.out.println("Hand full");
+   }
+   public static void showRandomCardFromHand(Hand myHand, int n) {
+      System.out.println("Testing inspectCard()");
+      Random rgen = new Random();
+      for (int i=0;i<n;i++) {
+      System.out.println(myHand.inspectCard(rgen.nextInt(myHand.MAX_CARDS+3)));
+      }
+   }
+   
+   public static void playAllCards (Hand myHand) {
+      while(myHand.numCards()>0) {
+         System.out.println("Playing "+myHand.playCard().toString());
+      }
+      System.out.println("After playing all cards");
+      System.out.println("Hand =  ( "+myHand.toString()+" )");  
+   }
+   
+   public static void dealAllCards (Deck myDeck) {
+      System.out.println("Dealing Cards:");
+      while(myDeck.topCard()>=0) {
+         System.out.println("Dealing "+myDeck.dealCard().toString());
+      }
+   }
+   
 }
 
 /**
