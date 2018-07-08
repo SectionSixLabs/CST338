@@ -142,6 +142,7 @@ public class Assignment3
       }
    }
    
+   //Function to display all hands 
    public static void showHands(Hand[] handArr) {
       System.out.println("Here are our "+handArr.length+" hands:");
       for (Hand playerHand : handArr) {
@@ -151,6 +152,7 @@ public class Assignment3
       }
    }
    
+   //Function to ask user to enter number of hands.
    @SuppressWarnings("resource")
    public static int getNumberOfHands() {
       Scanner scannerObject = new Scanner(System.in);
@@ -166,19 +168,22 @@ public class Assignment3
       return numHands; 
    }
    
-   @SuppressWarnings("resource")
+   //
    public static void pauseUntillKeyPress() {
-      Scanner scannerObject = new Scanner(System.in);
-      System.out.print("Press any key to continue . . .");
-      scannerObject.hasNext();
+
+      System.out.print("Press Enter key to continue . . .");
+      try {System.in.read();}
+      catch(Exception e){}
    }
    
+   //helper test function to display all cards in given array
    public static void showCards (Card[] cardsArray) {
       for (Card localCard :cardsArray) {
       System.out.println("Showing: "+ localCard.toString());
       }
    }
    
+   //Helper Test function to test Hand functionality
    public static void testHand(Hand myHand, Card[] cardsArray) {
       while (myHand.numCards()<myHand.MAX_CARDS) 
       {
@@ -191,6 +196,8 @@ public class Assignment3
       }
       System.out.println("Hand full");
    }
+   
+   //Helper Test function to test Inspect Card Method
    public static void showRandomCardFromHand(Hand myHand, int n) {
       System.out.println("Testing inspectCard()");
       Random rgen = new Random();
@@ -202,6 +209,7 @@ public class Assignment3
       System.out.println(myHand.inspectCard(100));
    }
    
+   //Helper test function to polay all cards in given hand to screen
    public static void playAllCards (Hand myHand) {
       while(myHand.numCards()>0) {
          System.out.println("Playing "+myHand.playCard().toString());
@@ -210,6 +218,7 @@ public class Assignment3
       System.out.println("Hand =  ( "+myHand.toString()+" )");  
    }
    
+   //Helper test function to deal all cards in the Deck to screen
    public static void dealAllCards (Deck myDeck) {
       System.out.println("Dealing Cards:");
       while(myDeck.topCard()>=0) {
@@ -217,6 +226,7 @@ public class Assignment3
       }
    }
    
+   //Helper function to reset all active hands to initial state
    public static void resetAllHands(Hand[] handArr) {
       for (int i=0; i<handArr.length;i++) {
          handArr[i].resetHand();
@@ -367,32 +377,6 @@ class Card
 
       default: return false;
       }
-      /* we could use switch statement instead as we already use enumerators 
-      if(suit == Suit.HEARTS)
-      {
-         validSuit = true;
-      }
-      else if(suit == Suit.SPADES)
-      {
-         validSuit = true;
-      }
-      else if(suit == Suit.CLUBS)
-      {
-         validSuit = true;
-      }
-      else if(suit == Suit.DIAMONDS)
-      {
-         validSuit = true;
-      }
-      else 
-      {
-         validSuit = false;
-      }
-       */
-      // System.out.println(validValue);
-      // System.out.println(validSuit);
-      // System.out.println(validValue && validSuit);
-      // return(validValue && validSuit);
    }
 
 }
@@ -590,7 +574,6 @@ class Deck {
          for (char value : Card.cardValues.toCharArray()) {
             Card localCard = new Card(value,suit);
             masterPack[i]=localCard; 
-            //System.out.println(masterPack[i].toString());
             i++; 
          }
       }
