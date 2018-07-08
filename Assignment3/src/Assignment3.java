@@ -136,7 +136,10 @@ public class Assignment3
             handArr[playerNum].takeCard(myDeck.dealCard());
             playerNum++; 
             if(playerNum == numHands) playerNum = 0;
-         } else break; 
+         } else {
+            //We will be dealing out to table cards that exceed the limit
+            System.out.println("Dealing "+myDeck.dealCard().toString());
+         }; 
         
       }
    }
