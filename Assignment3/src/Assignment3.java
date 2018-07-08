@@ -407,7 +407,7 @@ class Card
 class Hand {
    //public int value like MAX_CARDS and set it to something like 50 or 100 so
    //a runaway program can't try to create a monster array
-   public int MAX_CARDS  = 50; 
+   public int MAX_CARDS  = 100; 
 
    private  Card[] myCards; 
    private  int numCards;
@@ -433,7 +433,7 @@ class Hand {
    {
       if (this.numCards <= MAX_CARDS) 
       {
-      this.myCards[this.numCards] = card; 
+      this.myCards[this.numCards] = new Card(card.getValue(), card.getSuit()); 
       numCards +=1;
       return true; 
       } else return false;
