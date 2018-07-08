@@ -141,6 +141,18 @@ public class Assignment3
       //Reinitializing deck to 1 pack not shuffled 
       myDeck.init(6);
       
+      distributeCards(handArr,myDeck,numHands); 
+
+      System.out.println("Here are our hands, from unshuffled deck:");
+      for (Hand playerHand : handArr) {
+
+         System.out.println("Hand = ("+" "+playerHand.toString() +" )");
+         
+      }
+   }
+
+   public static void distributeCards(Hand[] handArr, Deck myDeck, int numHands)
+   {
       System.out.println("Distributing cards:");
       //TODO Make it in to Function distributeCards()
       int playerNum = 0;
@@ -153,14 +165,7 @@ public class Assignment3
          } else break; 
         
       }
-      System.out.println("Here are our hands, from unshuffled deck:");
-      for (Hand playerHand : handArr) {
-
-         System.out.println("Hand = ("+" "+playerHand.toString() +" )");
-         
-      }
    }
-
 }
 
 /**
