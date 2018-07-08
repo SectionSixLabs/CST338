@@ -91,7 +91,7 @@ public class Assignment3
       /*Consider creating an array for Hands dealt.*/
       System.out.println("Everything above this is testing phase stuff");
       System.out.println("Things below are phase 4 stuff\n");
-      //TODO Comment them out when finalizing and submitting
+
       
       int numHands = getNumberOfHands();
       
