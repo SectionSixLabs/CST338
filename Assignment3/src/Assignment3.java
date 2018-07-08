@@ -357,12 +357,12 @@ class Card
    {
 
       //Using Strings for Value
-      String values = "A23456789TJQK";
+      //String values = "A23456789TJQK";
       String stringValue = Character.toString(valueLocal);
 
       //See if value is in the String if not return false
       // No need to look farther
-      if (! values.contains(stringValue))
+      if (! cardValues.contains(stringValue))
       {
          return false;
       }
