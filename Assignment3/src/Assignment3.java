@@ -35,7 +35,7 @@ public class Assignment3
       // Test of Hand Class
       testCards[0].set('A',Card.Suit.SPADES);
       
-      //TODO Write testHand Function
+
       Hand hand1 = new Hand(); 
       testHand(hand1,testCards);       
 
@@ -90,8 +90,7 @@ public class Assignment3
       //TODO Code for Phase 4
       /*Consider creating an array for Hands dealt.*/
       System.out.println("Everything above this is testing phase stuff");
-      System.out.println("Things below are phase 4 stuff");
-      System.out.println("");
+      System.out.println("Things below are phase 4 stuff\n");
       //TODO Comment them out when finalizing and submitting
       
       int numHands = getNumberOfHands();
@@ -128,7 +127,6 @@ public class Assignment3
    public static void distributeCards(Hand[] handArr, Deck myDeck, int numHands)
    {
       System.out.println("Distributing cards:");
-      //TODO Make it in to Function distributeCards()
       int playerNum = 0;
       while(myDeck.topCard()>=0) {
          //We need to deal with MAX card number mismatch between hand and deck
@@ -233,7 +231,7 @@ public class Assignment3
  *
  */
 
-//TODO Add destractor and garbage collector to Card Class
+
 class Card
 {
 
@@ -402,7 +400,6 @@ class Card
 /**
  * Phase 2
  */
-//TODO Add distractor and  garbage collector to Hand Class
 //TODO Code for Phase 2
 class Hand {
    //public int value like MAX_CARDS and set it to something like 50 or 100 so
@@ -429,11 +426,11 @@ class Hand {
     * This is an object copy, not a reference copy, since the source 
     * of the Card might destroy or change its data after our Hand gets it
     *  -- we want our local data to be exactly as it was when we received it.*/
-   public boolean takeCard(Card card) 
+   public boolean takeCard(Card myCard) 
    {
       if (this.numCards <= MAX_CARDS) 
       {
-      this.myCards[this.numCards] = new Card(card.getValue(), card.getSuit()); 
+      this.myCards[this.numCards] = new Card(myCard.getValue(), myCard.getSuit()); 
       numCards +=1;
       return true; 
       } else return false;
@@ -483,7 +480,7 @@ class Hand {
  */
 
 //TODO Code for Phase 3
-//TODO Add distractor and garbage collector to Deck Class
+
 class Deck {
    //initialize it to allow a maximum of six packs
 
