@@ -248,7 +248,7 @@ class Card
    //A Public enum Type 
    public enum Suit {HEARTS, CLUBS, SPADES, DIAMONDS};
    //One addition to be used externally in Deck class
-   public static String cardValues = "A23456789TJQK";
+   public final static String cardValues = "A23456789TJQK";
 
    //Private Member Data
    private char value;
