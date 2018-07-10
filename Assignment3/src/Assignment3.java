@@ -388,7 +388,7 @@ class Card
 class Hand {
    //public int value like MAX_CARDS and set it to something like 50 or 100 so
    //a runaway program can't try to create a monster array
-   public int MAX_CARDS  = 100; 
+   public static final int MAX_CARDS  = 100; 
 
    private  Card[] myCards; 
    private  int numCards;
@@ -474,7 +474,7 @@ class Deck {
    //So we are not doing calculations inside of the deck class
    
    //We might use it outside of the class
-   public static int MAX_CARDS = MAX_PACKS*PACK_SIZE;     
+   public static final int MAX_CARDS = MAX_PACKS*PACK_SIZE;     
    /*This is a private static Card array, masterPack[], 
     * containing exactly 52 card references, which point to all 
     * the standard cards.   It will enable us to avoid capriciously and 
