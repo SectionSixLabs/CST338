@@ -128,13 +128,17 @@ public class Assignment3
    {
       System.out.println("Distributing cards:");
       int playerNum = 0;
-      while(myDeck.topCard()>=0) {
+      while(myDeck.topCard()>=0) 
+      {
          //We need to deal with MAX card number mismatch between hand and deck
-         if(handArr[playerNum].numCards()<handArr[playerNum].MAX_CARDS) {
+         if(handArr[playerNum].numCards()<handArr[playerNum].MAX_CARDS) 
+         {
             handArr[playerNum].takeCard(myDeck.dealCard());
             playerNum++; 
             if(playerNum == numHands) playerNum = 0;
-         } else {
+         } 
+         else 
+         {
             //We will be dealing out to table cards that exceed the limit
             System.out.println("Dealing "+myDeck.dealCard().toString());
          }; 
@@ -143,20 +147,21 @@ public class Assignment3
    }
    
    //Function to display all hands 
-   public static void showHands(Hand[] handArr) {
+   public static void showHands(Hand[] handArr) 
+   {
       System.out.println("Here are our "+handArr.length+" hands:");
-      for (Hand playerHand : handArr) {
-
-         System.out.println("Hand = ("+" "+playerHand.toString() +" )");
-         
+      for (Hand playerHand : handArr) 
+      {
+         System.out.println("Hand = ("+" "+playerHand.toString() +" )");  
       }
    }
    
    //Function to ask user to enter number of hands.
    @SuppressWarnings("resource")
-   public static int getNumberOfHands() {
+   public static int getNumberOfHands() 
+   {
       Scanner scannerObject = new Scanner(System.in);
-      //boolean repeatLoop = true;
+      
       int numHands=0;
       do {
          System.out.print("How many hands? (1 - 10, please): ");
@@ -169,7 +174,8 @@ public class Assignment3
    }
    
    //
-   public static void pauseUntillKeyPress() {
+   public static void pauseUntillKeyPress() 
+   {
 
       System.out.print("Press Enter key to continue . . .");
       try {System.in.read();}
@@ -177,18 +183,22 @@ public class Assignment3
    }
    
    //helper test function to display all cards in given array
-   public static void showCards (Card[] cardsArray) {
-      for (Card localCard :cardsArray) {
-      System.out.println("Showing: "+ localCard.toString());
+   public static void showCards (Card[] cardsArray) 
+   {
+      for (Card localCard :cardsArray) 
+      {
+         System.out.println("Showing: "+ localCard.toString());
       }
    }
    
    //Helper Test function to test Hand functionality
-   public static void testHand(Hand myHand, Card[] cardsArray) {
+   public static void testHand(Hand myHand, Card[] cardsArray) 
+   {
       while (myHand.numCards()<myHand.MAX_CARDS) 
       {
          boolean isBreak = false; 
-         for (Card localCard: cardsArray) {
+         for (Card localCard: cardsArray) 
+         {
             isBreak = !myHand.takeCard(localCard);
             if (isBreak) break;
          }
@@ -198,20 +208,24 @@ public class Assignment3
    }
    
    //Helper Test function to test Inspect Card Method
-   public static void showRandomCardFromHand(Hand myHand, int n) {
+   public static void showRandomCardFromHand(Hand myHand, int n) 
+   {
       System.out.println("Testing inspectCard()");
       Random rgen = new Random();
       System.out.println(myHand.inspectCard(1));
-      for (int i=0;i<n;i++) {
-      System.out.println(myHand.inspectCard(rgen.nextInt(myHand.MAX_CARDS+3)));
+      for (int i=0;i<n;i++) 
+      {
+         System.out.println(myHand.inspectCard(rgen.nextInt(myHand.MAX_CARDS+3)));
       }
       System.out.println(myHand.inspectCard(52));
       System.out.println(myHand.inspectCard(100));
    }
    
    //Helper test function to polay all cards in given hand to screen
-   public static void playAllCards (Hand myHand) {
-      while(myHand.numCards()>0) {
+   public static void playAllCards (Hand myHand) 
+   {
+      while(myHand.numCards()>0) 
+      {
          System.out.println("Playing "+myHand.playCard().toString());
       }
       System.out.println("After playing all cards");
@@ -219,16 +233,20 @@ public class Assignment3
    }
    
    //Helper test function to deal all cards in the Deck to screen
-   public static void dealAllCards (Deck myDeck) {
+   public static void dealAllCards (Deck myDeck) 
+   {
       System.out.println("Dealing Cards:");
-      while(myDeck.topCard()>=0) {
+      while(myDeck.topCard()>=0) 
+      {
          System.out.println("Dealing "+myDeck.dealCard().toString());
       }
    }
    
    //Helper function to reset all active hands to initial state
-   public static void resetAllHands(Hand[] handArr) {
-      for (int i=0; i<handArr.length;i++) {
+   public static void resetAllHands(Hand[] handArr) 
+   {
+      for (int i=0; i<handArr.length;i++) 
+      {
          handArr[i].resetHand();
       }
    } 
@@ -385,7 +403,8 @@ class Card
  * Phase 2
  */
 //TODO Code for Phase 2
-class Hand {
+class Hand 
+{
    //public int value like MAX_CARDS and set it to something like 50 or 100 so
    //a runaway program can't try to create a monster array
    public static final int MAX_CARDS  = 100; 
@@ -401,7 +420,8 @@ class Hand {
    }
 
    //remove all cards from the hand (in the simplest way).
-   public void resetHand() {
+   public void resetHand() 
+   {
       this.myCards =new Card [MAX_CARDS];
       this.numCards = 0;
    }
@@ -465,7 +485,8 @@ class Hand {
 
 //TODO Code for Phase 3
 
-class Deck {
+class Deck 
+{
    //initialize it to allow a maximum of six packs
 
    private static int MAX_PACKS = 6;
@@ -493,13 +514,15 @@ class Deck {
    /*a constructor that populates the arrays and assigns initial 
     * values to members.  Overload so that if no parameters are passed, 
     * 1 pack is assumed.*/
-   public Deck() {
+   public Deck() 
+   {
       allocateMasterPack();
       init(this.numPacks);
    }
    
    //Overload Deck() with one parameter 
-   public Deck(int numPacks) {
+   public Deck(int numPacks) 
+   {
       allocateMasterPack();
       if(numPacks>MAX_PACKS) init(MAX_PACKS); else init(numPacks);
    }
@@ -507,9 +530,11 @@ class Deck {
    /*re-populate cards[] with the standard 52 × numPacks cards.  
     * We should not repopulate the static array,masterPack[], since that was 
     * done once, in the (first-invoked) constructor and  never changes. */
-   public void init(int numPacks) {
+   public void init(int numPacks) 
+   {
       cards = new Card[PACK_SIZE*numPacks]; 
-      for (int i=0; i<numPacks;i++) {
+      for (int i=0; i<numPacks;i++) 
+      {
         System.arraycopy(masterPack, 0, cards, i*masterPack.length, 
               masterPack.length);
       }
@@ -517,13 +542,15 @@ class Deck {
    }
    
 /*mixes up the cards with the help of the standard random number generator.*/
-   public void shuffle() {
+   public void shuffle() 
+   {
       int localDeckSize =this.cards.length; 
       Card[] localDeck = new Card[localDeckSize]; 
       Random rgen = new Random();
       //While there cards in the deck deal card and assign it to the rendom 
       //place in the new array
-      while (this.topCard>=0) {
+      while (this.topCard>=0) 
+      {
          int randomIndex = -1;
          //Make sure that space is empty before assignment
          do {
@@ -538,21 +565,24 @@ class Deck {
    }
    
    /*returns and removes the card in the top occupied position of cards[].*/
-   public Card dealCard() {
+   public Card dealCard() 
+   {
       Card localCard = cards[topCard()];
       this.topCard--; 
       return localCard; 
    }
    
    /*An accessor for the int, topCard (no mutator.)*/
-   public int topCard() {
+   public int topCard() 
+   {
       return this.topCard; 
    }
    
    /*Accessor for an individual card.  Returns a card with errorFlag = true 
     *if k is bad.
     *We are not useing it anywhere though*/
-   public Card inspectCard(int k) {
+   public Card inspectCard(int k) 
+   {
       Card localCard = new Card('0',Card.Suit.CLUBS); 
       if (k<cards.length) localCard = cards[k]; 
       return localCard;
@@ -567,11 +597,14 @@ class Deck {
     * to ask itself, "Have I been here before?", and if the answer is "yes", 
     * it will immediately return without doing anything;  it has already built 
     * masterPack[] in a previous invocation.*/
-   private static void allocateMasterPack() {
+   private static void allocateMasterPack() 
+   {
       if (masterPack[0]!=null) return; 
       int i = 0;
-      for(Card.Suit suit : Card.Suit.values()) {
-         for (char value : Card.cardValues.toCharArray()) {
+      for(Card.Suit suit : Card.Suit.values()) 
+      {
+         for (char value : Card.cardValues.toCharArray()) 
+         {
             Card localCard = new Card(value,suit);
             masterPack[i]=localCard; 
             i++; 
@@ -580,5 +613,5 @@ class Deck {
       
    }
    
-   } 
+} 
 
