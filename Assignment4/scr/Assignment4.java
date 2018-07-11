@@ -22,8 +22,47 @@ public class Assignment4
 }
 
 
-
-
 //TODO class BarcodeImage
 
+class BarcodeImage implements Cloneable
+{
+   public static final int MAX_HEIGHT = 30;    
+   public static final int MAX_WIDTH = 65;
+   private boolean[][] image_data;
+   
+   //TODO class Methods
+}
+
+
 //TODO class DataMatrix
+class DataMatrix implements BarcodeIO
+{
+   public boolean scan(BarcodeImage bc)
+   {
+      
+   }
+   
+   public boolean readText(String text)
+   {
+      
+   }
+   public boolean generateImageFromText()
+   {
+      
+   }
+   
+   public boolean translateImageToText()
+   {
+      
+   }
+   
+   public void displayTextToConsole()
+   {
+      
+   }
+   
+   public void displayImageToConsole()
+   {
+      
+   }
+}
