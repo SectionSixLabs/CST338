@@ -37,6 +37,8 @@ class BarcodeImage implements Cloneable
 //TODO class DataMatrix
 class DataMatrix implements BarcodeIO
 {
+   private String text;
+   
    public boolean scan(BarcodeImage bc)
    {
       
@@ -44,8 +46,14 @@ class DataMatrix implements BarcodeIO
    
    public boolean readText(String text)
    {
-      
+      if(text != null)
+      {
+         this.text = text;
+         return true;
+      }
+      return false;
    }
+   
    public boolean generateImageFromText()
    {
       
