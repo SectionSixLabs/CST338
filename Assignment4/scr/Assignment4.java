@@ -49,6 +49,52 @@ class BarcodeImage implements Cloneable
          }
       }
    }
+   
+   /*
+    * Constructor -takes a 1D array of Strings and converts it to 
+    * the internal 2D array of booleans. 
+    */
+   public BarcodeImage(String[] str_data)
+   {
+      //TODO - see HINT
+   }
+   
+   //Acessor / mutators
+   
+   boolean getPixel(int row, int col)
+   {  //checking if parameter doesn't exceed max.
+      if((row > MAX_HEIGHT || row < 0) || (col > MAX_WIDTH || col < 0))
+      {
+         return false;
+      }
+      else
+      {
+         return image_data[row][col];
+      }
+   }
+   
+   boolean setPixel(int row, int col, boolean value)
+   {
+      if((row > MAX_HEIGHT || row < 0) || (col > MAX_WIDTH || col < 0))
+      {
+         return false;
+      }
+      else
+      {
+         image_data[row][col] = value;
+         return true;
+      }
+   }
+   
+   public BarcodeImage clone()
+   {
+      //TODO can implement with: return new BarcodeImage(this) but would need copy constructor
+   }
+   
+   //TODO Optional Methods but good for utility / debugging
+   //checkSize(String[] data)
+   //displayToConsole()
+   
 }
 
 
