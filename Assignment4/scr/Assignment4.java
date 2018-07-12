@@ -17,6 +17,39 @@ public class Assignment4
    {
       // TODO Auto-generated method stub
       
+      
+      
+      
+      String[] sImageIn_2 =
+         {
+               "                                          ",
+               "                                          ",
+               "* * * * * * * * * * * * * * * * * * *     ",
+               "*                                    *    ",
+               "**** *** **   ***** ****   *********      ",
+               "* ************ ************ **********    ",
+               "** *      *    *  * * *         * *       ",
+               "***   *  *           * **    *      **    ",
+               "* ** * *  *   * * * **  *   ***   ***     ",
+               "* *           **    *****  *   **   **    ",
+               "****  *  * *  * **  ** *   ** *  * *      ",
+               "**************************************    ",
+               "                                          ",
+               "                                          ",
+               "                                          ",
+               "                                          "
+
+         };
+        
+         BarcodeImage bc = new BarcodeImage(sImageIn_2);
+      
+      
+      
+      
+      
+      
+      
+      
       System.out.print("End of main.");
    }
 
@@ -57,6 +90,53 @@ class BarcodeImage implements Cloneable
    public BarcodeImage(String[] str_data)
    {
       //TODO - see HINT
+      /*
+      String[] sImageIn_2 =
+         {
+               "                                          ",
+               "                                          ",
+               "* * * * * * * * * * * * * * * * * * *     ",
+               "*                                    *    ",
+               "**** *** **   ***** ****   *********      ",
+               "* ************ ************ **********    ",
+               "** *      *    *  * * *         * *       ",
+               "***   *  *           * **    *      **    ",
+               "* ** * *  *   * * * **  *   ***   ***     ",
+               "* *           **    *****  *   **   **    ",
+               "****  *  * *  * **  ** *   ** *  * *      ",
+               "**************************************    ",
+               "                                          ",
+               "                                          ",
+               "                                          ",
+               "                                          "
+
+         };
+      */
+      
+      
+      image_data = new boolean[MAX_HEIGHT][MAX_WIDTH];
+            
+      int row;
+      int column;
+      int charIndex;
+      
+      int str_dataLength = 0;
+      
+      for(row=0; row<str_data.length; row++)
+      {
+         for(column=0; column<image_data[row].length; column++)
+         {
+           // if(str_data[row].length == )
+            if (str_data[row].charAt(column) == ' ')
+            {
+               image_data[row][column]=false; 
+            }
+            
+         }
+      }
+      
+      
+      
    }
    
    //Acessor / mutators
@@ -134,6 +214,8 @@ class DataMatrix implements BarcodeIO
    
    public DataMatrix()
    {
+      
+      
       
    }
    
