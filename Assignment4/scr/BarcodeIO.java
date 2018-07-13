@@ -41,6 +41,7 @@ public interface BarcodeIO
   * After this is called, we expect the implementing object to contain a 
   * fully-defined image and text that are in agreement with each other.*/
  public boolean translateImageToText();
+ 
  public void displayTextToConsole();
  public void displayImageToConsole();
 

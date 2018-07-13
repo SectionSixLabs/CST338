@@ -15,7 +15,6 @@ public class Assignment4
 
    public static void main(String[] args)
    {
-      // TODO Auto-generated method stub
       
       
       
@@ -69,6 +68,7 @@ class BarcodeImage implements Cloneable
    /*
     * Default Constructor
     */
+   //TODO BarcodeImage()
    public BarcodeImage()
    {
       image_data = new boolean[MAX_HEIGHT][MAX_WIDTH];
@@ -87,6 +87,8 @@ class BarcodeImage implements Cloneable
     * Constructor -takes a 1D array of Strings and converts it to 
     * the internal 2D array of booleans. 
     */
+   //TODO BarcodeImage(String[] str_data)
+  
    public BarcodeImage(String[] str_data)
    {
       //TODO - see HINT
@@ -180,6 +182,7 @@ class BarcodeImage implements Cloneable
    
    //Acessor / mutators
    
+   //TODO getPixel(int row, int col)
    boolean getPixel(int row, int col)
    {  //checking if parameter doesn't exceed max.
       if((row > MAX_HEIGHT || row < 0) || (col > MAX_WIDTH || col < 0))
@@ -192,6 +195,7 @@ class BarcodeImage implements Cloneable
       }
    }
    
+   //TODO setPixel(int row, int col, boolean value)
    boolean setPixel(int row, int col, boolean value)
    {
       if((row > MAX_HEIGHT || row < 0) || (col > MAX_WIDTH || col < 0))
@@ -208,7 +212,7 @@ class BarcodeImage implements Cloneable
    /*
     * Copy constructor
     */
-   
+   //TODO BarcodeImage(BarcodeImage other)
    public BarcodeImage(BarcodeImage other)
    {
      
@@ -229,7 +233,7 @@ class BarcodeImage implements Cloneable
     * (non-Javadoc)
     * @see java.lang.Object#clone()
     */
-   
+   //TODO BarcodeImage clone()
    public BarcodeImage clone()
    {
       //can implement with: return new BarcodeImage(this) but would need copy constructor
@@ -277,6 +281,7 @@ class DataMatrix implements BarcodeIO
     * Default constructor
     */
    
+ //TODO  DataMatrix()
    public DataMatrix()
    {
       
@@ -284,12 +289,15 @@ class DataMatrix implements BarcodeIO
       
    }
    
+   
+
    public DataMatrix(BarcodeImage image)
    {
       
    }
    
    
+
    public boolean scan(BarcodeImage bc)
    {
       return false;
