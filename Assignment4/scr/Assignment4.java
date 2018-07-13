@@ -292,6 +292,7 @@ class DataMatrix implements BarcodeIO
    
    public boolean scan(BarcodeImage bc)
    {
+      return false;
       
    }
    
@@ -306,11 +307,13 @@ class DataMatrix implements BarcodeIO
    }
    public boolean generateImageFromText()
    {
+      return false;
       
    }
    
    public boolean translateImageToText()
    {
+      return false;
       
    }
    
