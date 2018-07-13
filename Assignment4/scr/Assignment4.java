@@ -113,13 +113,11 @@ class BarcodeImage implements Cloneable
          };
       */
       
-      
+      // Create and initialize 2D array
       image_data = new boolean[MAX_HEIGHT][MAX_WIDTH];
             
       int row;
       int column;
-      //int charIndex;
-      
       
       for(row=0; row<image_data.length; row++)
       {
@@ -131,8 +129,8 @@ class BarcodeImage implements Cloneable
       
       
       
-      
-      //int str_dataLength = 0;
+      // Copy string parameter into 2D array
+      int image_dataRow = MAX_HEIGHT - str_data.length; 
       
       for(row=0; row<str_data.length; row++)
       {
@@ -142,20 +140,21 @@ class BarcodeImage implements Cloneable
             {
                if (str_data[row].charAt(column) == ' ')
                {
-                  image_data[row][column]=false; 
+                  image_data[image_dataRow][column]=false; 
                }
                else if(str_data[row].charAt(column) == '*')
                {
-                  image_data[row][column] = true;
-               }              
+                  image_data[image_dataRow][column] = true;
+               } 
             }
             
-            // TEST
+            // TEST gives cell number and value
             //System.out.println( "cell" + "[" + row + "]" + "[" + column + "]" + " " + image_data[row][column]);
          }
+         image_dataRow++;
       }
       
-      
+      //TEST PRINT OUT 2D ARRAY
       String booleanPrint = "";
       String setIndex = "";
       // TEST PRINT OUT
@@ -171,14 +170,12 @@ class BarcodeImage implements Cloneable
             {
                setIndex = "*";
             }
-            booleanPrint += setIndex;  
+            booleanPrint += "[" + setIndex + "]";  
+            
          }         
          System.out.println(booleanPrint);
          booleanPrint = "";
       }
-      
-      
-      
    }
    
    //Acessor / mutators
