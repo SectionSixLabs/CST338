@@ -118,21 +118,66 @@ class BarcodeImage implements Cloneable
             
       int row;
       int column;
-      int charIndex;
+      //int charIndex;
       
-      int str_dataLength = 0;
       
-      for(row=0; row<str_data.length; row++)
+      for(row=0; row<image_data.length; row++)
       {
          for(column=0; column<image_data[row].length; column++)
          {
-           // if(str_data[row].length == )
-            if (str_data[row].charAt(column) == ' ')
+            image_data[row][column] = false;
+         }
+      }
+      
+      
+      
+      
+      //int str_dataLength = 0;
+      
+      for(row=0; row<str_data.length; row++)
+      {
+         for(column=0; column<str_data[row].length(); column++)
+         {
+            if(str_data[row].length() < MAX_WIDTH )
             {
-               image_data[row][column]=false; 
+               if (str_data[row].charAt(column) == ' ')
+               {
+                  image_data[row][column]=false; 
+               }
+               else if(str_data[row].charAt(column) == '*')
+               {
+                  image_data[row][column] = true;
+               }              
             }
             
+            // TEST
+            //System.out.println( "cell" + "[" + row + "]" + "[" + column + "]" + " " + image_data[row][column]);
          }
+      }
+      
+      
+      String booleanPrint = "";
+      String setIndex = "";
+      // TEST PRINT OUT
+      for(row=0; row<image_data.length; row++)
+      {
+         for(column=0; column<image_data[row].length; column++)
+         {
+            if (image_data[row][column] == false)
+            {
+               setIndex = " ";
+            }
+            else
+            {
+               setIndex = "*";
+            }
+            booleanPrint += setIndex;
+            
+         }
+         
+         System.out.println(booleanPrint);
+         booleanPrint = "";
+         System.out.println();
       }
       
       
