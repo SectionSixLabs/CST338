@@ -205,9 +205,35 @@ class BarcodeImage implements Cloneable
       }
    }
    
+   /*
+    * Copy constructor
+    */
+   
+   public BarcodeImage(BarcodeImage other)
+   {
+     
+      this.image_data = new boolean[other.image_data.length][other.image_data[0].length];
+      
+      int row, column;
+      for(row=0; row<this.image_data.length; row++)
+      {
+         for(column=0; column<other.image_data[0].length; column++)
+         {
+            this.image_data[row][column]= other.image_data[row][column];
+         }
+      }
+      
+   }
+   
+   /*
+    * (non-Javadoc)
+    * @see java.lang.Object#clone()
+    */
+   
    public BarcodeImage clone()
    {
-      //TODO can implement with: return new BarcodeImage(this) but would need copy constructor
+      //can implement with: return new BarcodeImage(this) but would need copy constructor
+      return new BarcodeImage(this);
    }
    
    //TODO Optional Methods but good for utility / debugging
