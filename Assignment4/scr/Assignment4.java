@@ -171,13 +171,10 @@ class BarcodeImage implements Cloneable
             {
                setIndex = "*";
             }
-            booleanPrint += setIndex;
-            
-         }
-         
+            booleanPrint += setIndex;  
+         }         
          System.out.println(booleanPrint);
          booleanPrint = "";
-         System.out.println();
       }
       
       
