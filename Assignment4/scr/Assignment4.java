@@ -42,8 +42,9 @@ public class Assignment4
         
          BarcodeImage bc = new BarcodeImage(sImageIn_2);
       
-      
-      
+      //Testing some Data Matrix Methods
+      DataMatrix myDataMatrix = new DataMatrix();
+      myDataMatrix.displayTextToConsole();
       
       
       
@@ -234,7 +235,7 @@ class BarcodeImage implements Cloneable
     * @see java.lang.Object#clone()
     */
    //TODO BarcodeImage clone()
-   public BarcodeImage clone()
+   public BarcodeImage clone() throws CloneNotSupportedException
    {
       //can implement with: return new BarcodeImage(this) but would need copy constructor
       return new BarcodeImage(this);
@@ -288,7 +289,7 @@ class DataMatrix implements BarcodeIO
    public DataMatrix()
    {
       image = new BarcodeImage();
-      text = "";
+      text = "undefined"; //change to "" later "undefined" for testing purpose
       actualWidth = 0;
       actualHeight = 0;
       
@@ -316,8 +317,15 @@ class DataMatrix implements BarcodeIO
    public boolean scan(BarcodeImage bc)
    {
       //TODO try-catch
+      try
+      {
+        
+      }
+      catch(CloneNotSupportedException e) 
+      {
+         e.printStackTrace();
+      }
       return false;
-      
    }
    
    /*
@@ -351,10 +359,11 @@ class DataMatrix implements BarcodeIO
    
    public void displayTextToConsole()
    {
-      
+      System.out.println(text);
    }
    
-   public void displayImageToConsole()
+   //Private methods
+   private void cleanImage()
    {
       
    }
