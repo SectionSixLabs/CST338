@@ -1,10 +1,6 @@
 
 //Interface
 
-//TODO Question by Danny
-//Ecipse said to make interface its own file, but in opposition to the assignment
-//Specifications, do we just join them into one file at the end?
-
 //TODO Barcode IO
 public interface BarcodeIO
 {
@@ -42,7 +38,15 @@ public interface BarcodeIO
   * fully-defined image and text that are in agreement with each other.*/
  public boolean translateImageToText();
  
+ /*
+  * Prints out text string to console
+  */
  public void displayTextToConsole();
+ 
+ /*
+  * Prints out image to console. Do this in the form of a dot-matrix
+  * of blanks and asteriks 
+  */
  public void displayImageToConsole();
 
 }

@@ -282,28 +282,47 @@ class DataMatrix implements BarcodeIO
     */
    
  //TODO  DataMatrix()
+   /*
+    * Default constructor - construct an empty, but non-null image and text
+    */
    public DataMatrix()
    {
-      
-      
+      image = new BarcodeImage();
+      text = "";
+      actualWidth = 0;
+      actualHeight = 0;
       
    }
    
-   
-
+   /*
+    * Sets the image but leaves text at its default value. Calls scan(). 
+    */
    public DataMatrix(BarcodeImage image)
    {
       
    }
    
-   
+   /*
+    * Sets the text but leaves image at its default value. Calls readText().
+    */
+   public DataMatrix(String text)
+   {
+      
+   }
 
+   /*
+    * A mutator for image 
+    */
    public boolean scan(BarcodeImage bc)
    {
+      //TODO try-catch
       return false;
       
    }
    
+   /*
+    * A mutator for text 
+    */
    public boolean readText(String text)
    {
       if(text != null)
@@ -313,12 +332,17 @@ class DataMatrix implements BarcodeIO
       }
       return false;
    }
+   
+   /*
+    * Looks at internal text and creates a companion BarcodeImage
+    */
    public boolean generateImageFromText()
    {
       return false;
       
    }
    
+ 
    public boolean translateImageToText()
    {
       return false;
