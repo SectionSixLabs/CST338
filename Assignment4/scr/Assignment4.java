@@ -15,10 +15,7 @@ public class Assignment4
 
    public static void main(String[] args)
    {
-      
-      
-      
-      
+       
       String[] sImageIn_2 =
          {
                "                                          ",
@@ -40,15 +37,40 @@ public class Assignment4
 
          };
         
-         BarcodeImage bc = new BarcodeImage(sImageIn_2);
+        // BarcodeImage bc = new BarcodeImage(sImageIn_2);
+         
+         
+         String[] sImageIn =
+            {
+               "                                               ",
+               "                                               ",
+               "                                               ",
+               "     * * * * * * * * * * * * * * * * * * * * * ",
+               "     *                                       * ",
+               "     ****** **** ****** ******* ** *** *****   ",
+               "     *     *    ****************************** ",
+               "     * **    * *        **  *    * * *   *     ",
+               "     *   *    *  *****    *   * *   *  **  *** ",
+               "     *  **     * *** **   **  *    **  ***  *  ",
+               "     ***  * **   **  *   ****    *  *  ** * ** ",
+               "     *****  ***  *  * *   ** ** **  *   * *    ",
+               "     ***************************************** ",  
+               "                                               ",
+               "                                               ",
+               "                                               "
+
+            };
+         
+         BarcodeImage bc = new BarcodeImage(sImageIn);
       
       //Testing some Data Matrix Methods
-      DataMatrix myDataMatrix = new DataMatrix();
-      myDataMatrix.displayTextToConsole();
+      //DataMatrix myDataMatrix = new DataMatrix();
+      //myDataMatrix.displayTextToConsole();
       
-      
-      
-      
+      DataMatrix dataObject = new DataMatrix(bc);
+      dataObject.cleanImage();
+   
+   
       
       System.out.print("End of main.");
    }
@@ -93,28 +115,6 @@ class BarcodeImage implements Cloneable
    public BarcodeImage(String[] str_data)
    {
       //TODO - see HINT
-      /*
-      String[] sImageIn_2 =
-         {
-               "                                          ",
-               "                                          ",
-               "* * * * * * * * * * * * * * * * * * *     ",
-               "*                                    *    ",
-               "**** *** **   ***** ****   *********      ",
-               "* ************ ************ **********    ",
-               "** *      *    *  * * *         * *       ",
-               "***   *  *           * **    *      **    ",
-               "* ** * *  *   * * * **  *   ***   ***     ",
-               "* *           **    *****  *   **   **    ",
-               "****  *  * *  * **  ** *   ** *  * *      ",
-               "**************************************    ",
-               "                                          ",
-               "                                          ",
-               "                                          ",
-               "                                          "
-
-         };
-      */
       
       // Create and initialize 2D array
       image_data = new boolean[MAX_HEIGHT][MAX_WIDTH];
@@ -130,10 +130,10 @@ class BarcodeImage implements Cloneable
          }
       }
       
-      
-      
-      // Copy string parameter into 2D array
-      int image_dataRow = MAX_HEIGHT - str_data.length; 
+           
+      // Copy string parameter into 2D array and put in lower left
+      int image_dataRow = MAX_HEIGHT - str_data.length;
+      //int image_dataColumn = MAX_WIDTH - str_data[row].length();
       
       for(row=0; row<str_data.length; row++)
       {
@@ -149,35 +149,11 @@ class BarcodeImage implements Cloneable
                {
                   image_data[image_dataRow][column] = true;
                } 
-            }
-            
+            }         
             // TEST gives cell number and value
             //System.out.println( "cell" + "[" + row + "]" + "[" + column + "]" + " " + image_data[row][column]);
          }
          image_dataRow++;
-      }
-      
-      //TEST PRINT OUT 2D ARRAY
-      String booleanPrint = "";
-      String setIndex = "";
-      // TEST PRINT OUT
-      for(row=0; row<image_data.length; row++)
-      {
-         for(column=0; column<image_data[row].length; column++)
-         {
-            if (image_data[row][column] == false)
-            {
-               setIndex = " ";
-            }
-            else
-            {
-               setIndex = "*";
-            }
-            booleanPrint += "[" + setIndex + "]";  
-            
-         }         
-         System.out.println(booleanPrint);
-         booleanPrint = "";
       }
    }
    
@@ -243,8 +219,32 @@ class BarcodeImage implements Cloneable
    
    //TODO Optional Methods but good for utility / debugging
    //checkSize(String[] data)
-   //displayToConsole()
    
+   
+   public void displayToConsole()
+   {
+      int row, column;
+      String booleanPrint = "";
+      String setIndex = "";
+      
+      for(row=0; row<image_data.length; row++)
+      {
+         for(column=0; column<image_data[row].length; column++)
+         {
+            if (image_data[row][column] == false)
+            {
+               setIndex = " ";
+            }
+            else
+            {
+               setIndex = "*";
+            }
+            booleanPrint += setIndex + "";             
+         }         
+         System.out.println("\"" + booleanPrint + "\"");
+         booleanPrint = "";
+      }
+   }
 }
 
 
@@ -300,7 +300,7 @@ class DataMatrix implements BarcodeIO
     */
    public DataMatrix(BarcodeImage image)
    {
-      
+      this.image = image;
    }
    
    /*
@@ -327,6 +327,7 @@ class DataMatrix implements BarcodeIO
       }
       return false;
    }
+   
    
    /*
     * Access for actualWidth
@@ -380,8 +381,71 @@ class DataMatrix implements BarcodeIO
    }
    
    //Private methods
-   private void cleanImage()
+   public void cleanImage()
    {
+      // TODO need to change back to private
+      // boolean setPixel(int row, int col, boolean value)
+      
+      // move left 5 and down 2
+
+      int row, col;
+      String booleanPrint = "";
+      String setIndex = ""; 
+      
+      for(row=0; row<BarcodeImage.MAX_HEIGHT; row++)
+      {
+         for(col=0; col<BarcodeImage.MAX_HEIGHT; col++)
+         {
+            if (image.getPixel(row, col) == false)
+            {
+               setIndex = " ";
+            }
+            else
+            {
+               setIndex = "*";
+            }
+            booleanPrint += setIndex + "";             
+         }         
+         System.out.println("|" + booleanPrint + "|");
+         booleanPrint = "";
+      }
+      
+   // move left 5 and down 2
+
+     // int row, col;
+      booleanPrint = "";
+      setIndex = "";
+      int topLeft = 0;
+      int topLeftRow = 0;
+      int topLeftCol = 0;
+      
+      
+      int bottomRightCol = BarcodeImage.MAX_WIDTH - topLeftCol;
+      
+      for(row=0; row<BarcodeImage.MAX_HEIGHT; row++)
+      {
+         for(col=0; col<BarcodeImage.MAX_HEIGHT; col++)
+         {
+            if (image.getPixel(row, col) == false)
+            {
+               setIndex = " ";
+            }
+            else
+            {
+               setIndex = "*";
+               if (topLeft == 0)
+               {
+                  topLeft = 1;
+                  topLeftRow = row;
+                  topLeftCol = col;
+               }
+            }
+            booleanPrint += setIndex + "";             
+         }         
+         System.out.println("|" + booleanPrint + "|");
+         booleanPrint = "";
+      }
+      System.out.println(" this is the start of code: row " + topLeftRow + " col " + topLeftCol);
       
    }
 }
