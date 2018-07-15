@@ -329,6 +329,23 @@ class DataMatrix implements BarcodeIO
    }
    
    /*
+    * Access for actualWidth
+    */
+   
+   public int getAcutalWidth()
+   {
+      return actualWidth;
+   }
+   
+   /*
+    * Access for actualHeight
+    */
+   public int getAcutalHeight()
+   {
+      return actualHeight;
+   }
+   
+   /*
     * A mutator for text 
     */
    public boolean readText(String text)
