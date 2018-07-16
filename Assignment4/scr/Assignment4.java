@@ -401,12 +401,14 @@ class DataMatrix implements BarcodeIO
          System.out.print(textChar+"-");
          System.out.print((int)textChar);
          System.out.print("-"+Integer.toBinaryString(textChar));
-         String starString = Integer.toBinaryString(textChar);
-         starString.replace("1", "*");
-         starString.replace("0", " ");
-         System.out.println("-"+starString);
-         binStringArr[charIndex] = starString;
+         String binString = Integer.toBinaryString(textChar);
+         String oneReplace = binString.replaceAll("1", "*");
+         String spaceReplace = oneReplace.replaceAll("0", " ");
+       
+         System.out.println("-"+spaceReplace);
+         binStringArr[charIndex] = spaceReplace;
          //trying to implementing feature to change 1 to "*" and 0 to " "
+         //TODO now must make them column wise not positiioned row wise
          
       }
       //TODO fix binary to be in 2D array format with |_ datamatrix border
