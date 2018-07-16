@@ -58,18 +58,13 @@ public class Assignment4
             };
          
          BarcodeImage bc = new BarcodeImage(sImageIn_2);
+         
+         //Testing some Data Matrix Methods
+         //DataMatrix myDataMatrix = new DataMatrix();
+         //myDataMatrix.displayTextToConsole();
+      DataMatrix myData = new DataMatrix();
       
-      //Testing some Data Matrix Methods
-      //DataMatrix myDataMatrix = new DataMatrix();
-      //myDataMatrix.displayTextToConsole();
-      
-      DataMatrix dataObject = new DataMatrix(bc);
-      
-      //bc.displayToConsole();
-      
-      dataObject.cleanImage();
-   
-      bc.displayToConsole();
+     
       
       System.out.print("End of main.");
    }
@@ -307,7 +302,12 @@ class DataMatrix implements BarcodeIO
     */
    public DataMatrix(String text)
    {
-      
+      if (text == null)
+      {
+         System.out.println("Error: null DataMatrix constructor String Text");
+         System.exit(0);
+      }
+      readText(text);
    }
 
    /*
@@ -380,7 +380,7 @@ class DataMatrix implements BarcodeIO
    }
    
    //Private methods
-   public void cleanImage()
+   private void cleanImage()
    {
       // TODO need to change back to private
       int row, col;
