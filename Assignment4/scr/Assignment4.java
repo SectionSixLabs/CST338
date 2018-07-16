@@ -62,10 +62,14 @@ public class Assignment4
          //Testing some Data Matrix Methods
          //DataMatrix myDataMatrix = new DataMatrix();
          //myDataMatrix.displayTextToConsole();
-      DataMatrix myData = new DataMatrix();
+      DataMatrix myData = new DataMatrix("cat hat");
+      
+      myData.displayTextToConsole();
+      myData.displayImageToConsole();
+         
       
      
-      
+      /*
       //MyTest //remove later
       System.out.println("Mytest");
       String[] myString = {"* *","   ","***"};
@@ -75,12 +79,17 @@ public class Assignment4
       System.out.println("testingGenerateImagefromText function");
       DataMatrix testDM = new DataMatrix();
       testDM.generateImageFromText();
-      
+      */
       System.out.print("End of main.");
    }
 
 }
 
+
+
+/*************************************************/
+/*             BARCODE IMAGE CLASS               */
+/*************************************************/
 
 //TODO class BarcodeImage
 
@@ -252,6 +261,11 @@ class BarcodeImage implements Cloneable
 }
 
 
+
+/****************************************************/
+/*             DATA MATRIX CLASS                    */
+/****************************************************/
+
 //TODO class DataMatrix
 class DataMatrix implements BarcodeIO
 {
@@ -317,6 +331,7 @@ class DataMatrix implements BarcodeIO
          System.out.println("Error: null DataMatrix constructor String Text");
          System.exit(0);
       }
+      image = new BarcodeImage();
       readText(text);
    }
 
@@ -397,9 +412,36 @@ class DataMatrix implements BarcodeIO
       
    }
    
+   
    public void displayTextToConsole()
    {
       System.out.println(text);
+   }
+   
+   
+   public void displayImageToConsole()
+   {
+      int row, col;
+      String booleanPrint = "";
+      String setIndex = "";
+      
+      for(row=0; row<BarcodeImage.MAX_HEIGHT; row++)
+      {
+         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
+         {
+            if (image.getPixel(row, col) == false)
+            {
+               setIndex = " ";
+            }
+            else
+            {
+               setIndex = "*";
+            }
+            booleanPrint += setIndex + "";             
+         }         
+         System.out.println("|" + booleanPrint + "|");
+         booleanPrint = "";
+      } 
    }
    
    //Private methods
@@ -441,7 +483,7 @@ class DataMatrix implements BarcodeIO
       int topLeftRow = 0;
       int topLeftCol = 0; 
       
-      boolean bottomLeftFound = false;
+      //boolean bottomLeftFound = false;
       int bottomLeftRow = 0;
       int bottomLeftCol = 0;
       
@@ -526,4 +568,6 @@ class DataMatrix implements BarcodeIO
          }         
       } 
    }
+   
+   
 }
