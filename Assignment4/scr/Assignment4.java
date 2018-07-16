@@ -343,8 +343,8 @@ class DataMatrix implements BarcodeIO
       //TODO try-catch and finish and test method
       try
       {
-        clone();
-        cleanImage();
+        //clone();
+        //cleanImage();
       }
       catch(CloneNotSupportedException e) 
       {
@@ -390,7 +390,7 @@ class DataMatrix implements BarcodeIO
    public boolean generateImageFromText()
    {
       System.out.println("Hi from generateImageFromText. Still in prgress");
-      System.out.println("thechar-asciival-binvalue");
+      System.out.println("thechar-asciival-binvalue-starString");
       int charIndex;
       char textChar;
       String[] binStringArr = new String[text.length()]; 
@@ -400,9 +400,13 @@ class DataMatrix implements BarcodeIO
          textChar = text.charAt(charIndex);
          System.out.print(textChar+"-");
          System.out.print((int)textChar);
-         System.out.println("-"+Integer.toBinaryString(textChar));
-         binStringArr[charIndex] = Integer.toBinaryString(textChar);
-         
+         System.out.print("-"+Integer.toBinaryString(textChar));
+         String starString = Integer.toBinaryString(textChar);
+         starString.replace("1", "*");
+         starString.replace("0", " ");
+         System.out.println("-"+starString);
+         binStringArr[charIndex] = starString;
+         //trying to implementing feature to change 1 to "*" and 0 to " "
          
       }
       //TODO fix binary to be in 2D array format with |_ datamatrix border
