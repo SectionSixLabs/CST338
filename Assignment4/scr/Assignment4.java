@@ -71,6 +71,16 @@ public class Assignment4
    
       bc.displayToConsole();
       
+      //MyTest //remove later
+      System.out.println("Mytest");
+      String[] myString = {"* *","   ","***"};
+      BarcodeImage myBC = new BarcodeImage(myString);
+      myBC.displayToConsole();
+      
+      System.out.println("testingGenerateImagefromText function");
+      DataMatrix testDM = new DataMatrix();
+      testDM.generateImageFromText();
+      
       System.out.print("End of main.");
    }
 
@@ -363,7 +373,20 @@ class DataMatrix implements BarcodeIO
     */
    public boolean generateImageFromText()
    {
-      return false;
+      System.out.println("Hi from generateImageFromText. Still in prgress");
+      System.out.println("thechar-asciival-binvalue");
+      int charIndex;
+      char textChar;
+      for(charIndex=0;charIndex<text.length();charIndex++)
+      {
+         textChar = text.charAt(charIndex);
+         System.out.print(textChar+"-");
+         System.out.print((int)textChar);
+         System.out.println("-"+Integer.toBinaryString(textChar));
+         
+      }
+      //TODO fix binary to be in 2D array format with |_ datamatrix border
+      return true;
       
    }
    
