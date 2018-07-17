@@ -97,22 +97,16 @@ class BarcodeImage implements Cloneable
 {
    public static final int MAX_HEIGHT = 30;    
    public static final int MAX_WIDTH = 65;
-   private boolean[][] image_data;
-   
-   //TODO class Methods
+   private boolean[][] image_data = new boolean[MAX_HEIGHT][MAX_WIDTH];
    
    /*
     * Default Constructor
     */
-   //TODO BarcodeImage()
    public BarcodeImage()
    {
-      image_data = new boolean[MAX_HEIGHT][MAX_WIDTH];
-      
-      int row, column;
-      for(row=0; row<image_data.length; row++)
+      for(int row=0; row<image_data.length; row++)
       {
-         for(column=0; column<image_data[row].length; column++)
+         for(int column=0; column<image_data[row].length; column++)
          {
             image_data[row][column]=false;
          }
@@ -123,53 +117,81 @@ class BarcodeImage implements Cloneable
     * Constructor -takes a 1D array of Strings and converts it to 
     * the internal 2D array of booleans. 
     */
-   //TODO BarcodeImage(String[] str_data)
-  
    public BarcodeImage(String[] str_data)
    {
-      //TODO - see HINT
+      //XXX - Why are we reinitializing our instance here this way? 
       
       // Create and initialize 2D array
-      image_data = new boolean[MAX_HEIGHT][MAX_WIDTH];
+      //image_data = new boolean[MAX_HEIGHT][MAX_WIDTH]; 
             
-      int row;
-      int column;
-      
-      for(row=0; row<image_data.length; row++)
-      {
-         for(column=0; column<image_data[row].length; column++)
-         {
-            image_data[row][column] = false;
-         }
-      }
-      
-           
+//      for(int row=0; row<image_data.length; row++)
+//      {
+//         for(int column=0; column<image_data[row].length; column++)
+//         {
+//            image_data[row][column] = false;
+//         }
+//      }
       // Copy string parameter into 2D array and put in lower left
-      int image_dataRow = MAX_HEIGHT - str_data.length;
+      //FIXME MAX_HEIGHT<str_data.length
+//      int image_dataRow = MAX_HEIGHT - str_data.length;
       
       
-      for(row=0; row<str_data.length; row++)
-      {
-         for(column=0; column<str_data[row].length(); column++)
-         {
-            if(str_data[row].length() < MAX_WIDTH )
-            {
-               if (str_data[row].charAt(column) == ' ')
-               {
-                  image_data[image_dataRow][column]=false; 
-               }
-               else if(str_data[row].charAt(column) == '*')
-               {
-                  image_data[image_dataRow][column] = true;
-               } 
-            }         
-            // TEST gives cell number and value
-            //System.out.println( "cell" + "[" + row + "]" + "[" + column + "]" + " " + image_data[row][column]);
+//      for(int row=0; row<str_data.length; row++)
+//      {
+//         for(int column=0; column<str_data[row].length(); column++)
+//         {
+//            if(str_data[row].length() < MAX_WIDTH )
+//            {
+//               if (str_data[row].charAt(column) == ' ')
+//               {
+//                  this.image_data[image_dataRow][column]=false; 
+//               }
+//               else if(str_data[row].charAt(column) == '*')
+//               {
+//                  this.image_data[image_dataRow][column] = true;
+//               } 
+//            }         
+//         }
+//         image_dataRow++;
+//      }
+      int newImgHeight = str_data.length;
+      int newImgWidth = smalestString(str_data); 
+      
+      if (checkSize(str_data)) {
+         //Starting with a lest row
+         for (int row = newImgHeight; row<0;row--) {
+             for(int column=0; column<newImgWidth; column++)
+             {
+                   if (str_data[row].charAt(column) == ' ')
+                   {
+                      this.image_data[row][column]=false; 
+                   }
+                   else if(str_data[row].charAt(column) == '*')
+                   {
+                      this.image_data[row][column] = true;
+                   } 
+             }    
          }
-         image_dataRow++;
+
+      }else {
+         //TODO Find if string has a valid bar code image
       }
    }
-   
+   private boolean checkSize(String[] data)
+   {
+      int newImgHeight = data.length;
+      int newImgWidth = smalestString (data);
+      return (newImgHeight<MAX_HEIGHT && newImgWidth<MAX_WIDTH);
+      
+   }
+   private int smalestString (String[] data)
+   {
+      int newImgWidth = MAX_HEIGHT+1; 
+      for(String str :data) {
+         if (str.length()<newImgWidth) newImgWidth = str.length(); 
+      }
+      return newImgWidth ;
+   }
    //Acessor / mutators
    
    //TODO getPixel(int row, int col)
@@ -501,7 +523,7 @@ class DataMatrix implements BarcodeIO
       int topLeftRow = 0;
       int topLeftCol = 0; 
       
-      //boolean bottomLeftFound = false;
+      boolean bottomLeftFound = false;
       int bottomLeftRow = 0;
       int bottomLeftCol = 0;
       
@@ -527,7 +549,8 @@ class DataMatrix implements BarcodeIO
                   topLeftCol = col;
                }
                
-               if(row == BarcodeImage.MAX_HEIGHT -1 || image.getPixel(row + 1, topLeftCol) == false)
+               if(row == BarcodeImage.MAX_HEIGHT -1 || 
+                     image.getPixel(row + 1, topLeftCol) == false)
                {
                   bottomLeftFound = true;
                   bottomLeftRow = row;
@@ -536,7 +559,8 @@ class DataMatrix implements BarcodeIO
                   int searchCol = bottomLeftCol;
                   while(bottomRightFound == false)
                   {
-                     if(image.getPixel(row, searchCol) == false || searchCol == BarcodeImage.MAX_WIDTH -1)
+                     if(image.getPixel(row, searchCol) == false || 
+                           searchCol == BarcodeImage.MAX_WIDTH -1)
                      {
                         bottomRightFound = true;
                         bottomRightRow = row;
@@ -563,10 +587,14 @@ class DataMatrix implements BarcodeIO
       
       // TEST PRINT OUTS FOR WIDTH AND HEIGHT
       /*
-      System.out.println(" this is the start of code: row " + topLeftRow + " col " + topLeftCol);
-      System.out.println(" this is the bottom left of code: row " + bottomLeftRow + " col " + bottomLeftCol);
-      System.out.println(" this is the bottom right of code: row " + bottomRightRow + " col " + bottomRightCol);
-      System.out.println("the barCode dims are " + barcodeWidth + " width " + barcodeHeight + " height");
+      System.out.println(" this is the start of code: row " + topLeftRow + 
+      " col " + topLeftCol);
+      System.out.println(" this is the bottom left of code: row " + 
+      bottomLeftRow + " col " + bottomLeftCol);
+      System.out.println(" this is the bottom right of code: row " + 
+      bottomRightRow + " col " + bottomRightCol);
+      System.out.println("the barCode dims are " + barcodeWidth + " width " 
+      + barcodeHeight + " height");
       */
       
       //TESTING
