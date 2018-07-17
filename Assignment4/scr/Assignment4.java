@@ -74,7 +74,7 @@ public class Assignment4
       System.out.println("Mytest");
       String[] myString = {"* *","   ","***"};
       BarcodeImage myBC = new BarcodeImage(myString);
-      myBC.displayToConsole();
+      myBC.displayToConsole1();
       
       System.out.println("testingGenerateImagefromText function");
       DataMatrix testDM = new DataMatrix();
@@ -177,6 +177,9 @@ class BarcodeImage implements Cloneable
          //TODO Find if string has a valid bar code image
       }
    }
+   
+   /*It does the job of checking the incoming data for every conceivable size 
+    * or null error.  Smaller is okay.  Bigger or null is not.*/
    private boolean checkSize(String[] data)
    {
       int newImgHeight = data.length;
@@ -184,14 +187,20 @@ class BarcodeImage implements Cloneable
       return (newImgHeight<MAX_HEIGHT && newImgWidth<MAX_WIDTH);
       
    }
+   
+   /*finds smallest string if array is not uniformed*/
    private int smalestString (String[] data)
    {
       int newImgWidth = MAX_HEIGHT+1; 
       for(String str :data) {
          if (str.length()<newImgWidth) newImgWidth = str.length(); 
+         if (newImgWidth==0) {
+            return MAX_HEIGHT+1; 
+         }
       }
       return newImgWidth ;
    }
+   
    //Acessor / mutators
    
    //TODO getPixel(int row, int col)
@@ -258,26 +267,38 @@ class BarcodeImage implements Cloneable
    
    public void displayToConsole()
    {
-      int row, column;
-      String booleanPrint = "";
-      String setIndex = "";
-      
-      for(row=0; row<image_data.length; row++)
-      {
-         for(column=0; column<image_data[row].length; column++)
+//      int row, column;
+//      String booleanPrint = "";
+//      String setIndex = "";
+//      
+//      for(row=0; row<image_data.length; row++)
+//      {
+//         for(column=0; column<image_data[row].length; column++)
+//         {
+//            if (image_data[row][column] == false)
+//            {
+//               setIndex = " ";
+//            }
+//            else
+//            {
+//               setIndex = "*";
+//            }
+//            booleanPrint += setIndex + "";             
+//         }         
+//         System.out.println("\"" + booleanPrint + "\"");
+//         booleanPrint = "";
+//      }
+      String strRow = "";
+      String strElement = "";
+      for (boolean[] row :this.image_data) {
+         for (boolean element : row)
          {
-            if (image_data[row][column] == false)
-            {
-               setIndex = " ";
-            }
-            else
-            {
-               setIndex = "*";
-            }
-            booleanPrint += setIndex + "";             
-         }         
-         System.out.println("\"" + booleanPrint + "\"");
-         booleanPrint = "";
+            if (element==false) strElement = " "; 
+               else strElement = "*";
+            strRow+=strElement; 
+         }
+         System.out.println("\"" + strRow + "\"");
+         strRow = "";          
       }
    }
 }
@@ -439,7 +460,7 @@ class DataMatrix implements BarcodeIO
       {
          System.out.println(i+"is :"+binStringArr[i]);
       }
-      image.displayToConsole();
+      image.displayToConsole1();
       System.out.println("end generateimagefromtext");
       return true;
       
