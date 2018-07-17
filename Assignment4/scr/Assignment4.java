@@ -60,12 +60,12 @@ public class Assignment4
          BarcodeImage bc = new BarcodeImage(sImageIn_2);
          
          //Testing some Data Matrix Methods
-         //DataMatrix myDataMatrix = new DataMatrix();
-         //myDataMatrix.displayTextToConsole();
-     // DataMatrix myData = new DataMatrix("cat hat");
+      DataMatrix myDataMatrix = new DataMatrix();
+      myDataMatrix.displayTextToConsole();
+      DataMatrix myData = new DataMatrix("cat hat");
       
-     // myData.displayTextToConsole();
-     // myData.displayImageToConsole();
+      myData.displayTextToConsole();
+      myData.displayImageToConsole();
          
       
      
@@ -235,21 +235,21 @@ class BarcodeImage implements Cloneable
     * Copy constructor
     */
    //TODO BarcodeImage(BarcodeImage other)
-   public BarcodeImage(BarcodeImage other)
-   {
-     
-      this.image_data = new boolean[other.image_data.length][other.image_data[0].length];
-      
-      int row, column;
-      for(row=0; row<this.image_data.length; row++)
-      {
-         for(column=0; column<other.image_data[0].length; column++)
-         {
-            this.image_data[row][column]= other.image_data[row][column];
-         }
-      }
-      
-   }
+//   public BarcodeImage(BarcodeImage other)
+//   {
+//     
+//      this.image_data = new boolean[other.image_data.length][other.image_data[0].length];
+//      
+//      int row, column;
+//      for(row=0; row<this.image_data.length; row++)
+//      {
+//         for(column=0; column<other.image_data[0].length; column++)
+//         {
+//            this.image_data[row][column]= other.image_data[row][column];
+//         }
+//      }
+//      
+//   }
    
    /*
     * (non-Javadoc)
@@ -320,6 +320,9 @@ class BarcodeImage implements Cloneable
       return strArr;
       
    }
+   public String[] getData() {
+      return this.toStringArray(); 
+   } 
 }
 
 
@@ -414,8 +417,8 @@ class DataMatrix implements BarcodeIO
       //TODO try-catch and finish and test method
       try
       {
-        //clone();
-        //cleanImage();
+        this.image=bc.clone();
+        cleanImage();
       }
       catch(CloneNotSupportedException e) 
       {
@@ -468,37 +471,102 @@ class DataMatrix implements BarcodeIO
     * fully-defined image and text that are in agreement with each other.*/
    public boolean generateImageFromText()
    {
-      System.out.println("Hi from generateImageFromText. Still in prgress");
-      System.out.println("thechar-asciival-binvalue-starString");
-      int charIndex;
-      char textChar;
-      String[] binStringArr = new String[text.length()]; 
-      
-      for(charIndex=0;charIndex<text.length();charIndex++)
-      {
-         textChar = text.charAt(charIndex);
-         System.out.print(textChar+"-");
-         System.out.print((int)textChar);
-         System.out.print("-"+Integer.toBinaryString(textChar));
-         String binString = Integer.toBinaryString(textChar);
-         String oneReplace = binString.replaceAll("1", "*");
-         String spaceReplace = oneReplace.replaceAll("0", " ");
-       
-         System.out.println("-"+spaceReplace);
-         binStringArr[charIndex] = spaceReplace;
-         //trying to implementing feature to change 1 to "*" and 0 to " "
-         //TODO now must make them column wise not positiioned row wise
+      int txtLength = this.text.length();
+      String [] data = new String [10]; 
+      int col = 1; 
+      //top
+      if (txtLength<BarcodeImage.MAX_WIDTH) {
+         for (int i =0; i<txtLength;i++) {
+            data[0]+="* "; 
+         }
+         for (int n=1;n<9;n++)
+         {
+            data[n]="*";
+         }
+         
+         for(char ch : this.text.toCharArray()) {
+            int ascii  = (int) ch; 
+            if (ascii>128) {
+               ascii=-128;
+               data[1]+= "*";
+            } else data[1]+= " ";
+            
+            if (ascii>64) {
+               ascii=-64;
+               data[2]+= "*";
+            } else data[2]+= " ";
+            
+            
+            if (ascii>32) {
+               ascii=-32;
+               data[3] += "*";
+            } else data[3] += " ";
+            
+            if (ascii>16) {
+               ascii=-16;
+               data[4] += "*";
+            } else data[4] += " ";
+            
+            if (ascii>8) {
+               ascii=-8;
+               data[5] += "*";
+            } else data[5] += " ";
+            
+            if (ascii>4) {
+               ascii=-4;
+               data[6] += "*";
+            } else data[6] += " ";
+            
+            if (ascii==2) {
+               data[7] += "*";
+            } else data[7] += " ";
+            
+            if (ascii==1) {
+               data[8] += "*";
+            } else data[8]+= " ";
+            //buttom
+            for (int i =0; i<txtLength;i++) {
+               data[9]+="*"; 
+            }
+            
+            col++;
+         }  
+         
+         this.image = new BarcodeImage(data);
+         this.displayImageToConsole();
          
       }
-      //TODO fix binary to be in 2D array format with |_ datamatrix border
-      image = new BarcodeImage(binStringArr);
-      for(int i=0;i<binStringArr.length;i++)
-      {
-         System.out.println(i+"is :"+binStringArr[i]);
-      }
-      image.displayToConsole();
-      System.out.println("end generateimagefromtext");
-      return true;
+//      System.out.println("Hi from generateImageFromText. Still in prgress");
+//      System.out.println("thechar-asciival-binvalue-starString");
+//      int charIndex;
+//      char textChar;
+//      String[] binStringArr = new String[text.length()]; 
+//      
+//      for(charIndex=0;charIndex<text.length();charIndex++)
+//      {
+//         textChar = text.charAt(charIndex);
+//         System.out.print(textChar+"-");
+//         System.out.print((int)textChar);
+//         System.out.print("-"+Integer.toBinaryString(textChar));
+//         String binString = Integer.toBinaryString(textChar);
+//         String oneReplace = binString.replaceAll("1", "*");
+//         String spaceReplace = oneReplace.replaceAll("0", " ");
+//       
+//         System.out.println("-"+spaceReplace);
+//         binStringArr[charIndex] = spaceReplace;
+//         //trying to implementing feature to change 1 to "*" and 0 to " "
+//         //TODO now must make them column wise not positiioned row wise
+//         
+//      }
+//      //TODO fix binary to be in 2D array format with |_ datamatrix border
+//      image = new BarcodeImage(binStringArr);
+//      for(int i=0;i<binStringArr.length;i++)
+//      {
+//         System.out.println(i+"is :"+binStringArr[i]);
+//      }
+//      image.displayToConsole();
+//      System.out.println("end generateimagefromtext");
+      return false;
       
    }
    
@@ -519,7 +587,7 @@ class DataMatrix implements BarcodeIO
     */
    public void displayTextToConsole()
    {
-      System.out.println(text);
+      System.out.println(this.text);
    }
    
    /*
@@ -528,38 +596,70 @@ class DataMatrix implements BarcodeIO
     */
    public void displayImageToConsole()
    {
-      int row, col;
-      String booleanPrint = "";
-      String setIndex = "";
-      
-      for(row=0; row<BarcodeImage.MAX_HEIGHT; row++)
-      {
-         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
-         {
-            if (image.getPixel(row, col) == false)
-            {
-               setIndex = " ";
-            }
-            else
-            {
-               setIndex = "*";
-            }
-            booleanPrint += setIndex + "";             
-         }         
-         System.out.println("|" + booleanPrint + "|");
-         booleanPrint = "";
-      } 
+      String[] strArr = this.image.getData(); 
+      for (String str :strArr ) {
+         System.out.println("|" + str + "|");
+      }
+//      int row, col;
+//      String booleanPrint = "";
+//      String setIndex = "";
+//      
+//      for(row=0; row<BarcodeImage.MAX_HEIGHT; row++)
+//      {
+//         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
+//         {
+//            if (image.getPixel(row, col) == false)
+//            {
+//               setIndex = " ";
+//            }
+//            else
+//            {
+//               setIndex = "*";
+//            }
+//            booleanPrint += setIndex + "";             
+//         }         
+//         System.out.println("|" + booleanPrint + "|");
+//         booleanPrint = "";
+//      } 
    }
    
+
    //Private methods
    private void cleanImage()
    {
-        /*TODO get the image and look for CLLs
+      String [] strArr = image.getData(); 
+      for (int i = 0; i<strArr.length; i++) {
+         strArr[i]=strArr[i].trim();
+      }
+      int arrHeight = 0;
+      int maxLenght = 0; 
+      for (String str :strArr) {
+         if (str.length()!=0) {
+            arrHeight++;
+            if (str.length()>maxLenght) maxLenght=str.length(); 
+         }
+      }
+      String [] newArr = new String [arrHeight];
+      for (String str :strArr) {
+         if (str.length()!=0) {
+            if (str.length()<maxLenght) {
+               int addWS = maxLenght -str.length(); 
+               for (int n = 0; n<addWS; n++) {
+                  str+=" "; 
+               }
+            }
+            newArr[arrHeight] = str; 
+            arrHeight++;
+         }
+      }
+      this.image= new BarcodeImage(newArr); 
+      
+      /* get the image and look for CLLs
       TOP   "* * * * * * * * * * * * * * * * * *"
       Bottom"***********************************"
       
       */
-      
+            
 //      int row, col;
 //      String booleanPrint = "";
 //      String setIndex = "";
