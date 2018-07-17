@@ -62,14 +62,10 @@ public class Assignment4
          //Testing some Data Matrix Methods
          //DataMatrix myDataMatrix = new DataMatrix();
          //myDataMatrix.displayTextToConsole();
-      DataMatrix myData = new DataMatrix("cat hat");
-      
-      myData.displayTextToConsole();
-      myData.displayImageToConsole();
-         
-      
+      //DataMatrix myData = new DataMatrix("cat hat");
+
      
-      /*
+      
       //MyTest //remove later
       System.out.println("Mytest");
       String[] myString = {"* *","   ","***"};
@@ -79,7 +75,7 @@ public class Assignment4
       System.out.println("testingGenerateImagefromText function");
       DataMatrix testDM = new DataMatrix();
       testDM.generateImageFromText();
-      */
+      
       System.out.print("End of main.");
    }
 
@@ -483,7 +479,7 @@ class DataMatrix implements BarcodeIO
       int topLeftRow = 0;
       int topLeftCol = 0; 
       
-      //boolean bottomLeftFound = false;
+      boolean bottomLeftFound = false;
       int bottomLeftRow = 0;
       int bottomLeftCol = 0;
       
