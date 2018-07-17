@@ -63,7 +63,7 @@ public class Assignment4
       DataMatrix myDataMatrix = new DataMatrix();
       myDataMatrix.displayTextToConsole();
       DataMatrix myData = new DataMatrix("cat hat");
-      
+      myData.generateImageFromText(); 
       myData.displayTextToConsole();
       myData.displayImageToConsole();
          
