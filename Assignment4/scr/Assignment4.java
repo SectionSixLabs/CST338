@@ -65,6 +65,11 @@ public class Assignment4
       //DataMatrix myData = new DataMatrix("cat hat");
 
      
+      DataMatrix myData = new DataMatrix("cat hat");
+      myData.generateImageFromText(); 
+      myData.displayTextToConsole();
+      myData.displayImageToConsole();
+         
       
       //MyTest //remove later
       System.out.println("Mytest");
@@ -503,6 +508,25 @@ class DataMatrix implements BarcodeIO
                   topLeftFound = true;
                   topLeftRow = row;
                   topLeftCol = col;
+      String [] strArr = image.getData(); 
+      for (int i = 0; i<strArr.length; i++) {
+         strArr[i]=strArr[i].trim();
+      }
+      int arrHeight = 0;
+      int maxLenght = 0; 
+      for (String str :strArr) {
+         if (str.length()!=0) {
+            arrHeight++;
+            if (str.length()>maxLenght) maxLenght=str.length(); 
+         }
+      }
+      String [] newArr = new String [arrHeight];
+      for (String str :strArr) {
+         if (str.length()!=0) {
+            if (str.length()<maxLenght) {
+               int addWS = maxLenght -str.length(); 
+               for (int n = 0; n<addWS; n++) {
+                  str+=" "; 
                }
                
                if(row == BarcodeImage.MAX_HEIGHT -1 || image.getPixel(row + 1, topLeftCol) == false)
