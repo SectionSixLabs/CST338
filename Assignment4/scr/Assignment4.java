@@ -444,6 +444,7 @@ class DataMatrix implements BarcodeIO
          booleanPrint = "";
       } 
    }
+
    
    //Private methods
    private void cleanImage()
@@ -508,6 +509,7 @@ class DataMatrix implements BarcodeIO
                   topLeftFound = true;
                   topLeftRow = row;
                   topLeftCol = col;
+                  
       String [] strArr = image.getData(); 
       for (int i = 0; i<strArr.length; i++) {
          strArr[i]=strArr[i].trim();
@@ -588,6 +590,5 @@ class DataMatrix implements BarcodeIO
          }         
       } 
    }
-   
    
 }
