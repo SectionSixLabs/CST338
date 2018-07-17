@@ -73,8 +73,8 @@ public class Assignment4
       //MyTest //remove later
       System.out.println("Mytest");
       //String[] myString = {"* *","   ","***"};
-      BarcodeImage myBC = new BarcodeImage(sImageIn_2);
-      myBC.displayToConsole();
+      //BarcodeImage myBC = new BarcodeImage(sImageIn_2);
+      //myBC.displayToConsole();
       
       //System.out.println("testingGenerateImagefromText function");
       //DataMatrix testDM = new DataMatrix();
@@ -397,9 +397,18 @@ class DataMatrix implements BarcodeIO
       readText(text);
    }
 
-   /*
-    * A mutator for image 
-    */
+/*
+ * A mutator for image 
+ */
+/*accepts some image, represented as a BarcodeImage object to be described below
+ *, and stores a copy of this image.  Depending on the sophistication of the 
+ *implementing class, the internally stored image might be an exact clone of the
+ * parameter, or a refined, cleaned and processed image.  Technically, there is 
+ * no requirement that an implementing class use a BarcodeImage object 
+ * internally, although we will do so.  For the basic DataMatrix option, it will 
+ * be an exact clone.  Also, no translation is done here - i.e., any text string 
+ * that might be part of an implementing class is not touched, updated or 
+ * defined during the scan.*/
    public boolean scan(BarcodeImage bc)
    {
       //TODO try-catch and finish and test method
@@ -433,9 +442,12 @@ class DataMatrix implements BarcodeIO
       return actualHeight;
    }
    
-   /*
-    * A mutator for text 
-    */
+/*
+ * A mutator for text 
+ */
+/*accepts a text string to be eventually encoded in an image. No translation is 
+ * done here - i.e., any BarcodeImage that might be part of an implementing 
+ * class is not touched, updated or defined during the reading of the text*/
    public boolean readText(String text)
    {
       if(text != null)
@@ -449,6 +461,11 @@ class DataMatrix implements BarcodeIO
    /*
     * Looks at internal text and creates a companion BarcodeImage
     */
+   /*Not technically an I/O operation, this method looks at the internal text 
+    * stored in the implementing class and produces a companion BarcodeImage, 
+    * internally (or an image in whatever format the implementing class uses).  
+    * After this is called, we expect the implementing object to contain a 
+    * fully-defined image and text that are in agreement with each other.*/
    public boolean generateImageFromText()
    {
       System.out.println("Hi from generateImageFromText. Still in prgress");
@@ -485,20 +502,30 @@ class DataMatrix implements BarcodeIO
       
    }
    
- 
+   //TODO translateImageToText()
+   /*Not technically an I/O operation, this method looks at the internal text 
+    * stored in the implementing class and produces a companion BarcodeImage, 
+    * internally (or an image in whatever format the implementing class uses).  
+    * After this is called, we expect the implementing object to contain a 
+    * fully-defined image and text that are in agreement with each other.*/ 
    public boolean translateImageToText()
    {
       return false;
       
    }
    
-   
+   /*
+    * Prints out text string to console
+    */
    public void displayTextToConsole()
    {
       System.out.println(text);
    }
    
-   
+   /*
+    * Prints out image to console. Do this in the form of a dot-matrix
+    * of blanks and asteriks 
+    */
    public void displayImageToConsole()
    {
       int row, col;
@@ -527,132 +554,137 @@ class DataMatrix implements BarcodeIO
    //Private methods
    private void cleanImage()
    {
-      // TODO need to change back to private
-      int row, col;
-      String booleanPrint = "";
-      String setIndex = "";
+        /*TODO get the image and look for CLLs
+      TOP   "* * * * * * * * * * * * * * * * * *"
+      Bottom"***********************************"
       
-      // TESTING PRINT OUT BY GET PIXEL
-      /*
-      System.out.println("From clean mage before cleaned " );
-      for(row=0; row<BarcodeImage.MAX_HEIGHT; row++)
-      {
-         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
-         {
-            if (image.getPixel(row, col) == false)
-            {
-               setIndex = " ";
-            }
-            else
-            {
-               setIndex = "*";
-            }
-            booleanPrint += setIndex + "";             
-         }         
-         System.out.println("|" + booleanPrint + "|");
-         booleanPrint = "";
-      }     
       */
       
-      // SEARCH FOR START OF BAR CODE AND END OF BAR CODE
-      // SET DIMENSIONS
-
-      booleanPrint = "";
-      setIndex = "";
-      boolean topLeftFound = false;
-      int topLeftRow = 0;
-      int topLeftCol = 0; 
-      
-      boolean bottomLeftFound = false;
-      int bottomLeftRow = 0;
-      int bottomLeftCol = 0;
-      
-      boolean bottomRightFound = false;
-      int bottomRightRow = 0;
-      int bottomRightCol = 0;
-         
-      for(row=0; row<BarcodeImage.MAX_HEIGHT; row++)
-      {
-         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
-         {
-            if (image.getPixel(row, col) == false)
-            {
-               setIndex = " ";
-            }
-            else
-            {
-               setIndex = "*";
-               if (topLeftFound == false)
-               {
-                  topLeftFound = true;
-                  topLeftRow = row;
-                  topLeftCol = col;
-               }
-               
-               if(row == BarcodeImage.MAX_HEIGHT -1 || 
-                     image.getPixel(row + 1, topLeftCol) == false)
-               {
-                  bottomLeftFound = true;
-                  bottomLeftRow = row;
-                  bottomLeftCol = topLeftCol;
-                  
-                  int searchCol = bottomLeftCol;
-                  while(bottomRightFound == false)
-                  {
-                     if(image.getPixel(row, searchCol) == false || 
-                           searchCol == BarcodeImage.MAX_WIDTH -1)
-                     {
-                        bottomRightFound = true;
-                        bottomRightRow = row;
-                        bottomRightCol = searchCol;
-                     }
-                     searchCol++;
-                  }
-               }                          
-            }
-            //booleanPrint += setIndex + "";             
-         }         
-         //System.out.println("|" + booleanPrint + "|");
-        // booleanPrint = "";
-      }
-      
-      int barcodeWidth = bottomRightCol - topLeftCol;
-      actualWidth = barcodeWidth;
-      
-      int barcodeHeight = bottomRightRow - topLeftRow;
-      actualHeight = barcodeHeight;
-      
-      int shiftLeftBy = topLeftCol;
-      int shiftDownBy = BarcodeImage.MAX_HEIGHT - bottomLeftRow - 1;
-      
-      // TEST PRINT OUTS FOR WIDTH AND HEIGHT
-      /*
-      System.out.println(" this is the start of code: row " + topLeftRow + 
-      " col " + topLeftCol);
-      System.out.println(" this is the bottom left of code: row " + 
-      bottomLeftRow + " col " + bottomLeftCol);
-      System.out.println(" this is the bottom right of code: row " + 
-      bottomRightRow + " col " + bottomRightCol);
-      System.out.println("the barCode dims are " + barcodeWidth + " width " 
-      + barcodeHeight + " height");
-      */
-      
-      //TESTING
-      //System.out.println("Cleaned image");
-      //System.out.println("shift down by " + shiftDownBy);
-      
-      // RE-POSITION IMAGE TO 2D ARRAY
-      for(row=BarcodeImage.MAX_HEIGHT - 1; row > 0; row--)
-      {
-         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
-         {
-            if (image.getPixel(row, col) == true)
-            {
-               image.setPixel(row, col, false);
-               image.setPixel(row + shiftDownBy, col - shiftLeftBy, true);
-            }            
-         }         
-      } 
+//      int row, col;
+//      String booleanPrint = "";
+//      String setIndex = "";
+//      
+//      // TESTING PRINT OUT BY GET PIXEL
+//      /*
+//      System.out.println("From clean mage before cleaned " );
+//      for(row=0; row<BarcodeImage.MAX_HEIGHT; row++)
+//      {
+//         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
+//         {
+//            if (image.getPixel(row, col) == false)
+//            {
+//               setIndex = " ";
+//            }
+//            else
+//            {
+//               setIndex = "*";
+//            }
+//            booleanPrint += setIndex + "";             
+//         }         
+//         System.out.println("|" + booleanPrint + "|");
+//         booleanPrint = "";
+//      }     
+//      */
+//      
+//      // SEARCH FOR START OF BAR CODE AND END OF BAR CODE
+//      // SET DIMENSIONS
+//
+//      booleanPrint = "";
+//      setIndex = "";
+//      boolean topLeftFound = false;
+//      int topLeftRow = 0;
+//      int topLeftCol = 0; 
+//      
+//      boolean bottomLeftFound = false;
+//      int bottomLeftRow = 0;
+//      int bottomLeftCol = 0;
+//      
+//      boolean bottomRightFound = false;
+//      int bottomRightRow = 0;
+//      int bottomRightCol = 0;
+//         
+//      for(row=0; row<BarcodeImage.MAX_HEIGHT; row++)
+//      {
+//         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
+//         {
+//            if (image.getPixel(row, col) == false)
+//            {
+//               setIndex = " ";
+//            }
+//            else
+//            {
+//               setIndex = "*";
+//               if (topLeftFound == false)
+//               {
+//                  topLeftFound = true;
+//                  topLeftRow = row;
+//                  topLeftCol = col;
+//               }
+//               
+//               if(row == BarcodeImage.MAX_HEIGHT -1 || 
+//                     image.getPixel(row + 1, topLeftCol) == false)
+//               {
+//                  bottomLeftFound = true;
+//                  bottomLeftRow = row;
+//                  bottomLeftCol = topLeftCol;
+//                  
+//                  int searchCol = bottomLeftCol;
+//                  while(bottomRightFound == false)
+//                  {
+//                     if(image.getPixel(row, searchCol) == false || 
+//                           searchCol == BarcodeImage.MAX_WIDTH -1)
+//                     {
+//                        bottomRightFound = true;
+//                        bottomRightRow = row;
+//                        bottomRightCol = searchCol;
+//                     }
+//                     searchCol++;
+//                  }
+//               }                          
+//            }
+//            //booleanPrint += setIndex + "";             
+//         }         
+//         //System.out.println("|" + booleanPrint + "|");
+//        // booleanPrint = "";
+//      }
+//      
+//      int barcodeWidth = bottomRightCol - topLeftCol;
+//      actualWidth = barcodeWidth;
+//      
+//      int barcodeHeight = bottomRightRow - topLeftRow;
+//      actualHeight = barcodeHeight;
+//      
+//      int shiftLeftBy = topLeftCol;
+//      int shiftDownBy = BarcodeImage.MAX_HEIGHT - bottomLeftRow - 1;
+//      
+//      // TEST PRINT OUTS FOR WIDTH AND HEIGHT
+//      /*
+//      System.out.println(" this is the start of code: row " + topLeftRow + 
+//      " col " + topLeftCol);
+//      System.out.println(" this is the bottom left of code: row " + 
+//      bottomLeftRow + " col " + bottomLeftCol);
+//      System.out.println(" this is the bottom right of code: row " + 
+//      bottomRightRow + " col " + bottomRightCol);
+//      System.out.println("the barCode dims are " + barcodeWidth + " width " 
+//      + barcodeHeight + " height");
+//      */
+//      
+//      //TESTING
+//      //System.out.println("Cleaned image");
+//      //System.out.println("shift down by " + shiftDownBy);
+//      
+//      // RE-POSITION IMAGE TO 2D ARRAY
+//      for(row=BarcodeImage.MAX_HEIGHT - 1; row > 0; row--)
+//      {
+//         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
+//         {
+//            if (image.getPixel(row, col) == true)
+//            {
+//               image.setPixel(row, col, false);
+//               image.setPixel(row + shiftDownBy, col - shiftLeftBy, true);
+//            }            
+//         }         
+//      } 
    }
    
    
