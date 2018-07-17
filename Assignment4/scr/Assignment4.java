@@ -62,23 +62,23 @@ public class Assignment4
          //Testing some Data Matrix Methods
          //DataMatrix myDataMatrix = new DataMatrix();
          //myDataMatrix.displayTextToConsole();
-      DataMatrix myData = new DataMatrix("cat hat");
+     // DataMatrix myData = new DataMatrix("cat hat");
       
-      myData.displayTextToConsole();
-      myData.displayImageToConsole();
+     // myData.displayTextToConsole();
+     // myData.displayImageToConsole();
          
       
      
       
       //MyTest //remove later
       System.out.println("Mytest");
-      String[] myString = {"* *","   ","***"};
-      BarcodeImage myBC = new BarcodeImage(myString);
-      myBC.displayToConsole1();
+      //String[] myString = {"* *","   ","***"};
+      BarcodeImage myBC = new BarcodeImage(sImageIn_2);
+      myBC.displayToConsole();
       
-      System.out.println("testingGenerateImagefromText function");
-      DataMatrix testDM = new DataMatrix();
-      testDM.generateImageFromText();
+      //System.out.println("testingGenerateImagefromText function");
+      //DataMatrix testDM = new DataMatrix();
+      //testDM.generateImageFromText();
       
       System.out.print("End of main.");
    }
@@ -159,16 +159,17 @@ class BarcodeImage implements Cloneable
       
       if (checkSize(str_data)) {
          //Starting with a lest row
-         for (int row = newImgHeight; row<0;row--) {
+         int offset = MAX_HEIGHT- newImgHeight;
+         for (int row = MAX_HEIGHT-1; row>=offset;row--) {
              for(int column=0; column<newImgWidth; column++)
              {
-                   if (str_data[row].charAt(column) == ' ')
+                   if (str_data[row-offset].charAt(column) == ' ')
                    {
-                      this.image_data[row][column]=false; 
+                      boolean r = setPixel(row,column,false);
                    }
-                   else if(str_data[row].charAt(column) == '*')
+                   else if(str_data[row-offset].charAt(column) == '*')
                    {
-                      this.image_data[row][column] = true;
+                      boolean r = setPixel(row,column,true);
                    } 
              }    
          }
@@ -225,7 +226,7 @@ class BarcodeImage implements Cloneable
       }
       else
       {
-         image_data[row][col] = value;
+         this.image_data[row][col] = value;
          return true;
       }
    }
@@ -258,7 +259,9 @@ class BarcodeImage implements Cloneable
    public BarcodeImage clone() throws CloneNotSupportedException
    {
       //can implement with: return new BarcodeImage(this) but would need copy constructor
-      return new BarcodeImage(this);
+      //Nope. Use what you have
+      BarcodeImage clone= new BarcodeImage(this.toStringArray());
+      return clone;
    }
    
    //TODO Optional Methods but good for utility / debugging
@@ -288,6 +291,19 @@ class BarcodeImage implements Cloneable
 //         System.out.println("\"" + booleanPrint + "\"");
 //         booleanPrint = "";
 //      }
+
+      String[] strArr = this.toStringArray();
+      for (String row : strArr) {
+
+         System.out.println("\"" + row + "\"");
+      }
+
+   }
+   //Get the 1D string array form 2D boolean array 
+   private String[] toStringArray()
+   {
+      String[] strArr = new String[MAX_HEIGHT]; 
+      int i = 0; 
       String strRow = "";
       String strElement = "";
       for (boolean[] row :this.image_data) {
@@ -297,9 +313,12 @@ class BarcodeImage implements Cloneable
                else strElement = "*";
             strRow+=strElement; 
          }
-         System.out.println("\"" + strRow + "\"");
+         strArr[i] = strRow;
+         i++;
          strRow = "";          
       }
+      return strArr;
+      
    }
 }
 
@@ -460,7 +479,7 @@ class DataMatrix implements BarcodeIO
       {
          System.out.println(i+"is :"+binStringArr[i]);
       }
-      image.displayToConsole1();
+      image.displayToConsole();
       System.out.println("end generateimagefromtext");
       return true;
       
