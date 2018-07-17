@@ -163,7 +163,7 @@ class BarcodeImage implements Cloneable
                   image_data[image_dataRow][column] = true;
                } 
             }         
-            // TEST gives cell number and value
+             //TEST gives cell number and value
             //System.out.println( "cell" + "[" + row + "]" + "[" + column + "]" + " " + image_data[row][column]);
          }
          image_dataRow++;
