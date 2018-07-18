@@ -67,6 +67,7 @@ public class Assignment4
          
          // second secret message
          bc = new BarcodeImage(sImageIn_2);
+         bc.displayToConsole();
          dm.scan(bc);
          dm.translateImageToText();
          dm.displayTextToConsole();
@@ -271,21 +272,21 @@ class BarcodeImage implements Cloneable
     * Copy constructor
     */
    // BarcodeImage(BarcodeImage other)
-//   public BarcodeImage(BarcodeImage other)
-//   {
-//     
-//      this.image_data = new boolean[other.image_data.length][other.image_data[0].length];
-//      
-//      int row, column;
-//      for(row=0; row<this.image_data.length; row++)
-//      {
-//         for(column=0; column<other.image_data[0].length; column++)
-//         {
-//            this.image_data[row][column]= other.image_data[row][column];
-//         }
-//      }
-//      
-//   }
+   public BarcodeImage(BarcodeImage other)
+   {
+     
+      this.image_data = new boolean[other.image_data.length][other.image_data[0].length];
+      
+      int row, column;
+      for(row=0; row<this.image_data.length; row++)
+      {
+         for(column=0; column<other.image_data[0].length; column++)
+         {
+            this.image_data[row][column]= other.image_data[row][column];
+         }
+      }
+      
+   }
    
    /*
     * (non-Javadoc)
@@ -296,13 +297,7 @@ class BarcodeImage implements Cloneable
    {
       //can implement with: return new BarcodeImage(this) but would need copy 
       //constructor
-      //Nope. Use what you have
-      String [] strArr = new String[this.MAX_HEIGHT]; 
-      int i=0; 
-      for(String str : this.toStringArray()) {
-         strArr[i++]= str; 
-      }
-      BarcodeImage clone= new BarcodeImage(strArr);
+      BarcodeImage clone= new BarcodeImage(this);
       return clone;
    }
    
