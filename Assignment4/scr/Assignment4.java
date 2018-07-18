@@ -67,42 +67,18 @@ public class Assignment4
          
          // second secret message
          bc = new BarcodeImage(sImageIn_2);
-         bc.displayToConsole();
          dm.scan(bc);
          dm.translateImageToText();
          dm.displayTextToConsole();
          dm.displayImageToConsole();
-//         
-//         // create your own message
-//         dm.readText("What a great resume builder this is!");
-//         dm.generateImageFromText();
-//         dm.displayTextToConsole();
-//         dm.displayImageToConsole();
-//         
-//         //Testing some Data Matrix Methods
-//      DataMatrix myDataMatrix = new DataMatrix();
-//      myDataMatrix.displayTextToConsole();
-//      DataMatrix myData = new DataMatrix("cat hat");
-//      myData.generateImageFromText(); 
-//      myData.displayTextToConsole();
-//      myData.displayImageToConsole();
-//      myData.translateImageToText(); 
-//      myData.displayTextToConsole();
          
-      
-     
-      
-      //MyTest //remove later
-      System.out.println("Mytest");
-      //String[] myString = {"* *","   ","***"};
-      //BarcodeImage myBC = new BarcodeImage(sImageIn_2);
-      //myBC.displayToConsole();
-      
-      //System.out.println("testingGenerateImagefromText function");
-      //DataMatrix testDM = new DataMatrix();
-      //testDM.generateImageFromText();
-      
-      System.out.print("End of main.");
+         // create your own message
+         dm.readText("What a great resume builder this is!");
+         dm.generateImageFromText();
+         dm.displayTextToConsole();
+         dm.displayImageToConsole();
+
+         System.out.print("End of main.");
    }
 
 }
@@ -653,7 +629,7 @@ class DataMatrix implements BarcodeIO
     */
    public void displayImageToConsole()
    {
-      String[] strArr = this.image.getData(); 
+      String[] strArr = trimImmage(); 
       for (String str :strArr ) {
          System.out.println("|" + str + "|");
       }
@@ -682,7 +658,7 @@ class DataMatrix implements BarcodeIO
    
 
    //Private methods
-   private void cleanImage()
+   private String[] trimImmage() 
    {
       String [] strArr = image.getData(); 
       for (int i = 0; i<strArr.length; i++) {
@@ -709,9 +685,15 @@ class DataMatrix implements BarcodeIO
             newArr[i++] = str; 
          }
       }
-      this.image= new BarcodeImage(newArr); 
       this.actualHeight = arrHeight; 
-      this.actualWidth = maxLenght; 
+      this.actualWidth = maxLenght;
+      return newArr; 
+   }
+   
+   private void cleanImage()
+   {
+      this.image= new BarcodeImage(trimImmage()); 
+
       
       /* get the image and look for CLLs
       TOP   "* * * * * * * * * * * * * * * * * *"
