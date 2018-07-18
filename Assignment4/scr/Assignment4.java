@@ -86,7 +86,7 @@ public class Assignment4
          
          dm.generateImageFromText();
          
-         System.out.println("Displaying message from object: ");
+         System.out.print("Displaying message from object: ");
          dm.displayTextToConsole();
          
          System.out.println("displaying datamatrix: ");
@@ -140,9 +140,11 @@ class BarcodeImage implements Cloneable
       initialize();
    }
    
-   /*
+   /**
+    * Override of the default constructor
     * Constructor -takes a 1D array of Strings and converts it to 
     * the internal 2D array of booleans. 
+    * @param str_data String array containing representation of 2D array
     */
    public BarcodeImage(String[] str_data)
    {
@@ -170,11 +172,16 @@ class BarcodeImage implements Cloneable
 
       }else {
          //TODO Find if string has a valid bar code image
+         //Out of Scope for this assignment
       }
    }
    
-   /*It does the job of checking the incoming data for every conceivable size 
-    * or null error.  Smaller is okay.  Bigger or null is not.*/
+   /**
+    * It does the job of checking the incoming data for every conceivable size 
+    * or null error.  Smaller is okay.  Bigger or null is not.
+    * @param   data  String array containing 2D brocade matrix
+    * @return        True/False 
+    */
    private boolean checkSize(String[] data)
    {
       int newImgHeight = data.length;
@@ -183,7 +190,11 @@ class BarcodeImage implements Cloneable
       
    }
    
-   /*finds smallest string if array is not uniformed*/
+   /**
+    * Finds smallest string if array is not uniformed
+    * @param   data  String array containing 2D brocade matrix
+    * @return  width of the longest string in array
+    */
    private int smalestString (String[] data)
    {
       int newImgWidth = MAX_WIDTH+1; 
@@ -197,6 +208,9 @@ class BarcodeImage implements Cloneable
       return newImgWidth ;
    }
    
+   /**
+    * Initializing boolean 2D array with all elements set to false
+   */
    private void initialize() {
       for(int row=0; row<image_data.length; row++)
       {
@@ -209,9 +223,15 @@ class BarcodeImage implements Cloneable
    
    //Acessor / mutators
    
- 
+   /**
+    * Accessor for the class BarcodeImage class
+    * @param row  row index
+    * @param col  column index
+    * @return element of the 2D array
+    */
    boolean getPixel(int row, int col)
-   {  //checking if parameter doesn't exceed max.
+   {  
+      //checking if parameter doesn't exceed max.
       if((row > MAX_HEIGHT || row < 0) || (col > MAX_WIDTH || col < 0))
       {
          return false;
@@ -222,7 +242,14 @@ class BarcodeImage implements Cloneable
       }
    }
    
- 
+   /**
+    * Mutator for the BarcodeImage class 
+    * @param row     integer row index
+    * @param col     integer column index
+    * @param value   boolean value
+    * @return        boolean value True/False of sating element up 
+    * 
+    */
    boolean setPixel(int row, int col, boolean value)
    {
       if((row > MAX_HEIGHT || row < 0) || (col > MAX_WIDTH || col < 0))
@@ -236,46 +263,67 @@ class BarcodeImage implements Cloneable
       }
    }
    
-   
+   /**
+    * Assessor for the BarcodeImage class 
+    * @return String array representing 2D matrix
+    */
    public String[] getData() {
       return this.toStringArray(); 
    } 
    
+   /**
+    * Assessor for the class data matrix
+    * @return boolean 2D array 
+    */
    public boolean[][] getDataMtrix(){
-      return this.image_data; 
+      return duplicateArr(this.image_data); 
    }
    
-   /*
-    * Copy constructor
+   /**
+    * Overwrite of default constructor 
+    * @param other takes BarcodeImage object and duplicates its data
     */
-   // BarcodeImage(BarcodeImage other)
    public BarcodeImage(BarcodeImage other)
    {
      
-      this.image_data = new boolean[other.image_data.length][other.image_data[0].length];
-      
-      int row, column;
-      for(row=0; row<this.image_data.length; row++)
-      {
-         for(column=0; column<other.image_data[0].length; column++)
-         {
-            this.image_data[row][column]= other.image_data[row][column];
-         }
-      }
+      this.image_data = duplicateArr(other.image_data); 
       
    }
    
-  
-  
+   /**
+    * Class method to duplicate 2D data matrix
+    * @param dataArr boolean 2D array
+    * @return  copy of boolean 2D array
+    */
+   private boolean[][] duplicateArr(boolean[][] dataArr)
+   {
+      int dataArrLength = dataArr.length; 
+      int dataArrWidth = dataArr[0].length; 
+      boolean[][] newDataArr = new boolean[dataArrLength][dataArrWidth];
+      
+
+      for(int row=0; row<dataArrLength; row++)
+      {
+         for(int column=0; column<dataArrWidth; column++)
+         {
+            newDataArr[row][column]= dataArr[row][column];
+         }
+      }
+      return newDataArr;
+   }
+   
+  /**
+   * Method that overrides the method of that name in Cloneable interface
+   */
    public BarcodeImage clone() throws CloneNotSupportedException
    {
-      //can implement with: return new BarcodeImage(this) but would need copy 
-      //constructor
       BarcodeImage clone= new BarcodeImage(this);
       return clone;
    }
    
-   
+   /**
+    * Method that outputs 2D matrix to console 
+    */
    public void displayToConsole()
    {
       String[] strArr = this.toStringArray();
@@ -285,7 +333,11 @@ class BarcodeImage implements Cloneable
       }
 
    }
-   //Get the 1D string array form 2D boolean array 
+   //Get the 1D string array form 2D boolean array
+   /**
+    * Method that creates String Array representing 2D data matrix
+    * @return String array representing class image data
+    */
    private String[] toStringArray()
    {
       String[] strArr = new String[MAX_HEIGHT]; 
@@ -322,21 +374,21 @@ class DataMatrix implements BarcodeIO
    public static final char BLACK_CHAR = '*';
    public static final char WHITE_CHAR = ' ';
    
-   /*
+   /**
     * private Barcode image -
     * a single internal copy of any image scanned-in OR passed-into 
     * the constructor OR created by BarcodeIO's generateImageFromText()
     */
    private BarcodeImage image;
    
-   /*
+   /**
     * private String text - 
     * a single internal copy of any text read-in OR passed-into 
     * the constructor OR created by BarcodeIO's translateImageToText()
     */
    private String text;
    
-   /*
+   /**
     * these ints that are typically less than BarcodeImage.MAX_WIDTH 
     * and BarcodeImage.MAX_HEIGHT which represent the actual portion of
     * the BarcodeImage that has the real signal
@@ -346,7 +398,7 @@ class DataMatrix implements BarcodeIO
    
    //Methods
  
-   /*
+   /**
     * Default constructor - construct an empty, but non-null image and text
     */
    public DataMatrix()
@@ -358,8 +410,9 @@ class DataMatrix implements BarcodeIO
       
    }
    
-   /*
-    * Sets the image but leaves text at its default value. Calls scan(). 
+   /**
+    * Sets the image but leaves text at its default value. Calls scan().
+    * @param image  BarcodeImage Object
     */
    public DataMatrix(BarcodeImage image)
    {
@@ -367,8 +420,9 @@ class DataMatrix implements BarcodeIO
       cleanImage(); 
    }
    
-   /*
+   /**
     * Sets the text but leaves image at its default value. Calls readText().
+    * @param text String to encode
     */
    public DataMatrix(String text)
    {
@@ -381,18 +435,11 @@ class DataMatrix implements BarcodeIO
       readText(text);
    }
 
-/*
- * A mutator for image 
- */
-/*accepts some image, represented as a BarcodeImage object to be described below
- *, and stores a copy of this image.  Depending on the sophistication of the 
- *implementing class, the internally stored image might be an exact clone of the
- * parameter, or a refined, cleaned and processed image.  Technically, there is 
- * no requirement that an implementing class use a BarcodeImage object 
- * internally, although we will do so.  For the basic DataMatrix option, it will 
- * be an exact clone.  Also, no translation is done here - i.e., any text string 
- * that might be part of an implementing class is not touched, updated or 
- * defined during the scan.*/
+   /**
+    * Takes BarcodeImage Object, creates new instance within the class
+    * cleans and repositions signal to left lower corner
+    * @param bc BarcodeImage Object
+    */
    public boolean scan(BarcodeImage bc)
    {
       // try-catch and finish and test method
@@ -409,16 +456,15 @@ class DataMatrix implements BarcodeIO
    }
    
    
-   /*
+   /**
     * Access for actualWidth
     */
-   
    public int getAcutalWidth()
    {
       return actualWidth;
    }
    
-   /*
+   /**
     * Access for actualHeight
     */
    public int getAcutalHeight()
@@ -426,12 +472,14 @@ class DataMatrix implements BarcodeIO
       return actualHeight;
    }
    
-/*
- * A mutator for text 
- */
-/*accepts a text string to be eventually encoded in an image. No translation is 
- * done here - i.e., any BarcodeImage that might be part of an implementing 
- * class is not touched, updated or defined during the reading of the text*/
+   /**
+    * A mutator for text 
+    *accepts a text string to be eventually encoded in an image. No translation
+    * is done here - i.e., any BarcodeImage that might be part of an 
+    * implementing class is not touched, updated or defined during the reading 
+    * of the text
+    * @param text sets text string
+    */
    public boolean readText(String text)
    {
       if(text != null)
@@ -442,24 +490,26 @@ class DataMatrix implements BarcodeIO
       return false;
    }
    
-   /*
+   /**
     * Looks at internal text and creates a companion BarcodeImage
-    */
-   /*Not technically an I/O operation, this method looks at the internal text 
+    * Not technically an I/O operation, this method looks at the internal text 
     * stored in the implementing class and produces a companion BarcodeImage, 
     * internally (or an image in whatever format the implementing class uses).  
     * After this is called, we expect the implementing object to contain a 
-    * fully-defined image and text that are in agreement with each other.*/
+    * fully-defined image and text that are in agreement with each other.
+    */
    public boolean generateImageFromText()
    {
       int txtLength = this.text.length();
       String [] data = new String [10]; 
-      //top
+
       if (txtLength<BarcodeImage.MAX_WIDTH) {
+         //top
          data[0] = "*";
          for (int i =0; i<txtLength;i++) {
             data[0]+=" *"; 
          }
+         //First Column
          for (int n=1;n<9;n++)
          {
             data[n]="*";
@@ -510,52 +560,55 @@ class DataMatrix implements BarcodeIO
 
          }  
          
-         //buttom
+         //Bottom
          data[9] = "*";
          for (int i =0; i<txtLength;i++) {
             data[9]+="*"; 
          }
          
          this.image = new BarcodeImage(data);
-         this.displayImageToConsole();
+         return true; 
          
       }
-//TODO should this return true? or do if/else clause
       return false;
       
    }
    
   
-   /*Not technically an I/O operation, this method looks at the internal text 
+   /**
+    * Not technically an I/O operation, this method looks at the internal text 
     * stored in the implementing class and produces a companion BarcodeImage, 
     * internally (or an image in whatever format the implementing class uses).  
     * After this is called, we expect the implementing object to contain a 
-    * fully-defined image and text that are in agreement with each other.*/ 
+    * fully-defined image and text that are in agreement with each other.
+    */ 
    public boolean translateImageToText()
    {
       boolean[][] data = this.image.getDataMtrix(); 
-      
-      int imgHeight = data.length - this.actualHeight;
-      int imgWidth=this.actualWidth; 
-      char[] text = new char[this.actualWidth];
-      
-      for (int i=1;i<imgWidth;i++) {
-         String binString = ""; 
-         for(int j=imgHeight+1; j<imgHeight+this.actualHeight-1;j++)
-         {
-            if (data[j][i]) binString+=1+"";
-               else binString+=0+""; 
+
+      if (this.actualHeight!=0 && this.actualWidth!=0)
+      {
+         int imgHeight = data.length - this.actualHeight;
+         int imgWidth=this.actualWidth; 
+         char[] text = new char[this.actualWidth];
+         
+         for (int i=1;i<imgWidth;i++) {
+            String binString = ""; 
+            for(int j=imgHeight+1; j<imgHeight+this.actualHeight-1;j++)
+            {
+               if (data[j][i]) binString+=1+"";
+                  else binString+=0+""; 
+            }
+            int parseInt = Integer.parseInt(binString, 2);
+            text[i-1] = (char)parseInt; 
          }
-         int parseInt = Integer.parseInt(binString, 2);
-         text[i-1] = (char)parseInt; 
-      }
-        this.text = new String(text);     
-      //TODO should this return true? to set do a if/else clause?
-      return false;
+           this.text = new String(text);     
+           return true; 
+      }else return false;
       
    }
    
-   /*
+   /**
     * Prints out text string to console
     */
    public void displayTextToConsole()
@@ -563,9 +616,9 @@ class DataMatrix implements BarcodeIO
       System.out.println(this.text);
    }
    
-   /*
+   /**
     * Prints out image to console. Do this in the form of a dot-matrix
-    * of blanks and asteriks 
+    * of blanks and asterisk 
     */
    public void displayImageToConsole()
    {
@@ -578,6 +631,11 @@ class DataMatrix implements BarcodeIO
    
 
    //Private methods
+   /**
+    * Method that trims leading and trailing spaces for all the strings
+    * Sets actualHeight and actualWidth of signal image 
+    * @return String array representing signal matrix
+    */
    private String[] trimImmage() 
    {
       String [] strArr = image.getData(); 
@@ -610,6 +668,9 @@ class DataMatrix implements BarcodeIO
       return newArr; 
    }
    
+   /**
+    * Methods that cleans signal image and repositions it to botom left corner
+    */
    private void cleanImage()
    {
       this.image= new BarcodeImage(trimImmage());
