@@ -32,8 +32,6 @@ public class Assignment4
                "**************************************    "
 
          };
-        
-        // BarcodeImage bc = new BarcodeImage(sImageIn);
          
          
          String[] sImageIn =
@@ -57,19 +55,20 @@ public class Assignment4
 
             };
          
-         BarcodeImage bc = new BarcodeImage(sImageIn_2);
+         BarcodeImage bc = new BarcodeImage(sImageIn);
+         DataMatrix dm = new DataMatrix(bc);
+         //dm.displayImageToConsole();
+         //dm.cleanImage();
          
-         //Testing some Data Matrix Methods
-      DataMatrix myDataMatrix = new DataMatrix();
-      myDataMatrix.displayTextToConsole();
-      DataMatrix myData = new DataMatrix("cat hat");
-      myData.generateImageFromText(); 
-      myData.displayTextToConsole();
-      myData.displayImageToConsole();
+        
+         // First secret message
+        // dm.translateImageToText();
+         //dm.displayTextToConsole();
+         //dm.displayImageToConsole();
          
       
      
-      
+         /*
       //MyTest //remove later
       System.out.println("Mytest");
       //String[] myString = {"* *","   ","***"};
@@ -79,7 +78,9 @@ public class Assignment4
       //System.out.println("testingGenerateImagefromText function");
       //DataMatrix testDM = new DataMatrix();
       //testDM.generateImageFromText();
-      
+      */
+         
+         
       System.out.print("End of main.");
    }
 
@@ -578,6 +579,57 @@ class DataMatrix implements BarcodeIO
     * fully-defined image and text that are in agreement with each other.*/ 
    public boolean translateImageToText()
    {
+      
+      /*
+       * ------------------------------------
+|* * * * * * * * * * * * * * * * * |
+|*                                *|
+|****   * ***** **** **** ******** |
+|*   *** ***************** ********|
+|*  * **  *   *   *  *    * **     |
+|* *       * *  **    * * *    ****|
+|*     *   *    ** * *  *  *  ** * |
+|** * *** *****  **     * *      **|
+|****  *   **** ** *   *   *  * *  |
+|**********************************|
+       */
+      
+      
+      
+      int row, col, rowCol;
+      String setIndex = " ";
+      String booleanPrint = "";
+      
+      for(row=0; row<1; row++)
+      {
+         for(col=5; col<10; col++)
+         {
+            for(rowCol = 0; rowCol<BarcodeImage.MAX_HEIGHT; rowCol++)
+            {
+               if (image.getPixel(rowCol, col) == false)
+               {
+                  setIndex = " ";
+               }
+               else
+               {
+                  setIndex = "*";
+               }
+              
+              booleanPrint = setIndex; 
+              System.out.println(booleanPrint);
+              booleanPrint = "";       
+            }
+            System.out.println("----------------");          
+         }                
+      }
+      
+         
+          
+  
+      
+      
+      
+      
       return false;
       
    }
@@ -625,7 +677,7 @@ class DataMatrix implements BarcodeIO
    
 
    //Private methods
-   private void cleanImage()
+   public void cleanImage()
    {
       String [] strArr = image.getData(); 
       for (int i = 0; i<strArr.length; i++) {
