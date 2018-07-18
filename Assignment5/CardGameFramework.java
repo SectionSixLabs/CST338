@@ -1,5 +1,5 @@
 //class CardGameFramework  ----------------------------------------------------
-class CardGameFramework
+public class CardGameFramework
 {
    private static final int MAX_PLAYERS = 50;
 
