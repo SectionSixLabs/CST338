@@ -3,5 +3,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="Assignment3/src"/>
 	<classpathentry kind="src" path="Assignment4/scr"/>
+	<classpathentry kind="src" path="Assignment5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
