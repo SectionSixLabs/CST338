@@ -6,9 +6,6 @@
  *
  */
 
-// NOTE! Even though you learned to do multi-file projects, 
-// continue to submit only one file with a full, working program and run. 
-// Code Documentation
 
 public class Assignment4
 {
@@ -77,8 +74,46 @@ public class Assignment4
          dm.generateImageFromText();
          dm.displayTextToConsole();
          dm.displayImageToConsole();
-
-         System.out.print("End of main.");
+         
+         //Comment and/or remove this test portion before submit
+         //start of test1
+         System.out.println("End of main.");
+         
+         String myMessage = "Winners never give up!";
+         System.out.println("this is my secret message: "+myMessage);
+         
+         dm.readText(myMessage);
+         
+         dm.generateImageFromText();
+         
+         System.out.println("Displaying message from object: ");
+         dm.displayTextToConsole();
+         
+         System.out.println("displaying datamatrix: ");
+         dm.displayImageToConsole();
+       
+         String[] tImage =
+         {
+         "* * * * * * * * * * * *",
+         "*                      ",
+         "******** ***** **** ** ",
+         "* *********************",
+         "**    **   * *   *  ** ",
+         "* ***    *      *      ",
+         "** ***   ****  * ** *  ",
+         "** ** ** * * * * *     ",
+         "***  * *  * *  ** * * *",
+         "***********************"
+         };
+         
+         BarcodeImage tb = new BarcodeImage(tImage);
+         DataMatrix tm = new DataMatrix(tb);
+        
+         // decrypt message
+         System.out.println("Decrypting matrix");
+         tm.translateImageToText();
+         tm.displayTextToConsole();
+         //end of test one
    }
 
 }
@@ -89,7 +124,7 @@ public class Assignment4
 /*             BARCODE IMAGE CLASS               */
 /*************************************************/
 
-//XXX class BarcodeImage
+
 
 class BarcodeImage implements Cloneable
 {
@@ -111,41 +146,7 @@ class BarcodeImage implements Cloneable
     */
    public BarcodeImage(String[] str_data)
    {
-      //XXX - Why are we reinitializing our instance here this way? 
-      
-      // Create and initialize 2D array
-      //image_data = new boolean[MAX_HEIGHT][MAX_WIDTH]; 
-            
-//      for(int row=0; row<image_data.length; row++)
-//      {
-//         for(int column=0; column<image_data[row].length; column++)
-//         {
-//            image_data[row][column] = false;
-//         }
-//      }
-      // Copy string parameter into 2D array and put in lower left
-      //FIXME MAX_HEIGHT<str_data.length
-//      int image_dataRow = MAX_HEIGHT - str_data.length;
-      
-      
-//      for(int row=0; row<str_data.length; row++)
-//      {
-//         for(int column=0; column<str_data[row].length(); column++)
-//         {
-//            if(str_data[row].length() < MAX_WIDTH )
-//            {
-//               if (str_data[row].charAt(column) == ' ')
-//               {
-//                  this.image_data[image_dataRow][column]=false; 
-//               }
-//               else if(str_data[row].charAt(column) == '*')
-//               {
-//                  this.image_data[image_dataRow][column] = true;
-//               } 
-//            }         
-//         }
-//         image_dataRow++;
-//      }
+
       initialize();
       int newImgHeight = str_data.length;
       int newImgWidth = smalestString(str_data); 
@@ -208,7 +209,7 @@ class BarcodeImage implements Cloneable
    
    //Acessor / mutators
    
-   //XXX getPixel()
+ 
    boolean getPixel(int row, int col)
    {  //checking if parameter doesn't exceed max.
       if((row > MAX_HEIGHT || row < 0) || (col > MAX_WIDTH || col < 0))
@@ -221,7 +222,7 @@ class BarcodeImage implements Cloneable
       }
    }
    
-   //XXX setPixel()
+ 
    boolean setPixel(int row, int col, boolean value)
    {
       if((row > MAX_HEIGHT || row < 0) || (col > MAX_WIDTH || col < 0))
@@ -264,11 +265,8 @@ class BarcodeImage implements Cloneable
       
    }
    
-   /*
-    * (non-Javadoc)
-    * @see java.lang.Object#clone()
-    */
-   //TODO BarcodeImage clone()
+  
+  
    public BarcodeImage clone() throws CloneNotSupportedException
    {
       //can implement with: return new BarcodeImage(this) but would need copy 
@@ -277,34 +275,9 @@ class BarcodeImage implements Cloneable
       return clone;
    }
    
-   //TODO Optional Methods but good for utility / debugging
-   //checkSize(String[] data)
-   
    
    public void displayToConsole()
    {
-//      int row, column;
-//      String booleanPrint = "";
-//      String setIndex = "";
-//      
-//      for(row=0; row<image_data.length; row++)
-//      {
-//         for(column=0; column<image_data[row].length; column++)
-//         {
-//            if (image_data[row][column] == false)
-//            {
-//               setIndex = " ";
-//            }
-//            else
-//            {
-//               setIndex = "*";
-//            }
-//            booleanPrint += setIndex + "";             
-//         }         
-//         System.out.println("\"" + booleanPrint + "\"");
-//         booleanPrint = "";
-//      }
-
       String[] strArr = this.toStringArray();
       for (String row : strArr) {
 
@@ -342,7 +315,7 @@ class BarcodeImage implements Cloneable
 /*             DATA MATRIX CLASS                    */
 /****************************************************/
 
-//TODO class DataMatrix
+
 class DataMatrix implements BarcodeIO
 {
    //Data
@@ -372,11 +345,7 @@ class DataMatrix implements BarcodeIO
    private int actualHeight;
    
    //Methods
-   /*
-    * Default constructor
-    */
-   
- //TODO  DataMatrix()
+ 
    /*
     * Default constructor - construct an empty, but non-null image and text
     */
@@ -551,41 +520,12 @@ class DataMatrix implements BarcodeIO
          this.displayImageToConsole();
          
       }
-//      System.out.println("Hi from generateImageFromText. Still in prgress");
-//      System.out.println("thechar-asciival-binvalue-starString");
-//      int charIndex;
-//      char textChar;
-//      String[] binStringArr = new String[text.length()]; 
-//      
-//      for(charIndex=0;charIndex<text.length();charIndex++)
-//      {
-//         textChar = text.charAt(charIndex);
-//         System.out.print(textChar+"-");
-//         System.out.print((int)textChar);
-//         System.out.print("-"+Integer.toBinaryString(textChar));
-//         String binString = Integer.toBinaryString(textChar);
-//         String oneReplace = binString.replaceAll("1", "*");
-//         String spaceReplace = oneReplace.replaceAll("0", " ");
-//       
-//         System.out.println("-"+spaceReplace);
-//         binStringArr[charIndex] = spaceReplace;
-//         //trying to implementing feature to change 1 to "*" and 0 to " "
-//         // now must make them column wise not positiioned row wise
-//         
-//      }
-//      // fix binary to be in 2D array format with |_ datamatrix border
-//      image = new BarcodeImage(binStringArr);
-//      for(int i=0;i<binStringArr.length;i++)
-//      {
-//         System.out.println(i+"is :"+binStringArr[i]);
-//      }
-//      image.displayToConsole();
-//      System.out.println("end generateimagefromtext");
+//TODO should this return true? or do if/else clause
       return false;
       
    }
    
-   //TODO translateImageToText()
+  
    /*Not technically an I/O operation, this method looks at the internal text 
     * stored in the implementing class and produces a companion BarcodeImage, 
     * internally (or an image in whatever format the implementing class uses).  
@@ -610,7 +550,7 @@ class DataMatrix implements BarcodeIO
          text[i-1] = (char)parseInt; 
       }
         this.text = new String(text);     
-      
+      //TODO should this return true? to set do a if/else clause?
       return false;
       
    }
@@ -633,27 +573,7 @@ class DataMatrix implements BarcodeIO
       for (String str :strArr ) {
          System.out.println("|" + str + "|");
       }
-//      int row, col;
-//      String booleanPrint = "";
-//      String setIndex = "";
-//      
-//      for(row=0; row<BarcodeImage.MAX_HEIGHT; row++)
-//      {
-//         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
-//         {
-//            if (image.getPixel(row, col) == false)
-//            {
-//               setIndex = " ";
-//            }
-//            else
-//            {
-//               setIndex = "*";
-//            }
-//            booleanPrint += setIndex + "";             
-//         }         
-//         System.out.println("|" + booleanPrint + "|");
-//         booleanPrint = "";
-//      } 
+
    }
    
 
@@ -692,140 +612,7 @@ class DataMatrix implements BarcodeIO
    
    private void cleanImage()
    {
-      this.image= new BarcodeImage(trimImmage()); 
-
-      
-      /* get the image and look for CLLs
-      TOP   "* * * * * * * * * * * * * * * * * *"
-      Bottom"***********************************"
-      
-      */
-            
-//      int row, col;
-//      String booleanPrint = "";
-//      String setIndex = "";
-//      
-//      // TESTING PRINT OUT BY GET PIXEL
-//      /*
-//      System.out.println("From clean mage before cleaned " );
-//      for(row=0; row<BarcodeImage.MAX_HEIGHT; row++)
-//      {
-//         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
-//         {
-//            if (image.getPixel(row, col) == false)
-//            {
-//               setIndex = " ";
-//            }
-//            else
-//            {
-//               setIndex = "*";
-//            }
-//            booleanPrint += setIndex + "";             
-//         }         
-//         System.out.println("|" + booleanPrint + "|");
-//         booleanPrint = "";
-//      }     
-//      */
-//      
-//      // SEARCH FOR START OF BAR CODE AND END OF BAR CODE
-//      // SET DIMENSIONS
-//
-//      booleanPrint = "";
-//      setIndex = "";
-//      boolean topLeftFound = false;
-//      int topLeftRow = 0;
-//      int topLeftCol = 0; 
-//      
-//      boolean bottomLeftFound = false;
-//      int bottomLeftRow = 0;
-//      int bottomLeftCol = 0;
-//      
-//      boolean bottomRightFound = false;
-//      int bottomRightRow = 0;
-//      int bottomRightCol = 0;
-//         
-//      for(row=0; row<BarcodeImage.MAX_HEIGHT; row++)
-//      {
-//         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
-//         {
-//            if (image.getPixel(row, col) == false)
-//            {
-//               setIndex = " ";
-//            }
-//            else
-//            {
-//               setIndex = "*";
-//               if (topLeftFound == false)
-//               {
-//                  topLeftFound = true;
-//                  topLeftRow = row;
-//                  topLeftCol = col;
-//               }
-//               
-//               if(row == BarcodeImage.MAX_HEIGHT -1 || 
-//                     image.getPixel(row + 1, topLeftCol) == false)
-//               {
-//                  bottomLeftFound = true;
-//                  bottomLeftRow = row;
-//                  bottomLeftCol = topLeftCol;
-//                  
-//                  int searchCol = bottomLeftCol;
-//                  while(bottomRightFound == false)
-//                  {
-//                     if(image.getPixel(row, searchCol) == false || 
-//                           searchCol == BarcodeImage.MAX_WIDTH -1)
-//                     {
-//                        bottomRightFound = true;
-//                        bottomRightRow = row;
-//                        bottomRightCol = searchCol;
-//                     }
-//                     searchCol++;
-//                  }
-//               }                          
-//            }
-//            //booleanPrint += setIndex + "";             
-//         }         
-//         //System.out.println("|" + booleanPrint + "|");
-//        // booleanPrint = "";
-//      }
-//      
-//      int barcodeWidth = bottomRightCol - topLeftCol;
-//      actualWidth = barcodeWidth;
-//      
-//      int barcodeHeight = bottomRightRow - topLeftRow;
-//      actualHeight = barcodeHeight;
-//      
-//      int shiftLeftBy = topLeftCol;
-//      int shiftDownBy = BarcodeImage.MAX_HEIGHT - bottomLeftRow - 1;
-//      
-//      // TEST PRINT OUTS FOR WIDTH AND HEIGHT
-//      /*
-//      System.out.println(" this is the start of code: row " + topLeftRow + 
-//      " col " + topLeftCol);
-//      System.out.println(" this is the bottom left of code: row " + 
-//      bottomLeftRow + " col " + bottomLeftCol);
-//      System.out.println(" this is the bottom right of code: row " + 
-//      bottomRightRow + " col " + bottomRightCol);
-//      System.out.println("the barCode dims are " + barcodeWidth + " width " 
-//      + barcodeHeight + " height");
-//      */
-//      
-//      //TESTING
-//      //System.out.println("Cleaned image");
-//      //System.out.println("shift down by " + shiftDownBy);
-//      
-//      // RE-POSITION IMAGE TO 2D ARRAY
-//      for(row=BarcodeImage.MAX_HEIGHT - 1; row > 0; row--)
-//      {
-//         for(col=0; col<BarcodeImage.MAX_WIDTH; col++)
-//         {
-//            if (image.getPixel(row, col) == true)
-//            {
-//               image.setPixel(row, col, false);
-//               image.setPixel(row + shiftDownBy, col - shiftLeftBy, true);
-//            }            
-//         }         
-//      } 
+      this.image= new BarcodeImage(trimImmage());
    }
    
    
