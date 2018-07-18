@@ -77,8 +77,7 @@ public class Assignment4
          
          //Comment and/or remove this test portion before submit
          //start of test1
-         System.out.println("End of main.");
-         
+      
          String myMessage = "Winners never give up!";
          System.out.println("this is my secret message: "+myMessage);
          
@@ -114,6 +113,7 @@ public class Assignment4
          tm.translateImageToText();
          tm.displayTextToConsole();
          //end of test one
+         System.out.println("End of main.");
    }
 
 }
