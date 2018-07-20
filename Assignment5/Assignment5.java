@@ -8,7 +8,13 @@
 
 //TODO Please submit one file for each phase (3 .txt files, UML .pdf file)
 
-//TODO Phase1
+//TODO Checklist
+//Phase 1 Done. (Comment out tests when submitting.)
+//TODO Phase 2
+//TODO Phase 3
+//TODO Phase 4
+
+//Phase1
 import javax.swing.*;
 import java.awt.*;
 
@@ -41,7 +47,7 @@ public class Assignment5
          {
             if (files[i].isFile())
             { 
-               System.out.println(files[i]); //Comment this out when finalizing
+               System.out.println(files[i]); //TODO Comment this out when finalizing
                icon[i] = new ImageIcon(files[i].toString());
             }
          }
@@ -66,7 +72,7 @@ public class Assignment5
    static String turnIntIntoCardSuit(int j)
    {
       // an idea for another helper method (do it differently if you wish)
-      String cardSuit = "CDHS";
+      String cardSuit = "CDHS"; // Clubs Diamonds Hearts Spades 
       String myCardSuit = cardSuit.substring(j, j+1);
       
       return myCardSuit;
