@@ -27,21 +27,33 @@ public class Assignment5
       // build the file names ("AC.gif", "2C.gif", "3C.gif", "TC.gif", etc.)
       // in a SHORT loop.  For each file name, read it in and use it to
       // instantiate each of the 57 Icons in the icon[] array.
-      
+
       //Get your current working directory (generic)
       String myDir = System.getProperty("user.dir");
       File path = new File(myDir+"/Assignment5/images");
-
-      File [] files = path.listFiles();
-      for (int i = 0; i < files.length; i++)
+      File[] files = path.listFiles();
+      
+      if(files.length == NUM_CARD_IMAGES)
       {
-          if (files[i].isFile())
-          { 
-              System.out.println(files[i]);
-          }
+         System.out.println("There are 57 cards.");
+         
+         for (int i = 0; i < files.length; i++)
+         {
+            if (files[i].isFile())
+            { 
+               System.out.println(files[i]);
+               String filename = files[i].toString();
+               icon[i] = new ImageIcon(filename);
+               
+            }
+         }
+      }
+      else
+      {
+         System.out.println("Problem! There is not 57 card files in folder.");
       }
       
-      //Want to test different platforms 
+
    }
 
    // turns 0 - 13 into "A", "2", "3", ... "Q", "K", "X"
