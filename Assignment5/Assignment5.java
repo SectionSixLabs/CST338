@@ -66,6 +66,10 @@ public class Assignment5
    static String turnIntIntoCardSuit(int j)
    {
       // an idea for another helper method (do it differently if you wish)
+      String cardSuit = "CDHS";
+      String myCardSuit = cardSuit.substring(j, j+1);
+      
+      return myCardSuit;
    }
 
    // a simple main to throw all the JLabels out there for the world to see
@@ -101,15 +105,20 @@ public class Assignment5
       //Testing methods Area
       
       //A23456789TJQKX
-      //Testing method: turnIntIntoCardSuitValue
+      //Testing method: turnIntIntoCardValue
       System.out.println("Testing method: turnIntIntoCardValue");
       for(int i=0; i<14; i++)
       {
-         System.out.println(i+" is " +turnIntIntoCardValue(i));
+         System.out.println("Int "+i+" is " +turnIntIntoCardValue(i));
       }
       
-      //Testing method: 
-
+      //Testing method: turnIntIntoCardSuit
+      System.out.println("Testing method: turnIntoIntoCardSuit");
+      for(int i=0; i<4; i++)
+      {
+         System.out.println("Int "+i+" is " +turnIntIntoCardSuit(i));
+      }
+      
       //End of main
       System.out.println("End of main.");
    }
