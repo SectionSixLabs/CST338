@@ -61,6 +61,7 @@ public class Assignment5
    // turns 0 - 13 into "A", "2", "3", ... "Q", "K", "X"
    static String turnIntIntoCardValue(int k)
    {
+      //XXX You can use Enum for this
       // an idea for a helper method (do it differently if you wish)
       String cardNum = "A23456789TJQKX"; //Note there is Joker I guess as X
       String myCardValue = cardNum.substring(k, k+1);
@@ -71,6 +72,7 @@ public class Assignment5
    // turns 0 - 3 into "C", "D", "H", "S"
    static String turnIntIntoCardSuit(int j)
    {
+      //XXX You can use Enum for this
       // an idea for another helper method (do it differently if you wish)
       String cardSuit = "CDHS"; // Clubs Diamonds Hearts Spades 
       String myCardSuit = cardSuit.substring(j, j+1);
