@@ -41,10 +41,8 @@ public class Assignment5
          {
             if (files[i].isFile())
             { 
-               System.out.println(files[i]);
-               String filename = files[i].toString();
-               icon[i] = new ImageIcon(filename);
-               
+               System.out.println(files[i]); //Comment this out when finalizing
+               icon[i] = new ImageIcon(files[i].toString());
             }
          }
       }
@@ -52,14 +50,16 @@ public class Assignment5
       {
          System.out.println("Problem! There is not 57 card files in folder.");
       }
-      
-
    }
 
    // turns 0 - 13 into "A", "2", "3", ... "Q", "K", "X"
    static String turnIntIntoCardValue(int k)
    {
       // an idea for a helper method (do it differently if you wish)
+      String cardNum = "A23456789TJQKX"; //Note there is Joker I guess as X
+      String myCardValue = cardNum.substring(k, k+1);
+      
+      return myCardValue;
    }
 
    // turns 0 - 3 into "C", "D", "H", "S"
@@ -98,7 +98,17 @@ public class Assignment5
       // show everything to the user
       frmMyWindow.setVisible(true);
 
-
+      //Testing methods Area
+      
+      //A23456789TJQKX
+      //Testing method: turnIntIntoCardSuitValue
+      System.out.println("Testing method: turnIntIntoCardValue");
+      for(int i=0; i<14; i++)
+      {
+         System.out.println(i+" is " +turnIntIntoCardValue(i));
+      }
+      
+      //Testing method: 
 
       //End of main
       System.out.println("End of main.");
