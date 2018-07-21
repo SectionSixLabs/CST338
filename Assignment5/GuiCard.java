@@ -14,7 +14,33 @@
 //TODO Phase 3
 //TODO Phase 4
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+
 public class GuiCard
 {
    //TODO
+   
+   private static Icon[][] iconCards = new ImageIcon[14][4]; // 14 = A thru K + joker
+   private static Icon iconBack;
+   static boolean iconsLoaded = false;
+   
+   static void loadCardIcons()
+   {
+      //Hint:  Call this method any time you might need an Icon, but make 
+      //sure that it loads the entire array the first time it is called, 
+      //and does nothing any later time.
+      
+   }
+   
+   static public Icon getIcon(Card card)
+   {
+      
+   }
+   
+   static public Icon getBackCardIcon()
+   {
+      
+   }
 }
