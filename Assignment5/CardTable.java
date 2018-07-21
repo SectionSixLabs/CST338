@@ -18,6 +18,12 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import java.awt.event.AdjustmentListener;
+import java.awt.event.ActionEvent;
+
+import java.awt.Color;
+import java.awt.FlowLayout; 
+
 public class CardTable extends JFrame
 {
    static int MAX_CARDS_PER_HAND = 56;
@@ -27,6 +33,10 @@ public class CardTable extends JFrame
    private int numPlayers;
 
    public JPanel pnlComputerHand, pnlHumanHand, pnlPlayArea;
+   
+   //Will we need theses?
+   public static final int WIDTH = 1150; 
+   public static final int HEIGHT = 650;
    
    public CardTable(String title, int numCardsPerHand, int numPlayers)
    {
@@ -46,7 +56,26 @@ public class CardTable extends JFrame
       //battle. My client chose a joker for the two central cards, just so we 
       //have something to see in the playing region.
       
+      
+      
       //TODO
+
+      super();
+      
+      setSize(WIDTH, HEIGHT);
+      setTitle("Card Table");
+      setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+      setVisible(true);
+      
+      //JLabels needed? JLabel myLabel = new JLabel("Need Label?");
+      
+      //Color panes? getContentPane().setBackground(Color.PINK);
+      
+      //Layout Manager? setLayout(new BorderLayout()); 
+      setLayout(new FlowLayout());
+      
+      this.numCardsPerHand = numCardsPerHand;
+      this.numPlayers = numPlayers;
    }
    
    //Accessors for the two instance members
