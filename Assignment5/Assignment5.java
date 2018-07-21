@@ -118,6 +118,9 @@ public class Assignment5
       for(int i=0; i<14; i++)
       {
          System.out.println("Int "+i+" is " +turnIntIntoCardValue(i));
+         if (i<Card.cardValues.length()) {
+         System.out.println("Using Card Class: "+i+" is " +Card.cardValues.toCharArray()[i]);
+         }
       }
       
       //Testing method: turnIntIntoCardSuit
@@ -125,7 +128,9 @@ public class Assignment5
       for(int i=0; i<4; i++)
       {
          System.out.println("Int "+i+" is " +turnIntIntoCardSuit(i));
+         System.out.println("Using enum:"+Card.Suit.values()[i].name());
       }
+
       
       //End of main
       System.out.println("End of main.");
