@@ -35,6 +35,28 @@ public class GuiCard
       //sure that it loads the entire array the first time it is called, 
       //and does nothing any later time.
       
+      if(!iconsLoaded) //if not iconsLoaded
+      {
+         //Then load icons
+         String myDir = System.getProperty("user.dir");
+         String path = myDir+"/Assignment5/images/";
+         
+         String cardValues[] = {"A", "2", "3", "4", "5", "6", "7", "8", "9",
+                                 "T", "J", "Q", "K", "X"};
+         String cardSuites[] = {"C", "D", "H", "S"};
+         
+         for(int suit=0; suit<4; suit++)
+         {
+            for(int value=0; value<14; value++)
+            {
+               String file = path+cardValues[value]+cardSuites[suit]+".gif";
+               System.out.println(file); //test filepath
+               iconCards[value][suit] = new ImageIcon(file);
+            }
+         }
+      }
+      iconsLoaded = true; //After icons loaded true, don't need to load again
+      
    }
    
    static public Icon getIcon(Card card)
@@ -45,6 +67,11 @@ public class GuiCard
    static public Icon getBackCardIcon()
    {
       
+   }
+   //main as testing only ~remove after
+   public static void main(String[] args)
+   {
+      loadCardIcons();
    }
    
 
