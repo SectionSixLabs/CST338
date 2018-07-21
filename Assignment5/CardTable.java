@@ -15,16 +15,16 @@
 //TODO Phase 4
 
 import javax.swing.JFrame;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import java.io.File;
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-
-import java.awt.event.AdjustmentListener;
-import java.awt.event.ActionEvent;
-
-import java.awt.Color;
-import java.awt.FlowLayout; 
+import javax.swing.ImageIcon;
 import java.awt.BorderLayout;
+import javax.swing.border.TitledBorder;
 
 public class CardTable extends JFrame
 {
@@ -35,10 +35,6 @@ public class CardTable extends JFrame
    private int numPlayers;
 
    public JPanel pnlComputerHand, pnlHumanHand, pnlPlayArea;
-   
-   //Will we need theses?
-   public static final int WIDTH = 1150; 
-   public static final int HEIGHT = 650;
    
    public CardTable(String title, int numCardsPerHand, int numPlayers)
    {
@@ -58,38 +54,108 @@ public class CardTable extends JFrame
       //battle. My client chose a joker for the two central cards, just so we 
       //have something to see in the playing region.
       
+      //TODO
       
-      
-      //TODO Finish CardTable. Run to test the GUI. 
-
-      super();
-      
-      setSize(WIDTH, HEIGHT);
-      setTitle("Card Table");
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      setVisible(true);
-      
-      //Color panes? getContentPane().setBackground(Color.PINK);
-      
-      //Layout Manager? setLayout(new BorderLayout()); 
-      setLayout(new BorderLayout());
-      
-      //Labeling the 3 public Jpanels
-      
-      //Computer Label Top 
-      JLabel topLabel = new JLabel("Computer Hand");
-      add(topLabel, BorderLayout.NORTH);
-      
-      //Cards Played Middle 
-      JLabel middleLabel = new JLabel("Play Area");
-      add(middleLabel, BorderLayout.CENTER);
-      
-      //Player Label Bottom
-      JLabel bottomLabel = new JLabel("Player Hand");
-      add(bottomLabel, BorderLayout.SOUTH);
-      
+      super(title);
       this.numCardsPerHand = numCardsPerHand;
       this.numPlayers = numPlayers;
+      
+      String myDir = System.getProperty("user.dir");
+      
+      
+      setSize(800, 500);
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setBackground(Color.GREEN);
+      setLayout(new BorderLayout());
+      
+      
+      // COMPUTER HAND  
+      TitledBorder computerHandBorder = new TitledBorder("Computer Hand");
+      computerHandBorder.setTitleJustification(TitledBorder.LEFT);
+      computerHandBorder.setTitlePosition(TitledBorder.TOP);
+      
+      pnlComputerHand = new JPanel();
+      pnlComputerHand.setBorder(computerHandBorder);
+      pnlComputerHand.setLayout(new FlowLayout());
+      add(pnlComputerHand,BorderLayout.NORTH);
+      
+      // ADDING CARDS TO COMPUTER HAND
+      int i;
+      for (i = 0; i <= numCardsPerHand; i++)
+      {
+         JLabel computerCardsLabel = new JLabel();
+         ImageIcon computerCardsIcon = new ImageIcon(myDir+"/Assignment5/images/BK.gif");
+         computerCardsLabel.setIcon(computerCardsIcon);
+         pnlComputerHand.add(computerCardsLabel);  
+      }
+      
+      
+      
+      // Play Area
+      
+      /*But we also need to some text below each of the two center icons 
+       * to we know who played which card ( "Computer" or "You", so, we'll 
+       * really need four labels in this central play JPanel : two for card images
+       *  and two for text "Computer" and "You". Since we want the text 
+       *  directly below the icon, one way to do this is to make your 
+       *  central playing panel a 2x2 Grid Layout, where the top two positions
+       *   will be images and the bottom two will be text that describe the 
+       *   images. Hint: to center text in a label, use
+
+            myLabel = new JLabel( "My Text", JLabel.CENTER );
+      */
+      
+      
+      TitledBorder playAreaBorder = new TitledBorder("Play Area");
+      playAreaBorder.setTitleJustification(TitledBorder.LEFT);
+      playAreaBorder.setTitlePosition(TitledBorder.TOP);
+      
+      JPanel playArea = new JPanel();
+      playArea.setBorder(playAreaBorder);
+      playArea.setLayout(new GridLayout(2,2));
+      add(playArea,BorderLayout.CENTER);
+      
+      JLabel playedCardLabel1, playedCardLabel2;
+      
+      playedCardLabel1 = new JLabel();
+      playedCardLabel1.setHorizontalAlignment(JLabel.CENTER);
+      ImageIcon playedCard1Icon = new ImageIcon(myDir+"/Assignment5/images/3D.gif");
+      playedCardLabel1.setIcon(playedCard1Icon);
+      playArea.add(playedCardLabel1);
+      
+      playedCardLabel2 = new JLabel();
+      playedCardLabel2.setHorizontalAlignment(JLabel.CENTER);
+      ImageIcon playedCard2Icon = new ImageIcon(myDir+"/Assignment5/images/4H.gif");
+      playedCardLabel2.setIcon(playedCard2Icon);
+      playArea.add(playedCardLabel2);
+      
+      
+      JLabel computerPlayArea = new JLabel("Computer", JLabel.CENTER);
+      playArea.add(computerPlayArea);
+      
+      JLabel youPlayArea = new JLabel("You", JLabel.CENTER);
+      playArea.add(youPlayArea);
+      
+      
+      
+      // HUMAN HAND
+      TitledBorder humanHandBorder = new TitledBorder("Your Hand");
+      humanHandBorder.setTitleJustification(TitledBorder.LEFT);
+      humanHandBorder.setTitlePosition(TitledBorder.TOP);
+      
+      pnlHumanHand = new JPanel();
+      pnlHumanHand.setBorder(humanHandBorder);
+      pnlHumanHand.setLayout(new FlowLayout());
+      add(pnlHumanHand,BorderLayout.SOUTH);
+      
+      // ADDING CARDS TO HUMAN HAND
+      for (i = 0; i <= numCardsPerHand; i++)
+      {
+         JLabel humanCardsLabel = new JLabel();
+         ImageIcon humanCardsIcon = new ImageIcon(myDir+"/Assignment5/images/BK.gif");
+         humanCardsLabel.setIcon(humanCardsIcon);
+         pnlHumanHand.add(humanCardsLabel);  
+      }
    }
    
    //Accessors for the two instance members
@@ -103,12 +169,11 @@ public class CardTable extends JFrame
      return this.numPlayers;
   }
   
-  //Testing CardTable comment / remove after
-  //Should not have a main here. Only for testing CardTable. 
+  
   public static void main(String[] args)
   {
-     CardTable gui = new CardTable("TestGui", 5, 2);
-     gui.setVisible(true);
+     CardTable myCardTable = new CardTable("my card table", 5, 2);
+     myCardTable.setVisible(true);
+     
   }
-  
 }
