@@ -17,12 +17,14 @@
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
 
 import java.awt.event.AdjustmentListener;
 import java.awt.event.ActionEvent;
 
 import java.awt.Color;
 import java.awt.FlowLayout; 
+import java.awt.BorderLayout;
 
 public class CardTable extends JFrame
 {
@@ -58,21 +60,33 @@ public class CardTable extends JFrame
       
       
       
-      //TODO
+      //TODO Finish CardTable. Run to test the GUI. 
 
       super();
       
       setSize(WIDTH, HEIGHT);
       setTitle("Card Table");
-      setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setVisible(true);
-      
-      //JLabels needed? JLabel myLabel = new JLabel("Need Label?");
       
       //Color panes? getContentPane().setBackground(Color.PINK);
       
       //Layout Manager? setLayout(new BorderLayout()); 
-      setLayout(new FlowLayout());
+      setLayout(new BorderLayout());
+      
+      //Labeling the 3 public Jpanels
+      
+      //Computer Label Top 
+      JLabel topLabel = new JLabel("Computer Hand");
+      add(topLabel, BorderLayout.NORTH);
+      
+      //Cards Played Middle 
+      JLabel middleLabel = new JLabel("Play Area");
+      add(middleLabel, BorderLayout.CENTER);
+      
+      //Player Label Bottom
+      JLabel bottomLabel = new JLabel("Player Hand");
+      add(bottomLabel, BorderLayout.SOUTH);
       
       this.numCardsPerHand = numCardsPerHand;
       this.numPlayers = numPlayers;
@@ -88,4 +102,13 @@ public class CardTable extends JFrame
   {
      return this.numPlayers;
   }
+  
+  //Testing CardTable comment / remove after
+  //Should not have a main here. Only for testing CardTable. 
+  public static void main(String[] args)
+  {
+     CardTable gui = new CardTable("TestGui", 5, 2);
+     gui.setVisible(true);
+  }
+  
 }
