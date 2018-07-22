@@ -16,7 +16,7 @@ public class Phase2
 //      Icon tempIcon;
       GuiCard.loadCardIcons();
       Deck deck = new Deck(); 
-
+      deck.shuffle();
       
       
       // establish main frame in which program will run
@@ -45,7 +45,7 @@ public class Phase2
     for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
     {
        
-       Icon tempIcon = GuiCard.getIcon(getRandomCard(deck));
+       Icon tempIcon = GuiCard.getIcon(deck.dealCard());
        JLabel temlLabel = new JLabel(); 
        temlLabel.setIcon(tempIcon);
        humanLabels[i]=temlLabel;
@@ -62,8 +62,8 @@ public class Phase2
       myCardTable.setVisible(true);
       //TODO code goes here ...
  
-      Icon tempIcon1 = GuiCard.getIcon(getRandomCard(deck));
-      Icon tempIcon2 = GuiCard.getIcon(getRandomCard(deck));
+      Icon tempIcon1 = GuiCard.getIcon(deck.dealCard());
+      Icon tempIcon2 = GuiCard.getIcon(deck.dealCard());
       
       JLabel temlLabel1 = new JLabel(); 
       JLabel temlLabel2 = new JLabel(); 
@@ -84,15 +84,5 @@ public class Phase2
       myCardTable.setVisible(true);
    }
    
-   private static Card getRandomCard(Deck deck) {
-      
-      Card card = new Card();
-      Random rgen = new Random();
-      int randomIndex = 0; 
-      randomIndex=rgen.nextInt(deck.topCard());
-      card = deck.inspectCard(randomIndex); 
-      deck.removeCard(card); 
-      return card;
-      
-   }
+
 }
