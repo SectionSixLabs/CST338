@@ -369,7 +369,7 @@ class Deck
    public Card dealCard() 
    {
       Card localCard = new Card('0',Card.Suit.CLUBS); 
-      if (topCard>0) {
+      if (topCard>=0) {
          localCard = cards[topCard()];
          this.topCard--; 
       } 
