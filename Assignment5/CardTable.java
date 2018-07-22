@@ -17,12 +17,8 @@
 import javax.swing.JFrame;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
-import java.io.File;
 import java.awt.Color;
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import java.awt.BorderLayout;
 import javax.swing.border.TitledBorder;
 

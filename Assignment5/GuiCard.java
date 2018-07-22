@@ -89,7 +89,7 @@ public class GuiCard
 
    }
    
-   static public Icon getBackCardIcon()
+   public Icon getBackCardIcon()
    {
       if(iconsLoaded)
       {
@@ -115,7 +115,7 @@ public class GuiCard
       myJframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       
       JLabel backCardLabel = new JLabel();
-      backCardLabel.setIcon(getBackCardIcon());
+      //backCardLabel.setIcon(getBackCardIcon());
             
       myJframe.add(backCardLabel);
    }
