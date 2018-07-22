@@ -67,24 +67,24 @@ public class GuiCard
    
    static public Icon getIcon(Card card)
    {  
-      if(iconsLoaded)
+      if(iconsLoaded && !card.getErrorFlag())
       {
 
          //Get index based of suit and value of card
          int intValueIndex = Card.cardValues.lastIndexOf(card.getValue());
          int intSuitIndex = card.getSuit().ordinal();
 
-         //Testing ~comment out
-         System.out.println("Using Class: "+card.getValue()+" Index: "+intValueIndex); 
-         System.out.println("Using Class: "+card.getSuit()+" Index: "+intSuitIndex); 
-
-         JFrame myJframe = new JFrame("test window");
-         myJframe.setSize(400, 500);
-         myJframe.setVisible(true);
-         myJframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-         JLabel CardLabel = new JLabel();
-         CardLabel.setIcon(iconCards[intValueIndex][intSuitIndex]);
-         myJframe.add(CardLabel);
+//         //Testing ~comment out
+//         System.out.println("Using Class: "+card.getValue()+" Index: "+intValueIndex); 
+//         System.out.println("Using Class: "+card.getSuit()+" Index: "+intSuitIndex); 
+//
+//         JFrame myJframe = new JFrame("test window");
+//         myJframe.setSize(400, 500);
+//         myJframe.setVisible(true);
+//         myJframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//         JLabel CardLabel = new JLabel();
+//         CardLabel.setIcon(iconCards[intValueIndex][intSuitIndex]);
+//         myJframe.add(CardLabel);
 
          return iconCards[intValueIndex][intSuitIndex];
       }
