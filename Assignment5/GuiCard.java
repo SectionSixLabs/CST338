@@ -46,7 +46,8 @@ public class GuiCard
          
          String cardValues[] = {"A", "2", "3", "4", "5", "6", "7", "8", "9",
                                  "T", "J", "Q", "K", "X"};
-         String cardSuites[] = {"C", "D", "H", "S"};
+         //Lets keep it consistent with Card Class
+         String cardSuites[] = {"H", "C", "S", "D"};
          
          for(int suit=0; suit<4; suit++)
          {
@@ -70,47 +71,16 @@ public class GuiCard
    {  
       if(iconsLoaded)
       {
-         //Keeping consistency same as loadCardIcons maybe to make this public to class later
-         String cardValues[] = {"A", "2", "3", "4", "5", "6", "7", "8", "9",
-               "T", "J", "Q", "K", "X"};
-         String cardSuites[] = {"C", "D", "H", "S"};
-
-         //Remember Card has a char for Value and enum for Suit
-
-         //get card attributes value and suit to find their index in Array
-
-         String suitString;
-         String valueString;
-
-         switch(card.getSuit())
-         {
-         case CLUBS:
-            suitString = "C";
-            break;
-         case HEARTS:
-            suitString = "H";
-            break;
-         case DIAMONDS:
-            suitString = "D";
-            break;
-         case SPADES:
-            suitString = "S";
-            break;
-         default:
-            suitString = "Error";
-            break;
-
-         }
-
-         valueString = String.valueOf(card.getValue());
-
-         //Testing ~comment out
-         System.out.println(valueString);
-         System.out.println(suitString);
 
          //Get index based of suit and value of card
-         int intValueIndex = Arrays.asList(cardValues).indexOf(valueString);
-         int intSuitIndex = Arrays.asList(cardSuites).indexOf(suitString);
+         int intValueIndex = Card.cardValues.lastIndexOf(card.getValue());
+         int intSuitIndex = card.getSuit().ordinal();
+
+         //Testing ~comment out
+         System.out.println("Using Class: "+card.getValue()+" Index: "+intValueIndex); 
+         System.out.println("Using Class: "+card.getSuit()+" Index: "+intSuitIndex); 
+
+
 
          return iconCards[intValueIndex][intSuitIndex];
       }
@@ -137,7 +107,7 @@ public class GuiCard
    public static void main(String[] args)
    {
       loadCardIcons();
-      Card myCard = new Card();
+      Card myCard = new Card('4',Card.Suit.HEARTS);
       getIcon(myCard);
    }
    
