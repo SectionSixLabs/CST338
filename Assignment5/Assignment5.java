@@ -430,7 +430,18 @@ class Deck
     *top card into its place.  Be sure the card you need is actually still in 
     *the deck, if not return false.*/
    public boolean removeCard(Card card) {
-            
+      if(cards.length<MAX_CARDS) {
+         
+         for (int i = 0; i< cards.length; i++) {
+            if (cards[i].equals(card)) {
+                              
+               cards[i] = cards[topCard];
+               cards[topCard] = null; 
+               topCard --; 
+               return true;
+            }
+         }
+      }
       return false;
    }
    
