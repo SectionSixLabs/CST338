@@ -1,8 +1,6 @@
 
-import java.awt.*;
 import java.util.Random;
 import javax.swing.*;
-import javax.swing.border.*;
 public class Phase2
 {
    static int NUM_CARDS_PER_HAND = 7;
@@ -14,11 +12,9 @@ public class Phase2
    
    public static void main(String[] args)
    {
-      int k;
+
 //      Icon tempIcon;
-      GuiCard gui = new  GuiCard();
       GuiCard.loadCardIcons();
-      
       Deck deck = new Deck(); 
 
       
@@ -68,10 +64,13 @@ public class Phase2
  
       Icon tempIcon1 = GuiCard.getIcon(getRandomCard(deck));
       Icon tempIcon2 = GuiCard.getIcon(getRandomCard(deck));
+      
       JLabel temlLabel1 = new JLabel(); 
       JLabel temlLabel2 = new JLabel(); 
+      
       temlLabel1.setHorizontalAlignment(JLabel.CENTER);
       temlLabel2.setHorizontalAlignment(JLabel.CENTER);
+      
       temlLabel1.setIcon(tempIcon1);
       temlLabel2.setIcon(tempIcon2);
       

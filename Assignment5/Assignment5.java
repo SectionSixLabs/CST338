@@ -39,7 +39,6 @@ public class Assignment5
             numUnusedCardsPerPack, unusedCardsPerPack, 
             NUM_PLAYERS, NUM_CARDS_PER_HAND);
       
-      GuiCard gui = new  GuiCard();
       GuiCard.loadCardIcons();
       
       highCardGame.deal(); 
@@ -78,6 +77,10 @@ public class Assignment5
       myCardTable.setVisible(true);
       
       //TODO Create a Game Loop
+      while (true) {
+         
+         break; 
+      }
    }
 
 }
