@@ -107,6 +107,17 @@ public class GuiCard
       loadCardIcons();
       Card myCard = new Card('4',Card.Suit.HEARTS);
       getIcon(myCard);
+      
+      //Test for back of card icon
+      JFrame myJframe = new JFrame("test window");
+      myJframe.setSize(400, 500);
+      myJframe.setVisible(true);
+      myJframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
+      JLabel backCardLabel = new JLabel();
+      backCardLabel.setIcon(getBackCardIcon());
+            
+      myJframe.add(backCardLabel);
    }
    
 
