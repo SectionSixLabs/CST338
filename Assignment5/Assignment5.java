@@ -139,7 +139,8 @@ class Card
    //returns true if all the fields (members) are identical and false,otherwise.
    public boolean equals(Card card)
    {
-      return(suit.equals(card.suit) && value == card.value);
+      return(suit.equals(card.suit) && value == card.value 
+            && card.errorFlag == false);
    }
    
    //Sort incoming card array
@@ -367,9 +368,12 @@ class Deck
    /*returns and removes the card in the top occupied position of cards[].*/
    public Card dealCard() 
    {
-      Card localCard = cards[topCard()];
-      this.topCard--; 
-      return localCard; 
+      Card localCard = new Card('0',Card.Suit.CLUBS); 
+      if (topCard>0) {
+         localCard = cards[topCard()];
+         this.topCard--; 
+      } 
+      return localCard;
    }
    
    /*An accessor for the int, topCard (no mutator.)*/
