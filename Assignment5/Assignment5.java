@@ -416,31 +416,33 @@ class Deck
    if you add it.  Return false if there will be too many.  It should put the 
    card on the top of the deck.
    */
-   private boolean addCard (Card card) {
-      if (getNumCards()<this.MAX_CARDS) {
-         
-         return true; 
-      }else return false;
-      
+   public boolean addCard (Card card) {
+      for (Card lcard : cards) {
+         if (lcard.equals(card) && card.getValue()!='X') {
+            return false; 
+         }
+      }
+      cards[cards.length] = card; 
+      return true; 
    }
    
    /*you are looking to remove a specific card from the deck.  Put the current 
     *top card into its place.  Be sure the card you need is actually still in 
     *the deck, if not return false.*/
-   private boolean removeCard(Card card) {
-      
+   public boolean removeCard(Card card) {
+            
       return false;
    }
    
    /*put all of the cards in the deck back into the right order according to 
     *their values.  Is there another method somewhere that already does this 
     *that you could refer to?*/
-   private void sort() {
-      Card.arraySort(this.cards, getNumCards());
+   public void sort() {
+      Card.arraySort(this.cards, this.cards.length);
       
    }
    //return the number of cards remaining in the deck.
-   private int getNumCards() {
+   public int getNumCards() {
      
       return this.cards.length;
       
