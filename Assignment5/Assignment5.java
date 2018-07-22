@@ -22,7 +22,21 @@ public class Assignment5
    // a simple main to throw all the JLabels out there for the world to see
    public static void main(String[] args)
    {
-
+      int NUM_PLAYERS = 2; 
+      int NUM_CARDS_PER_HAND = 5; 
+      int numPacksPerDeck = 1;
+      int numJokersPerPack = 0;
+      int numUnusedCardsPerPack = 0;
+      Card[] unusedCardsPerPack = null;
+      CardGameFramework highCardGame = new CardGameFramework( 
+            numPacksPerDeck, numJokersPerPack,  
+            numUnusedCardsPerPack, unusedCardsPerPack, 
+            NUM_PLAYERS, NUM_CARDS_PER_HAND);
+      highCardGame.deal(); 
+      CardTable myCardTable = 
+            new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS);
+      myCardTable.setVisible(true);
+      myCardTable.
    }
 
 }
