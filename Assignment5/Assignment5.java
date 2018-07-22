@@ -13,6 +13,7 @@
 //Phase1
 import java.util.*;
 
+import javax.swing.Icon;
 import javax.swing.JLabel;
 
 
@@ -37,11 +38,44 @@ public class Assignment5
             numPacksPerDeck, numJokersPerPack,  
             numUnusedCardsPerPack, unusedCardsPerPack, 
             NUM_PLAYERS, NUM_CARDS_PER_HAND);
+      
+      GuiCard gui = new  GuiCard();
+      GuiCard.loadCardIcons();
+      
       highCardGame.deal(); 
+      
       CardTable myCardTable = 
             new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS);
       myCardTable.setVisible(true);
+      
+      // ADDING Labels TO COMPUTER HAND
+      for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
+      {
+         Icon tempIcon = GuiCard.getBackCardIcon();
+         JLabel temlLabel = new JLabel(); 
+         temlLabel.setIcon(tempIcon); 
+         computerLabels[i]=temlLabel;
+      }
+      
+      // ADDING Labels TO HUMAN HAND
+      for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
+      {
+         Icon tempIcon = 
+               GuiCard.getIcon(highCardGame.getHand(0).inspectCard(i+1));
+         JLabel temlLabel = new JLabel(); 
+         temlLabel.setIcon(tempIcon);
+         humanLabels[i]=temlLabel;
+      }
 
+        // ADD LABELS TO PANELS -----------------------------------------
+        //TODO code goes here ...
+      for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
+      {
+         myCardTable.pnlComputerHand.add(computerLabels[i]);
+         myCardTable.pnlHumanHand.add(humanLabels[i]);
+      }
+      
+      myCardTable.setVisible(true);
    }
 
 }
