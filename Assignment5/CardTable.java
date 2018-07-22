@@ -172,8 +172,10 @@ public class CardTable extends JFrame
   
   public static void main(String[] args)
   {
-     CardTable myCardTable = new CardTable("my card table", 5, 2);
+     CardTable myCardTable= new CardTable("CardTable", 5, 2);
+     myCardTable.setSize(800, 600);
+     myCardTable.setLocationRelativeTo(null);
+     myCardTable.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      myCardTable.setVisible(true);
-     
   }
 }
