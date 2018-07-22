@@ -65,7 +65,7 @@ public class GuiCard
       
    }
    
-   public Icon getIcon(Card card)
+   static public Icon getIcon(Card card)
    {  
       if(iconsLoaded)
       {
@@ -78,7 +78,13 @@ public class GuiCard
          System.out.println("Using Class: "+card.getValue()+" Index: "+intValueIndex); 
          System.out.println("Using Class: "+card.getSuit()+" Index: "+intSuitIndex); 
 
-
+         JFrame myJframe = new JFrame("test window");
+         myJframe.setSize(400, 500);
+         myJframe.setVisible(true);
+         myJframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         JLabel CardLabel = new JLabel();
+         CardLabel.setIcon(iconCards[intValueIndex][intSuitIndex]);
+         myJframe.add(CardLabel);
 
          return iconCards[intValueIndex][intSuitIndex];
       }
@@ -89,7 +95,7 @@ public class GuiCard
 
    }
    
-   public Icon getBackCardIcon()
+   static public Icon getBackCardIcon()
    {
       if(iconsLoaded)
       {
@@ -106,7 +112,7 @@ public class GuiCard
    {
       loadCardIcons();
       Card myCard = new Card('4',Card.Suit.HEARTS);
-      getIcon(myCard);
+     // getIcon(myCard);
       
       //Test for back of card icon
       JFrame myJframe = new JFrame("test window");

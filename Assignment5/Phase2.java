@@ -33,7 +33,7 @@ public class Phase2
     // ADDING Labels TO COMPUTER HAND
     for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
     {
-       tempIcon = gui.getBackCardIcon();
+       tempIcon = GuiCard.getBackCardIcon();
        JLabel temlLabel = new JLabel(); 
        temlLabel.setIcon(tempIcon); 
        computerLabels[i]=temlLabel;
@@ -42,7 +42,7 @@ public class Phase2
     // ADDING Labels TO HUMAN HAND
     for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
     {
-       tempIcon = gui.getBackCardIcon();
+       tempIcon = GuiCard.getBackCardIcon();
        JLabel temlLabel = new JLabel(); 
        temlLabel.setIcon(tempIcon);
        humanLabels[i]=temlLabel;
@@ -59,7 +59,7 @@ public class Phase2
       myCardTable.setVisible(true);
       //TODO code goes here ...
       Card card = new Card(); 
-      tempIcon = gui.getIcon(card);
+      tempIcon = GuiCard.getIcon(card);
       JLabel temlLabel = new JLabel(); 
       temlLabel.setIcon(tempIcon);
       
