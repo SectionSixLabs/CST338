@@ -65,7 +65,7 @@ public class GuiCard
       
    }
    
-   static public Icon getIcon(Card card)
+   public Icon getIcon(Card card)
    {  
       if(iconsLoaded)
       {
@@ -162,7 +162,6 @@ class Card
    {
       set(value, suit);
    }
-
 
    /*a stringizer that the client can use prior to displaying the card.  
     * It provides a clean representation of the card.  If errorFlag == true, it

@@ -56,8 +56,19 @@ public class Phase2
        myCardTable.pnlHumanHand.add(humanLabels[i]);
     }
       // and two random cards in the play region (simulating a computer/hum ply)
-      //TODO code goes here ...fy587tufghuyhgtudrytuyuihtyurdhgghghjugbkfnvbvmbjfvfkmg bhgkmj kgvbgbfjkf
-
+      myCardTable.setVisible(true);
+      //TODO code goes here ...
+      Card card = new Card(); 
+      tempIcon = gui.getIcon(card);
+      JLabel temlLabel = new JLabel(); 
+      temlLabel.setIcon(tempIcon);
+      
+      playedCardLabels[0] = temlLabel; 
+      playedCardLabels[1] = temlLabel; 
+      
+      myCardTable.pnlPlayArea.add(temlLabel);
+      myCardTable.pnlPlayArea.add(temlLabel);
+      
       // show everything to the user
       myCardTable.setVisible(true);
    }
