@@ -13,17 +13,22 @@
 //Phase1
 import java.util.*;
 
+import javax.swing.JLabel;
+
 
 public class Assignment5
 {
-
+   static int NUM_CARDS_PER_HAND = 7;
+   static int  NUM_PLAYERS = 2;
+   static JLabel[] computerLabels = new JLabel[NUM_CARDS_PER_HAND];
+   static JLabel[] humanLabels = new JLabel[NUM_CARDS_PER_HAND];  
+   static JLabel[] playedCardLabels  = new JLabel[NUM_PLAYERS]; 
+   static JLabel[] playLabelText  = new JLabel[NUM_PLAYERS]; 
 
 
    // a simple main to throw all the JLabels out there for the world to see
    public static void main(String[] args)
    {
-      int NUM_PLAYERS = 2; 
-      int NUM_CARDS_PER_HAND = 5; 
       int numPacksPerDeck = 1;
       int numJokersPerPack = 0;
       int numUnusedCardsPerPack = 0;
@@ -36,7 +41,7 @@ public class Assignment5
       CardTable myCardTable = 
             new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS);
       myCardTable.setVisible(true);
-      myCardTable.
+
    }
 
 }
