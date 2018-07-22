@@ -1,5 +1,6 @@
 
 import java.awt.*;
+import java.util.Random;
 import javax.swing.*;
 import javax.swing.border.*;
 public class Phase2
@@ -17,6 +18,10 @@ public class Phase2
 //      Icon tempIcon;
       GuiCard gui = new  GuiCard();
       GuiCard.loadCardIcons();
+      
+      Deck deck = new Deck(); 
+
+      
       
       // establish main frame in which program will run
       CardTable myCardTable 
@@ -43,7 +48,8 @@ public class Phase2
     // ADDING Labels TO HUMAN HAND
     for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
     {
-       Icon tempIcon = GuiCard.getBackCardIcon();
+       
+       Icon tempIcon = GuiCard.getIcon(getRandomCard(deck));
        JLabel temlLabel = new JLabel(); 
        temlLabel.setIcon(tempIcon);
        humanLabels[i]=temlLabel;
@@ -59,14 +65,15 @@ public class Phase2
       // and two random cards in the play region (simulating a computer/hum ply)
       myCardTable.setVisible(true);
       //TODO code goes here ...
-      Card card = new Card(); 
-      Icon tempIcon = GuiCard.getIcon(card);
+ 
+      Icon tempIcon1 = GuiCard.getIcon(getRandomCard(deck));
+      Icon tempIcon2 = GuiCard.getIcon(getRandomCard(deck));
       JLabel temlLabel1 = new JLabel(); 
       JLabel temlLabel2 = new JLabel(); 
       temlLabel1.setHorizontalAlignment(JLabel.CENTER);
       temlLabel2.setHorizontalAlignment(JLabel.CENTER);
-      temlLabel1.setIcon(tempIcon);
-      temlLabel2.setIcon(tempIcon);
+      temlLabel1.setIcon(tempIcon1);
+      temlLabel2.setIcon(tempIcon2);
       
       playedCardLabels[0] = temlLabel1; 
       playedCardLabels[1] = temlLabel2; 
@@ -76,5 +83,17 @@ public class Phase2
       
       // show everything to the user
       myCardTable.setVisible(true);
+   }
+   
+   private static Card getRandomCard(Deck deck) {
+      
+      Card card = new Card();
+      Random rgen = new Random();
+      int randomIndex = 0; 
+      randomIndex=rgen.nextInt(deck.topCard());
+      card = deck.inspectCard(randomIndex); 
+      deck.removeCard(card); 
+      return card;
+      
    }
 }

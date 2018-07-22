@@ -52,7 +52,7 @@ public class GuiCard
             for(int value=0; value<14; value++)
             {
                String file = path+cardValues[value]+cardSuites[suit]+".gif";
-               System.out.println(file); //test filepath
+//               System.out.println(file); //test filepath
                iconCards[value][suit] = new ImageIcon(file);
             }
          }
