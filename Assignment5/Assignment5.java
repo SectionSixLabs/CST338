@@ -144,7 +144,7 @@ class Card
    
    //Sort incoming card array
    static void arraySort(Card[] cards, int arraySize) {
-      int n = cards.length;
+      int n = arraySize;
       for (int i = 0; i < n-1; i++)
           for (int j = 0; j < n-i-1; j++)
               if (getRank(cards[j]) >getRank( cards[j+1]))
@@ -156,6 +156,7 @@ class Card
               }
    }
    
+   //Gets rank of the card, could have used String methods though 
    static int getRank(Card card) {
       for (int i = 0; i<valuRanks.length; i++)
       {
@@ -272,6 +273,10 @@ class Hand
       if (k<=this.numCards && k>0) localCard=this.myCards[k-1];
       return localCard; 
    }
+   
+   void sort() {
+      Card.arraySort(this.myCards, this.myCards.length);
+   }
 }
 
 /**
@@ -285,7 +290,7 @@ class Deck
    //initialize it to allow a maximum of six packs
 
    private static int MAX_PACKS = 6;
-   private static int PACK_SIZE = 52;
+   private static int PACK_SIZE = 56;
    //It is more efficient to use number of packs and pack size separately
    //So we are not doing calculations inside of the deck class
    
@@ -405,6 +410,39 @@ class Deck
             i++; 
          }
       }
+     
+   }
+   /*TODO make sure that there are not too many instances of the card in the deck 
+   if you add it.  Return false if there will be too many.  It should put the 
+   card on the top of the deck.
+   */
+   private boolean addCard (Card card) {
+      if (getNumCards()<this.MAX_CARDS) {
+         
+         return true; 
+      }else return false;
+      
+   }
+   
+   /*you are looking to remove a specific card from the deck.  Put the current 
+    *top card into its place.  Be sure the card you need is actually still in 
+    *the deck, if not return false.*/
+   private boolean removeCard(Card card) {
+      
+      return false;
+   }
+   
+   /*put all of the cards in the deck back into the right order according to 
+    *their values.  Is there another method somewhere that already does this 
+    *that you could refer to?*/
+   private void sort() {
+      Card.arraySort(this.cards, getNumCards());
+      
+   }
+   //return the number of cards remaining in the deck.
+   private int getNumCards() {
+     
+      return this.cards.length;
       
    }
    
