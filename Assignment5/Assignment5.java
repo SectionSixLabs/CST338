@@ -237,12 +237,12 @@ class Hand
    }
    
    //returns and removes the card in the top occupied position of the array.
-   public Card playCard() 
+   public Card playCard(int cardIndex) 
    {
       if (this.numCards>0) 
       {
-         Card cardLocal = this.myCards[this.numCards-1]; 
-         this.myCards[this.numCards-1] = null; 
+         Card cardLocal = this.myCards[cardIndex]; 
+         this.myCards[cardIndex] = null; 
          this.numCards-=1;
          return cardLocal; 
       } else return null; 
