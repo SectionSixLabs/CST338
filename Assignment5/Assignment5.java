@@ -8,11 +8,7 @@
 
 //TODO Please submit one file for each phase (3 .txt files, UML .pdf file)
 
-//TODO Checklist
 //Phase 1 Done. (Comment out tests when submitting.)
-//TODO Phase 2
-//TODO Phase 3
-//TODO Phase 4
 
 //Phase1
 import java.util.*;
@@ -39,6 +35,8 @@ class Card
    public enum Suit {HEARTS, CLUBS, SPADES, DIAMONDS};
    //One addition to be used externally in Deck class
    public final static String cardValues = "A23456789TJQKX";
+   public static char[] valuRanks = {'2', '3', '4', '5', '6', '7', '8', '9',
+         'T', 'J', 'Q', 'K','A','X'};
 
    //Private Member Data
    private char value;
@@ -142,6 +140,29 @@ class Card
    public boolean equals(Card card)
    {
       return(suit.equals(card.suit) && value == card.value);
+   }
+   
+   //Sort incoming card array
+   static void arraySort(Card[] cards, int arraySize) {
+      int n = cards.length;
+      for (int i = 0; i < n-1; i++)
+          for (int j = 0; j < n-i-1; j++)
+              if (getRank(cards[j]) >getRank( cards[j+1]))
+              {
+                  // swap temp and cards[i]
+                 Card temp = cards[j];
+                  cards[j] = cards[j+1];
+                  cards[j+1] = temp;
+              }
+   }
+   
+   static int getRank(Card card) {
+      for (int i = 0; i<valuRanks.length; i++)
+      {
+         if (card.getValue() ==valuRanks[i]) return i; 
+      }
+      return 0;
+      
    }
 
    private boolean isValid(char valueLocal, Suit suitLocal)
