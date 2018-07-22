@@ -15,6 +15,8 @@
 //TODO Phase 4
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.Color;
@@ -106,10 +108,10 @@ public class CardTable extends JFrame
       playAreaBorder.setTitleJustification(TitledBorder.LEFT);
       playAreaBorder.setTitlePosition(TitledBorder.TOP);
 //      
-      JPanel playArea = new JPanel();
-      playArea.setBorder(playAreaBorder);
-      playArea.setLayout(new GridLayout(2,2));
-      add(playArea,BorderLayout.CENTER);
+      pnlPlayArea = new JPanel();
+      pnlPlayArea.setBorder(playAreaBorder);
+      pnlPlayArea.setLayout(new GridLayout(2,2));
+      add(pnlPlayArea,BorderLayout.CENTER);
 //      
 //      JLabel playedCardLabel1, playedCardLabel2;
 //      
@@ -126,11 +128,11 @@ public class CardTable extends JFrame
 //      playArea.add(playedCardLabel2);
 //      
 //      
-//      JLabel computerPlayArea = new JLabel("Computer", JLabel.CENTER);
-//      playArea.add(computerPlayArea);
+      JLabel computerPlayArea = new JLabel("Computer", JLabel.CENTER);
+      pnlPlayArea.add(computerPlayArea);
 //      
-//      JLabel youPlayArea = new JLabel("You", JLabel.CENTER);
-//      playArea.add(youPlayArea);
+      JLabel youPlayArea = new JLabel("You", JLabel.CENTER);
+      pnlPlayArea.add(youPlayArea);
 //      
 //      
 //      

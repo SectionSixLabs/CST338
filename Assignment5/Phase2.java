@@ -14,7 +14,9 @@ public class Phase2
    public static void main(String[] args)
    {
       int k;
-      Icon tempIcon;
+//      Icon tempIcon;
+      GuiCard gui = new  GuiCard();
+      GuiCard.loadCardIcons();
       
       // establish main frame in which program will run
       CardTable myCardTable 
@@ -28,12 +30,11 @@ public class Phase2
 
       // CREATE LABELS ----------------------------------------------------
       //TODO code goes here ...
-      GuiCard gui = new  GuiCard();
-      GuiCard.loadCardIcons();
+
     // ADDING Labels TO COMPUTER HAND
     for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
     {
-       tempIcon = GuiCard.getBackCardIcon();
+       Icon tempIcon = GuiCard.getBackCardIcon();
        JLabel temlLabel = new JLabel(); 
        temlLabel.setIcon(tempIcon); 
        computerLabels[i]=temlLabel;
@@ -42,7 +43,7 @@ public class Phase2
     // ADDING Labels TO HUMAN HAND
     for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
     {
-       tempIcon = GuiCard.getBackCardIcon();
+       Icon tempIcon = GuiCard.getBackCardIcon();
        JLabel temlLabel = new JLabel(); 
        temlLabel.setIcon(tempIcon);
        humanLabels[i]=temlLabel;
@@ -59,15 +60,19 @@ public class Phase2
       myCardTable.setVisible(true);
       //TODO code goes here ...
       Card card = new Card(); 
-      tempIcon = GuiCard.getIcon(card);
-      JLabel temlLabel = new JLabel(); 
-      temlLabel.setIcon(tempIcon);
+      Icon tempIcon = GuiCard.getIcon(card);
+      JLabel temlLabel1 = new JLabel(); 
+      JLabel temlLabel2 = new JLabel(); 
+      temlLabel1.setHorizontalAlignment(JLabel.CENTER);
+      temlLabel2.setHorizontalAlignment(JLabel.CENTER);
+      temlLabel1.setIcon(tempIcon);
+      temlLabel2.setIcon(tempIcon);
       
-      playedCardLabels[0] = temlLabel; 
-      playedCardLabels[1] = temlLabel; 
+      playedCardLabels[0] = temlLabel1; 
+      playedCardLabels[1] = temlLabel2; 
       
-      myCardTable.pnlPlayArea.add(temlLabel);
-      myCardTable.pnlPlayArea.add(temlLabel);
+      myCardTable.pnlPlayArea.add(playedCardLabels[0]);
+      myCardTable.pnlPlayArea.add(playedCardLabels[1]);
       
       // show everything to the user
       myCardTable.setVisible(true);
