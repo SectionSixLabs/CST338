@@ -26,7 +26,9 @@ public class Assignment5
    static int NUM_CARDS_PER_HAND = 7;
    static int  NUM_PLAYERS = 2;
    static JLabel[] computerLabels = new JLabel[NUM_CARDS_PER_HAND];
-   static JLabel[] humanLabels = new JLabel[NUM_CARDS_PER_HAND];  
+   static JLabel[] humanLabels = new JLabel[NUM_CARDS_PER_HAND];
+   static JButton[] humanButtons = new JButton [NUM_CARDS_PER_HAND];
+   static EndingListener[] humanListner = new EndingListener[NUM_CARDS_PER_HAND]; 
    static JLabel[] playedCardLabels  = new JLabel[NUM_PLAYERS]; 
    static JLabel[] playLabelText  = new JLabel[NUM_PLAYERS]; 
 
@@ -67,8 +69,17 @@ public class Assignment5
          Icon tempIcon = 
                GuiCard.getIcon(highCardGame.getHand(1).inspectCard(i+1));
          JLabel temlLabel = new JLabel(); 
+         JButton tempButton = 
+               new JButton();
+         EndingListener tempListner = new EndingListener();
+         tempButton.addActionListener(tempListner);
+         tempButton.setIcon(tempIcon);
+         tempButton.setActionCommand((i+1)+"");
+         tempButton.setBorder(null);
          temlLabel.setIcon(tempIcon);
          humanLabels[i]=temlLabel;
+         humanButtons[i] = tempButton; 
+         humanListner[i] = tempListner; 
       }
 
         // ADD LABELS TO PANELS -----------------------------------------
@@ -76,7 +87,8 @@ public class Assignment5
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
       {
          myCardTable.pnlComputerHand.add(computerLabels[i]);
-         myCardTable.pnlHumanHand.add(humanLabels[i]);
+         //myCardTable.pnlHumanHand.add(humanLabels[i]);
+         myCardTable.pnlHumanHand.add(humanButtons[i]);
       }
       
       myCardTable.setVisible(true);
@@ -139,13 +151,14 @@ public class Assignment5
       JLabel compScore = new JLabel("0", SwingConstants.CENTER);
       JLabel gameScore = new JLabel("SCORE");
       JLabel humScore = new JLabel("0", SwingConstants.CENTER);
+      
       myCardTable.pnlScore.add(compScore);
       myCardTable.pnlScore.add(gameScore);
       myCardTable.pnlScore.add(humScore);
       
+      
       //TODO Create a Game Loop
       while (true) {
-         
          
          break; 
       }
@@ -167,6 +180,7 @@ public class Assignment5
 
 class EndingListener implements ActionListener
 {
+   
    public void actionPerformed(ActionEvent e)
    {
       String actionCommand = e.getActionCommand();
@@ -206,6 +220,9 @@ class EndingListener implements ActionListener
       else
       {
          System.out.println("Unexpected Error.");
+         System.out.println(actionCommand.toString());
+
+
       }
    }
 }
