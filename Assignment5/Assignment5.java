@@ -11,10 +11,14 @@
 //Phase 1 Done. (Comment out tests when submitting.)
 
 //Phase1
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JButton;
 
 
 public class Assignment5
@@ -43,8 +47,9 @@ public class Assignment5
       
       highCardGame.deal(); 
       
+      boolean c2 = true;
       CardTable myCardTable = 
-            new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS);
+            new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS, c2);
       myCardTable.setVisible(true);
       
       // ADDING Labels TO COMPUTER HAND
@@ -76,6 +81,60 @@ public class Assignment5
       
       myCardTable.setVisible(true);
       
+      //  //TODO Means of selection card from Human Hand
+      //Maybe have a button for each card to play
+      //[Play Card1][Play Card2][Play Card3]..etc..
+      
+      //an example here, however we will need to add a new panel on the frame layout
+      
+      //Adding Buttons
+      //Extra close Button (an example)
+      
+      //TODO discussion on what we want to implement with team 
+            
+      JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
+      myCardTable.pnlButton.add(instruction);
+      
+      JButton c1Button = new JButton("Card1");
+      EndingListener c1Ear = new EndingListener();
+      c1Button.addActionListener(c1Ear);
+      myCardTable.pnlButton.add(c1Button);
+      
+      JButton c2Button = new JButton("Card2");
+      EndingListener c2Ear = new EndingListener();
+      c2Button.addActionListener(c2Ear);
+      myCardTable.pnlButton.add(c2Button);
+      
+      JButton c3Button = new JButton("Card3");
+      EndingListener c3Ear = new EndingListener();
+      c3Button.addActionListener(c3Ear);
+      myCardTable.pnlButton.add(c3Button);
+      
+      JButton c4Button = new JButton("Card4");
+      EndingListener c4Ear = new EndingListener();
+      c4Button.addActionListener(c4Ear);
+      myCardTable.pnlButton.add(c4Button);
+      
+      JButton c5Button = new JButton("Card5");
+      EndingListener c5Ear = new EndingListener();
+      c5Button.addActionListener(c5Ear);
+      myCardTable.pnlButton.add(c5Button);
+      
+      JButton c6Button = new JButton("Card6");
+      EndingListener c6Ear = new EndingListener();
+      c6Button.addActionListener(c6Ear);
+      myCardTable.pnlButton.add(c6Button);
+      
+      JButton c7Button = new JButton("Card7");
+      EndingListener c7Ear = new EndingListener();
+      c7Button.addActionListener(c7Ear);
+      myCardTable.pnlButton.add(c7Button);
+      
+      JButton endButton = new JButton("Bye");
+      EndingListener buttonEar = new EndingListener();
+      endButton.addActionListener(buttonEar);
+      myCardTable.pnlButton.add(endButton);
+      
       //TODO Create a Game Loop
       while (true) {
          
@@ -84,6 +143,19 @@ public class Assignment5
       }
    }
 
+}
+
+class EndingListener implements ActionListener
+{
+   public void actionPerformed(ActionEvent e)
+   {
+      String actionCommand = e.getActionCommand();
+      if(actionCommand.equals("Bye"))
+      {
+         System.out.println("Closing Program. Goodbye!");
+         System.exit(0);
+      }
+   }
 }
 
 

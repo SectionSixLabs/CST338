@@ -32,7 +32,7 @@ public class CardTable extends JFrame
    private int numCardsPerHand;
    private int numPlayers;
 
-   public JPanel pnlComputerHand, pnlHumanHand, pnlPlayArea;
+   public JPanel pnlComputerHand, pnlHumanHand, pnlPlayArea, pnlButton;
    
    public CardTable(String title, int numCardsPerHand, int numPlayers)
    {
@@ -155,6 +155,68 @@ public class CardTable extends JFrame
 //         pnlHumanHand.add(humanCardsLabel);  
 //      }
    }
+   
+   //Second Constructor
+ //Second Constructor for Phase3
+   public CardTable(String title, int numCardsPerHand, int numPlayers, boolean x)
+   {
+      super(title);
+      this.numCardsPerHand = numCardsPerHand;
+      this.numPlayers = numPlayers;
+      
+//      String myDir = System.getProperty("user.dir");
+      
+      
+      setSize(800, 600);
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setBackground(Color.GREEN);
+      setLayout(new BorderLayout());
+      
+      
+//      // COMPUTER HAND  
+      TitledBorder computerHandBorder = new TitledBorder("Computer Hand");
+      computerHandBorder.setTitleJustification(TitledBorder.LEFT);
+      computerHandBorder.setTitlePosition(TitledBorder.TOP);
+      
+      
+      pnlComputerHand = new JPanel();
+      pnlComputerHand.setBorder(computerHandBorder);
+      pnlComputerHand.setLayout(new FlowLayout());
+      add(pnlComputerHand,BorderLayout.NORTH);
+      
+      TitledBorder playAreaBorder = new TitledBorder("Play Area");
+      playAreaBorder.setTitleJustification(TitledBorder.LEFT);
+      playAreaBorder.setTitlePosition(TitledBorder.TOP);
+      
+      pnlPlayArea = new JPanel();
+      pnlPlayArea.setBorder(playAreaBorder);
+      pnlPlayArea.setLayout(new GridLayout(2,2));
+      add(pnlPlayArea,BorderLayout.CENTER);
+     
+           
+      JLabel computerPlayArea = new JLabel("Computer", JLabel.CENTER);
+      pnlPlayArea.add(computerPlayArea);
+      
+      JLabel youPlayArea = new JLabel("You", JLabel.CENTER);
+      pnlPlayArea.add(youPlayArea);
+      
+      
+      // HUMAN HAND
+      TitledBorder humanHandBorder = new TitledBorder("Your Hand");
+      humanHandBorder.setTitleJustification(TitledBorder.LEFT);
+      humanHandBorder.setTitlePosition(TitledBorder.TOP);
+      
+      pnlHumanHand = new JPanel();
+      pnlHumanHand.setBorder(humanHandBorder);
+      pnlHumanHand.setLayout(new FlowLayout());
+      add(pnlHumanHand,BorderLayout.SOUTH);
+
+      //BUTTON Panel
+      pnlButton = new JPanel();
+      pnlButton.setLayout(new GridLayout(9,1));
+      add(pnlButton,BorderLayout.EAST);
+      
+   } //End of 2nd Constructor
    
    //Accessors for the two instance members
   public int getNumCardsPerHand()
