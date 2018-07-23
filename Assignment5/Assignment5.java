@@ -60,7 +60,7 @@ public class Assignment5
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
       {
          Icon tempIcon = 
-               GuiCard.getIcon(highCardGame.getHand(0).inspectCard(i+1));
+               GuiCard.getIcon(highCardGame.getHand(1).inspectCard(i+1));
          JLabel temlLabel = new JLabel(); 
          temlLabel.setIcon(tempIcon);
          humanLabels[i]=temlLabel;
@@ -78,6 +78,7 @@ public class Assignment5
       
       //TODO Create a Game Loop
       while (true) {
+         
          
          break; 
       }
