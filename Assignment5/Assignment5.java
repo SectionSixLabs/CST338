@@ -112,46 +112,6 @@ public class Assignment5
       JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
       myCardTable.pnlButton.add(instruction);
       
-      JButton c1Button = new JButton("Card1");
-      EndingListener c1Ear = new EndingListener();
-      c1Button.addActionListener(c1Ear);
-      myCardTable.pnlButton.add(c1Button);
-      
-      JButton c2Button = new JButton("Card2");
-      EndingListener c2Ear = new EndingListener();
-      c2Button.addActionListener(c2Ear);
-      myCardTable.pnlButton.add(c2Button);
-      
-      JButton c3Button = new JButton("Card3");
-      EndingListener c3Ear = new EndingListener();
-      c3Button.addActionListener(c3Ear);
-      myCardTable.pnlButton.add(c3Button);
-      
-      JButton c4Button = new JButton("Card4");
-      EndingListener c4Ear = new EndingListener();
-      c4Button.addActionListener(c4Ear);
-      myCardTable.pnlButton.add(c4Button);
-      
-      JButton c5Button = new JButton("Card5");
-      EndingListener c5Ear = new EndingListener();
-      c5Button.addActionListener(c5Ear);
-      myCardTable.pnlButton.add(c5Button);
-      
-      JButton c6Button = new JButton("Card6");
-      EndingListener c6Ear = new EndingListener();
-      c6Button.addActionListener(c6Ear);
-      myCardTable.pnlButton.add(c6Button);
-      
-      JButton c7Button = new JButton("Card7");
-      EndingListener c7Ear = new EndingListener();
-      c7Button.addActionListener(c7Ear);
-      myCardTable.pnlButton.add(c7Button);
-      
-      JButton endButton = new JButton("Exit");
-      EndingListener buttonEar = new EndingListener();
-      endButton.addActionListener(buttonEar);
-      myCardTable.pnlButton.add(endButton);
-      
       //Socre Panel
       JLabel compScore = new JLabel("0", SwingConstants.CENTER);
       JLabel gameScore = new JLabel("SCORE");
@@ -201,34 +161,6 @@ class EndingListener implements ActionListener
       {
          System.out.println("Closing Program. Goodbye!");
          System.exit(0);
-      }
-      else if(actionCommand.equals("Card1"))
-      {
-         Assignment5.hi();
-      }
-      else if(actionCommand.equals("Card2"))
-      {
-         
-      }
-      else if(actionCommand.equals("Card3"))
-      {
-         
-      }
-      else if(actionCommand.equals("Card4"))
-      {
-         
-      }
-      else if(actionCommand.equals("Card5"))
-      {
-         
-      }
-      else if(actionCommand.equals("Card6"))
-      {
-         
-      }
-      else if(actionCommand.equals("Card7"))
-      {
-         
       }
       else
       {
