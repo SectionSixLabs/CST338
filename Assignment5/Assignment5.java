@@ -45,6 +45,8 @@ public class Assignment5
             numUnusedCardsPerPack, unusedCardsPerPack, 
             NUM_PLAYERS, NUM_CARDS_PER_HAND);
       
+
+      
       GuiCard.loadCardIcons();
       
       highCardGame.deal(); 
@@ -53,6 +55,8 @@ public class Assignment5
       CardTable myCardTable = 
             new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS, c2);
       myCardTable.setVisible(true);
+      
+      EndingListener.initListener(highCardGame, myCardTable); 
       
       // ADDING Labels TO COMPUTER HAND
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
@@ -71,6 +75,7 @@ public class Assignment5
          JLabel temlLabel = new JLabel(); 
          JButton tempButton = 
                new JButton();
+         
          EndingListener tempListner = new EndingListener();
          tempButton.addActionListener(tempListner);
          tempButton.setIcon(tempIcon);
@@ -171,6 +176,7 @@ public class Assignment5
       System.out.println(cardLeft);
       
    }
+
    public static void hi()
    {
       System.out.println("hi from buttonpress");
@@ -180,6 +186,13 @@ public class Assignment5
 
 class EndingListener implements ActionListener
 {
+   static CardGameFramework highCardGame;
+   static CardTable myCardTable; 
+   
+   static void  initListener (CardGameFramework game, CardTable table) {
+      highCardGame = game; 
+      myCardTable = table; 
+   }
    
    public void actionPerformed(ActionEvent e)
    {
@@ -221,6 +234,14 @@ class EndingListener implements ActionListener
       {
          System.out.println("Unexpected Error.");
          System.out.println(actionCommand.toString());
+         Card inPlayCard = highCardGame.playCard(1, Integer.valueOf(e.getActionCommand()));
+         Icon tempIcon1 = GuiCard.getIcon(inPlayCard);
+         JLabel temlLabel1 = new JLabel(); 
+         temlLabel1.setHorizontalAlignment(JLabel.CENTER);
+         temlLabel1.setIcon(tempIcon1);
+         myCardTable.pnlPlayArea.add(temlLabel1);
+         //TODO needs alignment in play area 
+         myCardTable.setVisible(true);
 
 
       }
