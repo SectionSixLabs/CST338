@@ -56,7 +56,7 @@ public class Assignment5
             new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS, c2);
       myCardTable.setVisible(true);
       
-      EndingListener.initListener(highCardGame, myCardTable); 
+      EndingListener.initListener(highCardGame, myCardTable, humanButtons,humanLabels); 
       
       // ADDING Labels TO COMPUTER HAND
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
@@ -79,7 +79,7 @@ public class Assignment5
          EndingListener tempListner = new EndingListener();
          tempButton.addActionListener(tempListner);
          tempButton.setIcon(tempIcon);
-         tempButton.setActionCommand((i+1)+"");
+         tempButton.setActionCommand((i)+"");
          tempButton.setBorder(null);
          temlLabel.setIcon(tempIcon);
          humanLabels[i]=temlLabel;
@@ -148,10 +148,15 @@ class EndingListener implements ActionListener
 {
    static CardGameFramework highCardGame;
    static CardTable myCardTable; 
+   static JButton[] humanButtons; 
+   static JLabel[] humanLabels;
    
-   static void  initListener (CardGameFramework game, CardTable table) {
+   //Retrieve reference to game data
+   static void  initListener (CardGameFramework game, CardTable table, JButton[] hB, JLabel[] hL) {
       highCardGame = game; 
       myCardTable = table; 
+      humanButtons = hB; 
+      humanLabels = hL; 
    }
    
    public void actionPerformed(ActionEvent e)
@@ -164,20 +169,23 @@ class EndingListener implements ActionListener
       }
       else
       {
-         System.out.println("Unexpected Error.");
+         int cardIndex = Integer.valueOf(e.getActionCommand()); 
+         //System.out.println("Unexpected Error.");
          System.out.println(actionCommand.toString());
-         Card inPlayCard = highCardGame.playCard(1, Integer.valueOf(e.getActionCommand()));
-         Icon tempIcon1 = GuiCard.getIcon(inPlayCard);
-         JLabel temlLabel1 = new JLabel(); 
-         temlLabel1.setHorizontalAlignment(JLabel.CENTER);
-         temlLabel1.setIcon(tempIcon1);
-         myCardTable.pnlPlayArea.add(temlLabel1);
-         //TODO needs alignment in play area 
-         myCardTable.setVisible(true);
+         System.out.println("Playing: "+highCardGame.playCard(1, cardIndex).toString());
+         //Card inPlayCard = ;
+         //Icon tempIcon1 = GuiCard.getIcon(inPlayCard);
+         //JLabel temlLabel1 = new JLabel(); 
+         humanButtons[cardIndex].setHorizontalAlignment(JLabel.CENTER);
 
+         myCardTable.pnlPlayArea.add(humanLabels[cardIndex]);
+         myCardTable.pnlHumanHand.remove(humanButtons[cardIndex]);
+         myCardTable.setVisible(true);
+         myCardTable.repaint();
 
       }
    }
+
 }
 
 
