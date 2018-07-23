@@ -32,7 +32,7 @@ public class CardTable extends JFrame
    private int numCardsPerHand;
    private int numPlayers;
 
-   public JPanel pnlComputerHand, pnlHumanHand, pnlPlayArea, pnlButton;
+   public JPanel pnlComputerHand, pnlHumanHand, pnlPlayArea, pnlButton, pnlScore;
    
    public CardTable(String title, int numCardsPerHand, int numPlayers)
    {
@@ -167,7 +167,7 @@ public class CardTable extends JFrame
 //      String myDir = System.getProperty("user.dir");
       
       
-      setSize(800, 600);
+      setSize(900, 700);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setBackground(Color.GREEN);
       setLayout(new BorderLayout());
@@ -215,6 +215,11 @@ public class CardTable extends JFrame
       pnlButton = new JPanel();
       pnlButton.setLayout(new GridLayout(9,1));
       add(pnlButton,BorderLayout.EAST);
+      
+      //Score Panel
+      pnlScore = new JPanel();
+      pnlScore.setLayout(new GridLayout(3, 1));
+      add(pnlScore,BorderLayout.WEST);
       
    } //End of 2nd Constructor
    

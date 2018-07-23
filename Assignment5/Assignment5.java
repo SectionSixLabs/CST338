@@ -130,10 +130,18 @@ public class Assignment5
       c7Button.addActionListener(c7Ear);
       myCardTable.pnlButton.add(c7Button);
       
-      JButton endButton = new JButton("Bye");
+      JButton endButton = new JButton("Exit");
       EndingListener buttonEar = new EndingListener();
       endButton.addActionListener(buttonEar);
       myCardTable.pnlButton.add(endButton);
+      
+      //Socre Panel
+      JLabel compScore = new JLabel("0", SwingConstants.CENTER);
+      JLabel gameScore = new JLabel("SCORE");
+      JLabel humScore = new JLabel("0", SwingConstants.CENTER);
+      myCardTable.pnlScore.add(compScore);
+      myCardTable.pnlScore.add(gameScore);
+      myCardTable.pnlScore.add(humScore);
       
       //TODO Create a Game Loop
       while (true) {
@@ -141,6 +149,18 @@ public class Assignment5
          
          break; 
       }
+      
+      
+      //Testing Area
+      System.out.println("Hi from end of Assingment5");
+      System.out.println("How mnay cards are left in deck");
+      int cardLeft = highCardGame.getNumCardsRemainingInDeck();
+      System.out.println(cardLeft);
+      
+   }
+   public static void hi()
+   {
+      System.out.println("hi from buttonpress");
    }
 
 }
@@ -150,10 +170,42 @@ class EndingListener implements ActionListener
    public void actionPerformed(ActionEvent e)
    {
       String actionCommand = e.getActionCommand();
-      if(actionCommand.equals("Bye"))
+      if(actionCommand.equals("Exit"))
       {
          System.out.println("Closing Program. Goodbye!");
          System.exit(0);
+      }
+      else if(actionCommand.equals("Card1"))
+      {
+         Assignment5.hi();
+      }
+      else if(actionCommand.equals("Card2"))
+      {
+         
+      }
+      else if(actionCommand.equals("Card3"))
+      {
+         
+      }
+      else if(actionCommand.equals("Card4"))
+      {
+         
+      }
+      else if(actionCommand.equals("Card5"))
+      {
+         
+      }
+      else if(actionCommand.equals("Card6"))
+      {
+         
+      }
+      else if(actionCommand.equals("Card7"))
+      {
+         
+      }
+      else
+      {
+         System.out.println("Unexpected Error.");
       }
    }
 }
