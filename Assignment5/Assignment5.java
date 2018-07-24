@@ -191,18 +191,18 @@ class EndingListener implements ActionListener
          //pcTurn(); 
          pcTurn2(cardIndex); //matching card# human chooses
          
-         updateScore(cardIndex);
+         updateScore();
       }
    }
    
-   private void updateScore(int cardIndex)
+   private void updateScore()
    {
       //Testing the card values
      //System.out.println("PC val:"+highCardGame.getHand(0).inspectCard(cardIndex));
      //System.out.println("Hum val:"+highCardGame.getHand(1).inspectCard(cardIndex));
   
-      int pcRank = Card.getRank(highCardGame.getHand(0).inspectCard(cardIndex));
-      int humRank = Card.getRank(highCardGame.getHand(1).inspectCard(cardIndex));
+      int pcRank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
+      int humRank = Card.getRank(cardsInPlay[player.One.ordinal()]);
       System.out.println("rankPCrank: "+pcRank);
       System.out.println("rankHumRank: "+humRank);
       //need to check out the card.getRank
@@ -270,7 +270,7 @@ class EndingListener implements ActionListener
       
    } 
    
-   private void pcTurn2(int x) {
+   private void pcTurn2(int cardIndex) {
       /* Testing Cards in Computer Hands
       for(int x=0; x<NUM_CARDS_PER_HAND;x++)
       {
@@ -287,25 +287,26 @@ class EndingListener implements ActionListener
       
       if(Assignment5.playNum == 0)
       {
-         myCardTable.pnlPlayArea.add(computerFaces[x]);
-         myCardTable.pnlPlayArea.remove(computerLabels[x]);
-         Assignment5.oldIndex = x;
+         myCardTable.pnlPlayArea.add(computerFaces[cardIndex]);
+         myCardTable.pnlPlayArea.remove(computerLabels[cardIndex]);
+         Assignment5.oldIndex = cardIndex;
       }
       else if(Assignment5.playNum > 0)
       {
          myCardTable.pnlPlayArea.remove(computerFaces[Assignment5.oldIndex]);
          
-         Assignment5.oldIndex = x;
-         myCardTable.pnlPlayArea.add(computerFaces[x]);
+         Assignment5.oldIndex = cardIndex;
+         myCardTable.pnlPlayArea.add(computerFaces[cardIndex]);
        
          //computerFaces = array with card faces
          //computerLabels = back of card
         
       }
-      
+      cardsInPlay[player.CPU.ordinal()]=highCardGame.playCard(player.CPU.ordinal(), cardIndex); 
+      System.out.println("CPU Playing: "+cardsInPlay[player.CPU.ordinal()].toString());
       Assignment5.playNum++;
 
-      myCardTable.pnlPlayArea.remove(computerLabels[x]);
+      myCardTable.pnlComputerHand.remove(computerLabels[cardIndex]);
   
       myCardTable.setVisible(true);
       myCardTable.repaint();
@@ -317,17 +318,17 @@ class EndingListener implements ActionListener
       //System.out.println("Unexpected Error.");
       // making sure we have a card ref
       cardsInPlay[player.One.ordinal()]=highCardGame.playCard(player.One.ordinal(), cardIndex); 
-      System.out.println("Playing: "+cardsInPlay[player.One.ordinal()].toString());
+      System.out.println("Odin Playing: "+cardsInPlay[player.One.ordinal()].toString());
 
       
-      //humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
+      humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
       humanLabels[cardIndex].setBorder(null);
       
       if (playedCardLabels[player.One.ordinal()]!=null) {
          myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);          
       }
       
-      myCardTable.pnlPlayArea.add(humanLabels[cardIndex],0,1);
+      myCardTable.pnlPlayArea.add(humanLabels[cardIndex]);
       playedCardLabels[player.One.ordinal()] = humanLabels[cardIndex]; 
       myCardTable.pnlHumanHand.remove(humanButtons[cardIndex]);
       myCardTable.setVisible(true);

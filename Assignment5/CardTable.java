@@ -192,14 +192,14 @@ public class CardTable extends JFrame
       pnlPlayArea.setBorder(playAreaBorder);
       pnlPlayArea.setLayout(new GridLayout(2,2));
       add(pnlPlayArea,BorderLayout.CENTER);
-     
+
+      JLabel youPlayArea = new JLabel("You", JLabel.CENTER);
+      pnlPlayArea.add(youPlayArea);
            
       JLabel computerPlayArea = new JLabel("Computer", JLabel.CENTER);
-      pnlPlayArea.add(computerPlayArea, 0, 0);
+      pnlPlayArea.add(computerPlayArea);
       
-      JLabel youPlayArea = new JLabel("You", JLabel.CENTER);
-      pnlPlayArea.add(youPlayArea, 0,1);
-      
+     
       
       // HUMAN HAND
       TitledBorder humanHandBorder = new TitledBorder("Your Hand");
