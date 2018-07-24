@@ -56,7 +56,9 @@ public class Assignment5
             new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS, c2);
       myCardTable.setVisible(true);
       
-      EndingListener.initListener(highCardGame, myCardTable, humanButtons,humanLabels); 
+      EndingListener.initListener(highCardGame, myCardTable, 
+            humanButtons,humanLabels,computerLabels,playedCardLabels,
+            playLabelText,NUM_PLAYERS, NUM_CARDS_PER_HAND ); 
       
       // ADDING Labels TO COMPUTER HAND
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
@@ -146,17 +148,31 @@ public class Assignment5
 
 class EndingListener implements ActionListener
 {
+   static int NUM_CARDS_PER_HAND;
+   static int  NUM_PLAYERS;
    static CardGameFramework highCardGame;
    static CardTable myCardTable; 
    static JButton[] humanButtons; 
    static JLabel[] humanLabels;
+   static JLabel[] computerLabels;
+   static JLabel[] playedCardLabels; 
+   static JLabel[] playLabelText; 
    
    //Retrieve reference to game data
-   static void  initListener (CardGameFramework game, CardTable table, JButton[] hB, JLabel[] hL) {
+   //XXX Listner Init
+   static void  initListener (CardGameFramework game, CardTable table, 
+         JButton[] hB, JLabel[] hL, JLabel[] cL, JLabel[] pCL,JLabel[] pLtxt, 
+         int nP, int nCPH) {
       highCardGame = game; 
       myCardTable = table; 
       humanButtons = hB; 
       humanLabels = hL; 
+      computerLabels = cL; 
+      playedCardLabels = pCL;
+      playLabelText = pLtxt;
+      NUM_CARDS_PER_HAND = nCPH;
+      NUM_PLAYERS = nP; 
+      
    }
    
    public void actionPerformed(ActionEvent e)
@@ -173,18 +189,24 @@ class EndingListener implements ActionListener
          //System.out.println("Unexpected Error.");
          System.out.println(actionCommand.toString());
          System.out.println("Playing: "+highCardGame.playCard(1, cardIndex).toString());
-         //Card inPlayCard = ;
-         //Icon tempIcon1 = GuiCard.getIcon(inPlayCard);
-         //JLabel temlLabel1 = new JLabel(); 
-         humanButtons[cardIndex].setHorizontalAlignment(JLabel.CENTER);
-
+         humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
+         humanLabels[cardIndex].setBorder(null);
+         if (playedCardLabels[1]!=null) {
+            myCardTable.pnlPlayArea.remove(playedCardLabels[1]);          
+         }
+         
          myCardTable.pnlPlayArea.add(humanLabels[cardIndex]);
+         playedCardLabels[1] = humanLabels[cardIndex]; 
          myCardTable.pnlHumanHand.remove(humanButtons[cardIndex]);
          myCardTable.setVisible(true);
          myCardTable.repaint();
 
       }
    }
+   
+   private void pcTurn() {
+      
+   } 
 
 }
 
