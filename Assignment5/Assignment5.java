@@ -19,6 +19,7 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
 
 public class Assignment5
@@ -38,6 +39,7 @@ public class Assignment5
    static int oldIndex = 0;
    static int scorePC = 0;
    static int scoreHum = 0;
+   static int numTurns = 0;
    // a simple main to throw all the JLabels out there for the world to see
    public static void main(String[] args)
    {
@@ -115,8 +117,8 @@ public class Assignment5
       myCardTable.setVisible(true);
       
             
-      JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
-      myCardTable.pnlButton.add(instruction);
+      //JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
+      //myCardTable.pnlButton.add(instruction);
       
       //Socre Panel
       JLabel compScore = new JLabel(scorePC+"", SwingConstants.CENTER);
@@ -195,6 +197,11 @@ class EndingListener implements ActionListener
          pcTurn2(cardIndex); //matching card# human chooses
          
          updateScore();
+         Assignment5.numTurns += 1;
+         if(Assignment5.numTurns == Assignment5.NUM_CARDS_PER_HAND)
+         {
+            EndGame();
+         }
       }
    }
    
@@ -298,7 +305,45 @@ class EndingListener implements ActionListener
       myCardTable.setVisible(true);
       myCardTable.repaint();
    } 
+   
+   private void EndGame()
+   {
+      int WIDTH = 300;
+      int HEIGHT = 200;
+      
+      JFrame endWindow = new JFrame();
+      endWindow.setSize(WIDTH, HEIGHT);
+      
+      endWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
+      String messageText = "";
+      if(Assignment5.scoreHum > Assignment5.scorePC)
+      {
+         messageText = "You win!";
+      }
+      else if(Assignment5.scoreHum < Assignment5.scorePC)
+      {
+         messageText = "You lose.";
+      }
+      else
+      {
+         messageText = "Tied Game!";
+      }
+      JButton endButton = new JButton(messageText);
+      EndListener buttonEar = new EndListener();
+      endButton.addActionListener(buttonEar);
+      endWindow.add(endButton);
+      endWindow.setVisible(true);  
+   }
+}
 
+class EndListener implements ActionListener
+{
+public void actionPerformed(ActionEvent e)
+{
+   System.out.println("Closing Program. Goodbye!");
+   System.exit(0);
+}
 }
 
 
