@@ -33,8 +33,8 @@ public class Assignment5
    static JLabel[] playedCardLabels  = new JLabel[NUM_PLAYERS]; 
    static JLabel[] playLabelText  = new JLabel[NUM_PLAYERS]; 
    static Card[] cardsInPlay = new Card[NUM_PLAYERS];
-
-
+   static int playNum = 0;
+   static int oldIndex = 0;
    // a simple main to throw all the JLabels out there for the world to see
    public static void main(String[] args)
    {
@@ -194,9 +194,9 @@ class EndingListener implements ActionListener
          int cardIndex = Integer.valueOf(e.getActionCommand()); 
          System.out.println(actionCommand.toString());
          playerTurn( cardIndex);
-         pcTurn(); 
-
-
+         //pcTurn(); 
+         pcTurn2(cardIndex); //matching card# human chooses
+         
       }
    }
    
@@ -234,6 +234,40 @@ class EndingListener implements ActionListener
       myCardTable.setVisible(true);
       myCardTable.repaint();
       
+   } 
+   
+   private void pcTurn2(int x) {
+      /* Testing Cards in Computer Hands
+      for(int x=0; x<NUM_CARDS_PER_HAND;x++)
+      {
+         System.out.println("PC card "+"x"+": "+highCardGame.getHand(0).inspectCard(x+1));
+      } 
+      
+        Icon tempIcon = GuiCard.getIcon(highCardGame.getHand(0).inspectCard(x));
+        computerLabels[x].setHorizontalAlignment(JLabel.CENTER);
+        computerLabels[x].setBorder(null);
+        computerLabels[x] = new JLabel(tempIcon);
+        myCardTable.pnlPlayArea.add(computerLabels[x]);
+        System.out.println("playNum: "+ Assignment5.playNum);
+      */
+      
+      if(Assignment5.playNum == 0)
+      {
+         myCardTable.pnlPlayArea.add(computerLabels[x]);
+         Assignment5.oldIndex = x;
+      }
+      else if(Assignment5.playNum > 0)
+      {
+         myCardTable.pnlPlayArea.remove(computerLabels[Assignment5.oldIndex]);
+         Assignment5.oldIndex = x;
+         myCardTable.pnlPlayArea.add(computerLabels[x]);
+      }
+      
+      Assignment5.playNum++;
+      
+      myCardTable.pnlPlayArea.add(computerLabels[x]);
+      myCardTable.setVisible(true);
+      myCardTable.repaint();
    } 
    
    private void playerTurn(int cardIndex) {
