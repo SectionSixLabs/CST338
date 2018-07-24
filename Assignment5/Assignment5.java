@@ -31,6 +31,7 @@ public class Assignment5
    static EndingListener[] humanListner = new EndingListener[NUM_CARDS_PER_HAND]; 
    static JLabel[] playedCardLabels  = new JLabel[NUM_PLAYERS]; 
    static JLabel[] playLabelText  = new JLabel[NUM_PLAYERS]; 
+   static Card[] cardsInPlay = new Card[NUM_PLAYERS];
 
 
    // a simple main to throw all the JLabels out there for the world to see
@@ -58,7 +59,7 @@ public class Assignment5
       
       EndingListener.initListener(highCardGame, myCardTable, 
             humanButtons,humanLabels,computerLabels,playedCardLabels,
-            playLabelText,NUM_PLAYERS, NUM_CARDS_PER_HAND ); 
+            playLabelText,cardsInPlay,NUM_PLAYERS, NUM_CARDS_PER_HAND ); 
       
       // ADDING Labels TO COMPUTER HAND
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
@@ -148,6 +149,7 @@ public class Assignment5
 
 class EndingListener implements ActionListener
 {
+   public enum player {CPU, One}; 
    static int NUM_CARDS_PER_HAND;
    static int  NUM_PLAYERS;
    static CardGameFramework highCardGame;
@@ -157,12 +159,13 @@ class EndingListener implements ActionListener
    static JLabel[] computerLabels;
    static JLabel[] playedCardLabels; 
    static JLabel[] playLabelText; 
+   static Card[] cardsInPlay; 
    
    //Retrieve reference to game data
    //XXX Listner Init
    static void  initListener (CardGameFramework game, CardTable table, 
          JButton[] hB, JLabel[] hL, JLabel[] cL, JLabel[] pCL,JLabel[] pLtxt, 
-         int nP, int nCPH) {
+         Card[] cIP, int nP, int nCPH) {
       highCardGame = game; 
       myCardTable = table; 
       humanButtons = hB; 
@@ -170,6 +173,7 @@ class EndingListener implements ActionListener
       computerLabels = cL; 
       playedCardLabels = pCL;
       playLabelText = pLtxt;
+      cardsInPlay = cIP; 
       NUM_CARDS_PER_HAND = nCPH;
       NUM_PLAYERS = nP; 
       
@@ -186,26 +190,36 @@ class EndingListener implements ActionListener
       else
       {
          int cardIndex = Integer.valueOf(e.getActionCommand()); 
-         //System.out.println("Unexpected Error.");
          System.out.println(actionCommand.toString());
-         System.out.println("Playing: "+highCardGame.playCard(1, cardIndex).toString());
-         humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
-         humanLabels[cardIndex].setBorder(null);
-         if (playedCardLabels[1]!=null) {
-            myCardTable.pnlPlayArea.remove(playedCardLabels[1]);          
-         }
-         
-         myCardTable.pnlPlayArea.add(humanLabels[cardIndex]);
-         playedCardLabels[1] = humanLabels[cardIndex]; 
-         myCardTable.pnlHumanHand.remove(humanButtons[cardIndex]);
-         myCardTable.setVisible(true);
-         myCardTable.repaint();
+         playerTurn( cardIndex);
+
 
       }
    }
    
    private void pcTurn() {
       
+   } 
+   private void playerTurn(int cardIndex) {
+      //human action first
+
+      //System.out.println("Unexpected Error.");
+
+      cardsInPlay[1]=highCardGame.playCard(player.One.ordinal(), cardIndex); 
+      System.out.println("Playing: "+cardsInPlay[player.One.ordinal()].toString());
+
+      
+      humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
+      humanLabels[cardIndex].setBorder(null);
+      if (playedCardLabels[1]!=null) {
+         myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);          
+      }
+      
+      myCardTable.pnlPlayArea.add(humanLabels[cardIndex],0,1);
+      playedCardLabels[player.One.ordinal()] = humanLabels[cardIndex]; 
+      myCardTable.pnlHumanHand.remove(humanButtons[cardIndex]);
+      myCardTable.setVisible(true);
+      myCardTable.repaint();
    } 
 
 }

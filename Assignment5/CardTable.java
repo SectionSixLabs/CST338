@@ -198,7 +198,7 @@ public class CardTable extends JFrame
       pnlPlayArea.add(computerPlayArea, 0, 0);
       
       JLabel youPlayArea = new JLabel("You", JLabel.CENTER);
-      pnlPlayArea.add(youPlayArea, 1,1);
+      pnlPlayArea.add(youPlayArea, 0,1);
       
       
       // HUMAN HAND
