@@ -36,6 +36,8 @@ public class Assignment5
    static Card[] cardsInPlay = new Card[NUM_PLAYERS];
    static int playNum = 0;
    static int oldIndex = 0;
+   static int scorePC = 0;
+   static int scoreHum = 0;
    // a simple main to throw all the JLabels out there for the world to see
    public static void main(String[] args)
    {
@@ -114,9 +116,9 @@ public class Assignment5
       myCardTable.pnlButton.add(instruction);
       
       //Socre Panel
-      JLabel compScore = new JLabel("0", SwingConstants.CENTER);
+      JLabel compScore = new JLabel(scorePC+"", SwingConstants.CENTER);
       JLabel gameScore = new JLabel("SCORE");
-      JLabel humScore = new JLabel("0", SwingConstants.CENTER);
+      JLabel humScore = new JLabel(scoreHum+"", SwingConstants.CENTER);
       
       myCardTable.pnlScore.add(compScore);
       myCardTable.pnlScore.add(gameScore);
@@ -189,12 +191,46 @@ class EndingListener implements ActionListener
          //pcTurn(); 
          pcTurn2(cardIndex); //matching card# human chooses
          
-         updateScore();
+         updateScore(cardIndex);
       }
    }
    
-   private void updateScore()
+   private void updateScore(int cardIndex)
    {
+      //Testing the card values
+     //System.out.println("PC val:"+highCardGame.getHand(0).inspectCard(cardIndex));
+     //System.out.println("Hum val:"+highCardGame.getHand(1).inspectCard(cardIndex));
+  
+      int pcRank = Card.getRank(highCardGame.getHand(0).inspectCard(cardIndex));
+      int humRank = Card.getRank(highCardGame.getHand(1).inspectCard(cardIndex));
+      System.out.println("rankPCrank: "+pcRank);
+      System.out.println("rankHumRank: "+humRank);
+      //need to check out the card.getRank
+      
+      if(humRank > pcRank)
+      {
+         Assignment5.scoreHum += 1;
+      }
+      else if (humRank < pcRank)
+      {
+         Assignment5.scorePC += 1;
+      }
+      else 
+      {
+         //Do update to score
+      }
+      //Reassign Score Panel Labels
+      myCardTable.pnlScore.removeAll();
+      
+      JLabel compScore = new JLabel(Assignment5.scorePC+"", SwingConstants.CENTER);
+      JLabel humScore = new JLabel(Assignment5.scoreHum+"", SwingConstants.CENTER);
+      JLabel gameScore = new JLabel("SCORE");
+      myCardTable.pnlScore.add(compScore);
+      myCardTable.pnlScore.add(gameScore);
+      myCardTable.pnlScore.add(humScore);
+      
+      myCardTable.setVisible(true);
+      myCardTable.repaint();
       
    }
    
