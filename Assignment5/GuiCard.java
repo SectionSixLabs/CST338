@@ -111,7 +111,7 @@ public class GuiCard
    public static void main(String[] args)
    {
       loadCardIcons();
-      Card myCard = new Card('4',Card.Suit.HEARTS);
+     // Card myCard = new Card('4',Card.Suit.HEARTS);
      // getIcon(myCard);
       
       //Test for back of card icon

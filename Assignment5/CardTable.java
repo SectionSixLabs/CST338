@@ -26,6 +26,10 @@ import javax.swing.border.TitledBorder;
 
 public class CardTable extends JFrame
 {
+   /**
+    * 
+    */
+   private static final long serialVersionUID = 1L;
    static int MAX_CARDS_PER_HAND = 56;
    static int MAX_PLAYERS = 2;  // for now, we only allow 2 person games
    

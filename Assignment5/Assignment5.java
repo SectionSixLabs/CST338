@@ -13,7 +13,7 @@
 //Phase1
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+//import java.util.*;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -30,7 +30,7 @@ public class Assignment5
    static JLabel[] computerFaces = new JLabel[NUM_CARDS_PER_HAND];
    static JLabel[] humanLabels = new JLabel[NUM_CARDS_PER_HAND];
    static JButton[] humanButtons = new JButton [NUM_CARDS_PER_HAND];
-   static EndingListener[] humanListner = new EndingListener[NUM_CARDS_PER_HAND]; 
+   static EndingListener[] humanListner =new EndingListener[NUM_CARDS_PER_HAND]; 
    static JLabel[] playedCardLabels  = new JLabel[NUM_PLAYERS]; 
    static JLabel[] playLabelText  = new JLabel[NUM_PLAYERS]; 
    static Card[] cardsInPlay = new Card[NUM_PLAYERS];
@@ -64,7 +64,8 @@ public class Assignment5
       
       EndingListener.initListener(highCardGame, myCardTable, 
             humanButtons,humanLabels,computerLabels,playedCardLabels,
-            playLabelText,cardsInPlay,NUM_PLAYERS, NUM_CARDS_PER_HAND, computerFaces); 
+            playLabelText,cardsInPlay,NUM_PLAYERS, NUM_CARDS_PER_HAND, 
+            computerFaces); 
       
       // ADDING Labels TO COMPUTER HAND
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
@@ -75,7 +76,8 @@ public class Assignment5
          computerLabels[i]=temlLabel;
       
          //computerFaces
-         Icon tempIconFace = GuiCard.getIcon(highCardGame.getHand(0).inspectCard(i+1));
+         Icon tempIconFace = GuiCard.getIcon(highCardGame.getHand(0).
+               inspectCard(i+1));
          computerFaces[i] = new JLabel(tempIconFace);
          
       }
@@ -84,7 +86,8 @@ public class Assignment5
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
       {
          Icon tempIcon = 
-               GuiCard.getIcon(highCardGame.getHand(player.One.ordinal()).inspectCard(i+1));
+               GuiCard.getIcon(highCardGame.getHand(player.One.ordinal()).
+                     inspectCard(i+1));
          JLabel temlLabel = new JLabel(); 
          JButton tempButton = 
                new JButton();
@@ -198,8 +201,6 @@ class EndingListener implements ActionListener
    private void updateScore()
    {
       //Testing the card values
-     //System.out.println("PC val:"+highCardGame.getHand(0).inspectCard(cardIndex));
-     //System.out.println("Hum val:"+highCardGame.getHand(1).inspectCard(cardIndex));
   
       int pcRank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
       int humRank = Card.getRank(cardsInPlay[player.One.ordinal()]);
@@ -224,9 +225,13 @@ class EndingListener implements ActionListener
       //Reassign Score Panel Labels
       myCardTable.pnlScore.removeAll();
       
-      JLabel compScore = new JLabel("CPU: "+Assignment5.scorePC, SwingConstants.CENTER);
-      JLabel humScore = new JLabel("Player: "+Assignment5.scoreHum+"", SwingConstants.CENTER);
+      JLabel compScore = 
+          new JLabel("CPU: "+Assignment5.scorePC, SwingConstants.CENTER);
+      JLabel humScore = 
+          new JLabel("Player: "+Assignment5.scoreHum+"", SwingConstants.CENTER);
+      
       JLabel gameScore = new JLabel("SCORE");
+      
       myCardTable.pnlScore.add(compScore);
       myCardTable.pnlScore.add(gameScore);
       myCardTable.pnlScore.add(humScore);
@@ -238,19 +243,6 @@ class EndingListener implements ActionListener
    
  
    private void pcTurn2(int cardIndex) {
-      /* Testing Cards in Computer Hands
-      for(int x=0; x<NUM_CARDS_PER_HAND;x++)
-      {
-         System.out.println("PC card "+"x"+": "+highCardGame.getHand(0).inspectCard(x+1));
-      } 
-      
-        Icon tempIcon = GuiCard.getIcon(highCardGame.getHand(0).inspectCard(x));
-        computerLabels[x].setHorizontalAlignment(JLabel.CENTER);
-        computerLabels[x].setBorder(null);
-        computerLabels[x] = new JLabel(tempIcon);
-        myCardTable.pnlPlayArea.add(computerLabels[x]);
-        System.out.println("playNum: "+ Assignment5.playNum);
-      */
       
       if(Assignment5.playNum == 0)
       {
@@ -269,8 +261,11 @@ class EndingListener implements ActionListener
          //computerLabels = back of card
         
       }
-      cardsInPlay[player.CPU.ordinal()]=highCardGame.playCard(player.CPU.ordinal(), cardIndex); 
-      System.out.println("CPU Playing: "+cardsInPlay[player.CPU.ordinal()].toString());
+      cardsInPlay[player.CPU.ordinal()]=
+            highCardGame.playCard(player.CPU.ordinal(), cardIndex); 
+      
+      System.out.println("CPU Playing: "
+            +cardsInPlay[player.CPU.ordinal()].toString());
       Assignment5.playNum++;
 
       myCardTable.pnlComputerHand.remove(computerLabels[cardIndex]);
@@ -284,8 +279,10 @@ class EndingListener implements ActionListener
 
       //System.out.println("Unexpected Error.");
       // making sure we have a card ref
-      cardsInPlay[player.One.ordinal()]=highCardGame.playCard(player.One.ordinal(), cardIndex); 
-      System.out.println("Odin Playing: "+cardsInPlay[player.One.ordinal()].toString());
+      cardsInPlay[player.One.ordinal()]=
+            highCardGame.playCard(player.One.ordinal(), cardIndex); 
+      System.out.println("Odin Playing: "
+            +cardsInPlay[player.One.ordinal()].toString());
 
       
       humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
