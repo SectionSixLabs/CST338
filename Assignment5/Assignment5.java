@@ -8,6 +8,10 @@
 
 //TODO Please submit one file for each phase (3 .txt files, UML .pdf file)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> stash
 
 //Phase1
 import java.awt.event.ActionEvent;
@@ -36,7 +40,11 @@ public class Assignment5
    // a simple main to throw all the JLabels out there for the world to see
    public static void main(String[] args)
    {
+<<<<<<< HEAD
 
+=======
+      
+>>>>>>> stash
       int numPacksPerDeck = 1;
       int numJokersPerPack = 0;
       int numUnusedCardsPerPack = 0;
@@ -47,7 +55,6 @@ public class Assignment5
             NUM_PLAYERS, NUM_CARDS_PER_HAND);
       
 
-      
       GuiCard.loadCardIcons();
       
       highCardGame.deal(); 
@@ -101,11 +108,19 @@ public class Assignment5
       
       myCardTable.setVisible(true);
       
+<<<<<<< HEAD
       //East Panel      
       //JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
       //myCardTable.pnlButton.add(instruction);
       
       //Socre Panel
+=======
+      
+      //JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
+      //myCardTable.pnlButton.add(instruction);
+      
+      //Score Panel
+>>>>>>> stash
       JLabel compScore = new JLabel("0", SwingConstants.CENTER);
       JLabel gameScore = new JLabel("SCORE");
       JLabel humScore = new JLabel("0", SwingConstants.CENTER);
@@ -114,6 +129,10 @@ public class Assignment5
       myCardTable.pnlScore.add(gameScore);
       myCardTable.pnlScore.add(humScore);
       
+<<<<<<< HEAD
+=======
+      
+>>>>>>> stash
       //Testing Area
       System.out.println("Hi from end of Assingment5");
       System.out.println("How mnay cards are left in deck");
@@ -122,10 +141,6 @@ public class Assignment5
       
    }
 
-   public static void hi()
-   {
-      System.out.println("hi from buttonpress");
-   }
 
 }
 
@@ -174,14 +189,31 @@ class EndingListener implements ActionListener
          int cardIndex = Integer.valueOf(e.getActionCommand()); 
          System.out.println(actionCommand.toString());
          playerTurn( cardIndex);
-
+         pcTurn(cardIndex);
 
       }
    }
    
+<<<<<<< HEAD
    private void pcTurn() {
       //TODO
+=======
+   private void pcTurn(int x) {
+      /* Testing Cards in Computer Hands
+      for(int x=0; x<NUM_CARDS_PER_HAND;x++)
+      {
+         System.out.println("PC card "+"x"+": "+highCardGame.getHand(0).inspectCard(x+1));
+      } 
+      */
+        Icon tempIcon = GuiCard.getIcon(highCardGame.getHand(0).inspectCard(x));
+        computerLabels[x].setHorizontalAlignment(JLabel.CENTER);
+        computerLabels[x].setBorder(null);
+        computerLabels[x] = new JLabel(tempIcon);
+        myCardTable.pnlPlayArea.add(computerLabels[x]);
+>>>>>>> stash
    } 
+   
+   
    private void playerTurn(int cardIndex) {
       //human action first
 
