@@ -27,6 +27,7 @@ public class Assignment5
    static int NUM_CARDS_PER_HAND = 7;
    static int  NUM_PLAYERS = 2;
    static JLabel[] computerLabels = new JLabel[NUM_CARDS_PER_HAND];
+   static JLabel[] computerFaces = new JLabel[NUM_CARDS_PER_HAND];
    static JLabel[] humanLabels = new JLabel[NUM_CARDS_PER_HAND];
    static JButton[] humanButtons = new JButton [NUM_CARDS_PER_HAND];
    static EndingListener[] humanListner = new EndingListener[NUM_CARDS_PER_HAND]; 
@@ -61,7 +62,7 @@ public class Assignment5
       
       EndingListener.initListener(highCardGame, myCardTable, 
             humanButtons,humanLabels,computerLabels,playedCardLabels,
-            playLabelText,cardsInPlay,NUM_PLAYERS, NUM_CARDS_PER_HAND ); 
+            playLabelText,cardsInPlay,NUM_PLAYERS, NUM_CARDS_PER_HAND, computerFaces); 
       
       // ADDING Labels TO COMPUTER HAND
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
@@ -70,6 +71,11 @@ public class Assignment5
          JLabel temlLabel = new JLabel(); 
          temlLabel.setIcon(tempIcon); 
          computerLabels[i]=temlLabel;
+      
+         //computerFaces
+         Icon tempIconFace = GuiCard.getIcon(highCardGame.getHand(0).inspectCard(i+1));
+         computerFaces[i] = new JLabel(tempIconFace);
+         
       }
       
       // ADDING Labels TO HUMAN HAND
@@ -103,16 +109,6 @@ public class Assignment5
       
       myCardTable.setVisible(true);
       
-      //  //TODO Means of selection card from Human Hand
-      //Maybe have a button for each card to play
-      //[Play Card1][Play Card2][Play Card3]..etc..
-      
-      //an example here, however we will need to add a new panel on the frame layout
-      
-      //Adding Buttons
-      //Extra close Button (an example)
-      
-      //TODO discussion on what we want to implement with team 
             
       JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
       myCardTable.pnlButton.add(instruction);
@@ -126,13 +122,7 @@ public class Assignment5
       myCardTable.pnlScore.add(gameScore);
       myCardTable.pnlScore.add(humScore);
       
-      
-      //TODO Create a Game Loop
-      while (true) {
-         
-         break; 
-      }
-      
+     
       
       //Testing Area
       System.out.println("Hi from end of Assingment5");
@@ -162,12 +152,13 @@ class EndingListener implements ActionListener
    static JLabel[] playedCardLabels; 
    static JLabel[] playLabelText; 
    static Card[] cardsInPlay; 
+   static JLabel[] computerFaces;
    
    //Retrieve reference to game data
    //XXX Listner Init
    static void  initListener (CardGameFramework game, CardTable table, 
          JButton[] hB, JLabel[] hL, JLabel[] cL, JLabel[] pCL,JLabel[] pLtxt, 
-         Card[] cIP, int nP, int nCPH) {
+         Card[] cIP, int nP, int nCPH, JLabel[] cF) {
       highCardGame = game; 
       myCardTable = table; 
       humanButtons = hB; 
@@ -178,6 +169,7 @@ class EndingListener implements ActionListener
       cardsInPlay = cIP; 
       NUM_CARDS_PER_HAND = nCPH;
       NUM_PLAYERS = nP; 
+      computerFaces = cF;
       
    }
    
@@ -197,7 +189,13 @@ class EndingListener implements ActionListener
          //pcTurn(); 
          pcTurn2(cardIndex); //matching card# human chooses
          
+         updateScore();
       }
+   }
+   
+   private void updateScore()
+   {
+      
    }
    
    private void pcTurn() {
@@ -253,19 +251,26 @@ class EndingListener implements ActionListener
       
       if(Assignment5.playNum == 0)
       {
-         myCardTable.pnlPlayArea.add(computerLabels[x]);
+         myCardTable.pnlPlayArea.add(computerFaces[x]);
+         myCardTable.pnlPlayArea.remove(computerLabels[x]);
          Assignment5.oldIndex = x;
       }
       else if(Assignment5.playNum > 0)
       {
-         myCardTable.pnlPlayArea.remove(computerLabels[Assignment5.oldIndex]);
+         myCardTable.pnlPlayArea.remove(computerFaces[Assignment5.oldIndex]);
+         
          Assignment5.oldIndex = x;
-         myCardTable.pnlPlayArea.add(computerLabels[x]);
+         myCardTable.pnlPlayArea.add(computerFaces[x]);
+       
+         //computerFaces = array with card faces
+         //computerLabels = back of card
+        
       }
       
       Assignment5.playNum++;
-      
-      myCardTable.pnlPlayArea.add(computerLabels[x]);
+
+      myCardTable.pnlPlayArea.remove(computerLabels[x]);
+  
       myCardTable.setVisible(true);
       myCardTable.repaint();
    } 
