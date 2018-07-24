@@ -249,6 +249,9 @@ class Card
       int n = arraySize;
       for (int i = 0; i < n-1; i++)
           for (int j = 0; j < n-i-1; j++)
+             {
+              if (cards[j+1]==null) break;
+            
               if (getRank(cards[j]) >getRank( cards[j+1]))
               {
                   // swap temp and cards[i]
@@ -256,10 +259,11 @@ class Card
                   cards[j] = cards[j+1];
                   cards[j+1] = temp;
               }
+             }
    }
    
    //Gets rank of the card, could have used String methods though 
-   static int getRank(Card card) {
+   static public int getRank(Card card) {
       for (int i = 0; i<valuRanks.length; i++)
       {
          if (card.getValue() ==valuRanks[i]) return i; 
@@ -377,7 +381,7 @@ class Hand
    }
    
    void sort() {
-      Card.arraySort(this.myCards, this.myCards.length);
+      Card.arraySort(this.myCards, this.myCards.length-1);
    }
 }
 

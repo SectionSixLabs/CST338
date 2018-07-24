@@ -23,6 +23,7 @@ import javax.swing.JButton;
 
 public class Assignment5
 {
+   static enum player {CPU, One}; 
    static int NUM_CARDS_PER_HAND = 7;
    static int  NUM_PLAYERS = 2;
    static JLabel[] computerLabels = new JLabel[NUM_CARDS_PER_HAND];
@@ -74,7 +75,7 @@ public class Assignment5
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
       {
          Icon tempIcon = 
-               GuiCard.getIcon(highCardGame.getHand(1).inspectCard(i+1));
+               GuiCard.getIcon(highCardGame.getHand(player.One.ordinal()).inspectCard(i+1));
          JLabel temlLabel = new JLabel(); 
          JButton tempButton = 
                new JButton();
@@ -149,7 +150,7 @@ public class Assignment5
 
 class EndingListener implements ActionListener
 {
-   public enum player {CPU, One}; 
+   static enum player {CPU, One}; 
    static int NUM_CARDS_PER_HAND;
    static int  NUM_PLAYERS;
    static CardGameFramework highCardGame;
@@ -192,26 +193,58 @@ class EndingListener implements ActionListener
          int cardIndex = Integer.valueOf(e.getActionCommand()); 
          System.out.println(actionCommand.toString());
          playerTurn( cardIndex);
+         pcTurn(); 
 
 
       }
    }
    
    private void pcTurn() {
+      highCardGame.getHand(player.CPU.ordinal()).sort(); 
+      int playerCardRank =0;
+      int tempCardRank = 0; 
+      int cardIndex = 1; 
+      for (int i =0; i<highCardGame.getHand(player.CPU.ordinal()).numCards(); 
+            i++) {
+          playerCardRank = Card.getRank(cardsInPlay[player.One.ordinal()]); 
+          tempCardRank  = Card.getRank(highCardGame.getHand(player.CPU.ordinal()).
+                     inspectCard(i));
+         //TODO make into a function 
+         if (playerCardRank<tempCardRank) {
+            cardsInPlay[player.CPU.ordinal()]=
+                  highCardGame.playCard(player.CPU.ordinal(), i); 
+            System.out.println("CPU Playing: "+cardsInPlay[player.CPU.ordinal()].toString());
+            cardIndex = i+1; 
+            break; 
+         }
+         
+      }
+      computerLabels[cardIndex].setBorder(null);
+      computerLabels[cardIndex].setIcon(GuiCard.getIcon(cardsInPlay[player.CPU.ordinal()]));
+      if (playedCardLabels[player.CPU.ordinal()]!=null) {
+         myCardTable.pnlPlayArea.remove(playedCardLabels[player.CPU.ordinal()]);          
+      }
+      myCardTable.pnlPlayArea.add(computerLabels[cardIndex],0,1);
+      playedCardLabels[player.CPU.ordinal()] = computerLabels[cardIndex]; 
+      myCardTable.pnlComputerHand.remove(computerLabels[cardIndex]);
+      myCardTable.setVisible(true);
+      myCardTable.repaint();
       
    } 
+   
    private void playerTurn(int cardIndex) {
       //human action first
 
       //System.out.println("Unexpected Error.");
-
-      cardsInPlay[1]=highCardGame.playCard(player.One.ordinal(), cardIndex); 
+      // making sure we have a card ref
+      cardsInPlay[player.One.ordinal()]=highCardGame.playCard(player.One.ordinal(), cardIndex); 
       System.out.println("Playing: "+cardsInPlay[player.One.ordinal()].toString());
 
       
-      humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
+      //humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
       humanLabels[cardIndex].setBorder(null);
-      if (playedCardLabels[1]!=null) {
+      
+      if (playedCardLabels[player.One.ordinal()]!=null) {
          myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);          
       }
       
