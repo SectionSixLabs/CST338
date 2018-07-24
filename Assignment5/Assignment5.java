@@ -8,7 +8,6 @@
 
 //TODO Please submit one file for each phase (3 .txt files, UML .pdf file)
 
-//Phase 1 Done. (Comment out tests when submitting.)
 
 //Phase1
 import java.awt.event.ActionEvent;
@@ -37,7 +36,7 @@ public class Assignment5
    // a simple main to throw all the JLabels out there for the world to see
    public static void main(String[] args)
    {
-      // going to add something
+
       int numPacksPerDeck = 1;
       int numJokersPerPack = 0;
       int numUnusedCardsPerPack = 0;
@@ -102,19 +101,9 @@ public class Assignment5
       
       myCardTable.setVisible(true);
       
-      //  //TODO Means of selection card from Human Hand
-      //Maybe have a button for each card to play
-      //[Play Card1][Play Card2][Play Card3]..etc..
-      
-      //an example here, however we will need to add a new panel on the frame layout
-      
-      //Adding Buttons
-      //Extra close Button (an example)
-      
-      //TODO discussion on what we want to implement with team 
-            
-      JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
-      myCardTable.pnlButton.add(instruction);
+      //East Panel      
+      //JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
+      //myCardTable.pnlButton.add(instruction);
       
       //Socre Panel
       JLabel compScore = new JLabel("0", SwingConstants.CENTER);
@@ -124,14 +113,6 @@ public class Assignment5
       myCardTable.pnlScore.add(compScore);
       myCardTable.pnlScore.add(gameScore);
       myCardTable.pnlScore.add(humScore);
-      
-      
-      //TODO Create a Game Loop
-      while (true) {
-         
-         break; 
-      }
-      
       
       //Testing Area
       System.out.println("Hi from end of Assingment5");
@@ -199,7 +180,7 @@ class EndingListener implements ActionListener
    }
    
    private void pcTurn() {
-      
+      //TODO
    } 
    private void playerTurn(int cardIndex) {
       //human action first
