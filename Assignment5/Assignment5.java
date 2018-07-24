@@ -271,7 +271,7 @@ class EndingListener implements ActionListener
       cardsInPlay[player.CPU.ordinal()]=
             highCardGame.playCard(player.CPU.ordinal(), cardIndex); 
       
-      System.out.println("CPU Playing: "
+      System.out.println("Smith Playing: "
             +cardsInPlay[player.CPU.ordinal()].toString());
       Assignment5.playNum++;
 
@@ -288,7 +288,7 @@ class EndingListener implements ActionListener
       // making sure we have a card ref
       cardsInPlay[player.One.ordinal()]=
             highCardGame.playCard(player.One.ordinal(), cardIndex); 
-      System.out.println("Odin Playing: "
+      System.out.println("Neo Playing: "
             +cardsInPlay[player.One.ordinal()].toString());
 
       
