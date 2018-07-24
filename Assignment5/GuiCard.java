@@ -381,7 +381,7 @@ class Hand
    }
    
    void sort() {
-      Card.arraySort(this.myCards, this.myCards.length-1);
+      Card.arraySort(this.myCards, this.myCards.length);
    }
 }
 

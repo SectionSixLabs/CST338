@@ -201,7 +201,9 @@ class EndingListener implements ActionListener
    }
    
    private void pcTurn() {
+      System.out.println("Before Sort: "+highCardGame.getHand(player.CPU.ordinal()).toString());
       highCardGame.getHand(player.CPU.ordinal()).sort(); 
+      System.out.println("After Sort: "+highCardGame.getHand(player.CPU.ordinal()).toString());
       int playerCardRank =0;
       int tempCardRank = 0; 
       int cardIndex = 1; 
@@ -212,20 +214,21 @@ class EndingListener implements ActionListener
                      inspectCard(i));
          //TODO make into a function 
          if (playerCardRank<tempCardRank) {
-            cardsInPlay[player.CPU.ordinal()]=
-                  highCardGame.playCard(player.CPU.ordinal(), i); 
-            System.out.println("CPU Playing: "+cardsInPlay[player.CPU.ordinal()].toString());
-            cardIndex = i+1; 
+
+            cardIndex = i; 
             break; 
          }
          
       }
+      cardsInPlay[player.CPU.ordinal()]=
+            highCardGame.playCard(player.CPU.ordinal(), cardIndex); 
+      System.out.println("CPU Playing: "+cardsInPlay[player.CPU.ordinal()].toString());
       computerLabels[cardIndex].setBorder(null);
       computerLabels[cardIndex].setIcon(GuiCard.getIcon(cardsInPlay[player.CPU.ordinal()]));
       if (playedCardLabels[player.CPU.ordinal()]!=null) {
          myCardTable.pnlPlayArea.remove(playedCardLabels[player.CPU.ordinal()]);          
       }
-      myCardTable.pnlPlayArea.add(computerLabels[cardIndex],0,1);
+      myCardTable.pnlPlayArea.add(computerLabels[cardIndex],1,1);
       playedCardLabels[player.CPU.ordinal()] = computerLabels[cardIndex]; 
       myCardTable.pnlComputerHand.remove(computerLabels[cardIndex]);
       myCardTable.setVisible(true);
