@@ -1,5 +1,10 @@
-
-//import java.util.Random;
+/**
+ * GUI Cards
+ * CST338
+ * Module5
+ * @author Sergiy Zarubin, Lacey Sikes, Rocky Moreno, Danny Tran
+ *
+ */
 import javax.swing.*;
 public class Phase2
 {
