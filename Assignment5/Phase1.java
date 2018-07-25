@@ -33,7 +33,7 @@ public class Phase1
          {
             if (files[i].isFile())
             { 
-               System.out.println(files[i]); //TODO Comment this out when finalizing
+              // System.out.println(files[i]); 
                icon[i] = new ImageIcon(files[i].toString());
             }
          }
@@ -105,7 +105,8 @@ public class Phase1
       {
          System.out.println("Int "+i+" is " +turnIntIntoCardValue(i));
          if (i<Card.cardValues.length()) {
-         System.out.println("Using Card Class: "+i+" is " +Card.cardValues.toCharArray()[i]);
+         System.out.println("Using Card Class: "+i+" is " 
+               +Card.cardValues.toCharArray()[i]);
          }
       }
       
