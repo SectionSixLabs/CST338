@@ -132,10 +132,10 @@ public class Assignment5
      
       
       //Testing Area
-      System.out.println("Hi from end of Assingment5");
-      System.out.println("How mnay cards are left in deck");
-      int cardLeft = highCardGame.getNumCardsRemainingInDeck();
-      System.out.println(cardLeft);
+      //System.out.println("Hi from end of Assingment5");
+      //System.out.println("How mnay cards are left in deck");
+      //int cardLeft = highCardGame.getNumCardsRemainingInDeck();
+      //System.out.println(cardLeft);
       
    }
 
