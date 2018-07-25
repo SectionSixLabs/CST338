@@ -1,3 +1,12 @@
+//Phase3 contains four classes in it. 
+//Assignment5.java
+//CardTable.java
+//GuiCard.java
+//CardGameFramework.java
+
+
+/****Assignment5.java File *************************/
+
 /**
  * GUI Cards
  * CST338
