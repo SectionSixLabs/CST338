@@ -26,6 +26,8 @@ import javax.swing.JFrame;
 //okayBranch has in tact the original Assignment5
 public class Assignment5
 {
+   //Adding a turn enum
+   static enum turn{CPU, One};
    static enum player {CPU, One}; 
    static int NUM_CARDS_PER_HAND = 7;
    static int  NUM_PLAYERS = 2;
@@ -194,7 +196,9 @@ public class Assignment5
       System.out.println(cardLeft);
 
       System.out.println("Testing Area");
-
+      System.out.println("Whose turn?");
+      turn playerTurn = turn.CPU;
+      System.out.println(playerTurn);
    }
 
 
@@ -203,6 +207,7 @@ public class Assignment5
 
 class EndingListener implements ActionListener
 {
+   static enum turn {CPU, One};
    static enum player {CPU, One}; 
    static int NUM_CARDS_PER_HAND;
    static int  NUM_PLAYERS;
@@ -262,6 +267,9 @@ class EndingListener implements ActionListener
 
          myCardTable.setVisible(true);
          myCardTable.repaint();
+         
+         //switch to turns to opponent
+         //TODO
       }
       else
       {
@@ -275,6 +283,7 @@ class EndingListener implements ActionListener
          updateScore();
          */
          
+         //TODO implement turn based
          humanPlay(cardIndex);
          computerPlay();
          
@@ -390,7 +399,32 @@ class EndingListener implements ActionListener
    
    private void computerPlay()
    {
-      //Trying to hash out humanPlay first
+      //TODO Trying to hash out humanPlay first
+      
+      //Pseuo
+    //Check range for pile on play area
+      int pile1Rank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
+      
+      int pile2Rank = Card.getRank(cardsInPlay[player.One.ordinal()]);
+      
+      //check for cards in hand
+      //if card in computer hand is playable in any of the piles 
+      
+      //play the card into pile
+      //TODO decide what kind of algorithm to use? Maybe just pick the first card that works? to discuss with team
+      
+      //display JLabel / icon for card
+      
+      //Switch player turn
+      
+      //else if cannt play
+      //hit the "i cannot play" button
+      
+      //switch turn to other player
+      
+      
+      
+      
    }
 
    //Method to see if card is one below or above card in pile for play
