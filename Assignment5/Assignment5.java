@@ -106,7 +106,7 @@ public class Assignment5
       }
 
       // ADD LABELS TO PANELS -----------------------------------------
-      //TODO code goes here ...
+      
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
       {
          myCardTable.pnlComputerHand.add(computerLabels[i]);
@@ -136,18 +136,18 @@ public class Assignment5
       myCardTable.pnlScore.add(gameScore);
       myCardTable.pnlScore.add(humScore);
       
-      //TODO
+      
       //Initialize Game by flipping two cards from deck into pnlPlayArea
       cardsInPlay[player.CPU.ordinal()] = highCardGame.getCardFromDeck();
       cardsInPlay[player.One.ordinal()] = highCardGame.getCardFromDeck();
       
-      //Testing
+      //Testing card drawn from deck
       System.out.println("The card for cpu pile:");
       System.out.println(cardsInPlay[player.CPU.ordinal()]);
       System.out.println("The card for hum pile:");
       System.out.println(cardsInPlay[player.One.ordinal()]);
       
-      //TODO display card in field
+      //display the two cards in card playing field
       Icon tempIconCPU = 
             GuiCard.getIcon(cardsInPlay[player.CPU.ordinal()]);
       JLabel tempLabelCPU = new JLabel(); 
@@ -271,9 +271,14 @@ class EndingListener implements ActionListener
          updateScore();
          */
          
+         //TODO have card be able to be placed in either pile if it is a valid play
+         
          //test see if actionCommand for card is valid to play (one higher or lower than card in table)
          if(validPlay(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex)))
          { //TODO fix so plays to appropirate pile not just player pile
+            
+            //Not sure but maybe it would be good idea to turn this into a method
+            //that way can also implement and call PC's turn as well
             cardsInPlay[player.One.ordinal()]=
                   highCardGame.playCard(player.One.ordinal(), cardIndex); 
             System.out.println("Neo Playing: "

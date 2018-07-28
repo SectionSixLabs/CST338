@@ -24,6 +24,8 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.border.TitledBorder;
 
+//TODO add the Clock Timer which extends Thread
+
 public class CardTable extends JFrame
 {
    /**
