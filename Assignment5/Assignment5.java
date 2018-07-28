@@ -239,6 +239,7 @@ class EndingListener implements ActionListener
       //higher score is losing, kinda like golf
 
       String actionCommand = e.getActionCommand();
+      
       if(actionCommand.equals("I cannot play")) //this is human button not cpu
       {
          Assignment5.scoreHum += 1;
@@ -264,6 +265,10 @@ class EndingListener implements ActionListener
       {
          int cardIndex = Integer.valueOf(e.getActionCommand()); 
          System.out.println(actionCommand.toString());
+         
+         //indicator of which pile to use
+         boolean usePile1 = false;
+         boolean usePile2 = false;
 
          /* The method calls from prior assignment //Comment out
          playerTurn( cardIndex);
@@ -271,33 +276,99 @@ class EndingListener implements ActionListener
          updateScore();
          */
          
-         //TODO have card be able to be placed in either pile if it is a valid play
+         //TODO fix issue of card be able to be placed in either pile if it is a valid play
          
          //test see if actionCommand for card is valid to play (one higher or lower than card in table)
          if(validPlay(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex)))
-         { //TODO fix so plays to appropirate pile not just player pile
+         {
+               
+            //Because validPlay is true then one of the piles must be valid for play by the cardIndex
             
-            //Not sure but maybe it would be good idea to turn this into a method
-            //that way can also implement and call PC's turn as well
-            cardsInPlay[player.One.ordinal()]=
-                  highCardGame.playCard(player.One.ordinal(), cardIndex); 
-            System.out.println("Neo Playing: "
-                  +cardsInPlay[player.One.ordinal()].toString());
-
-
+            //Check range for first pile
+            int pile1Rank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
+            
+            //if pile1 (cardsInPlay[player.CPU.ordinal()] is one off (+/- 1) then use this pile
+            int pile1RankBelow = pile1Rank-1;
+            int pile1RankAbove = pile1Rank+1;
+            
+            //if player selected card is valid +/- 1 from pile1 use this pile for playing
+            if(pile1RankBelow == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
+                  || pile1RankAbove == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))  );
+            {
+               //pile1
+               cardsInPlay[player.CPU.ordinal()] = 
+                     highCardGame.playCard(player.One.ordinal(), cardIndex);
+               //Testing
+               System.out.println("Neo Playing: "
+                     +cardsInPlay[player.CPU.ordinal()].toString());
+               
+               usePile1 = true;
+            }  
+            
+            
+            int pile2Rank = Card.getRank(cardsInPlay[player.One.ordinal()]);
+            
+            int pile2RankBelow = pile2Rank-1;
+            int pile2RankAbove = pile2Rank+1;
+            
+            if((pile2RankBelow == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
+                  || pile2RankAbove == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))) 
+                  && //negation of the before if statement to ensure not to put in pile1
+                  pile1RankBelow != Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
+                  || pile1RankAbove != Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))   )
+            { //pile2
+               cardsInPlay[player.One.ordinal()]=
+                     highCardGame.playCard(player.One.ordinal(), cardIndex); 
+               System.out.println("Cifer Playing: "
+                     +cardsInPlay[player.One.ordinal()].toString());
+               
+               usePile2 = true;
+            }
+            
             humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
             humanLabels[cardIndex].setBorder(null);
-
-            if (playedCardLabels[player.One.ordinal()]!=null) {
-               myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);          
+            
+            
+            //Decide which pile to add image label to
+            
+            if(usePile1)
+            {
+               if (playedCardLabels[player.CPU.ordinal()]!=null) 
+               { //clear pile1 image
+                  myCardTable.pnlPlayArea.remove(playedCardLabels[player.CPU.ordinal()]);   
+                  
+                  Icon tempIconCPU = 
+                        GuiCard.getIcon(cardsInPlay[player.CPU.ordinal()]);
+                  JLabel tempLabelCPU = new JLabel(); 
+                  tempLabelCPU.setIcon(tempIconCPU);
+                  
+                  myCardTable.pnlPlayArea.add(playedCardLabels[player.CPU.ordinal()]);
+                  myCardTable.setVisible(true);
+                  myCardTable.repaint();
+               }
+            } 
+            else if(usePile2)
+            {
+               if (playedCardLabels[player.One.ordinal()]!=null)
+               { //clear pile2 image
+                  myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);
+                  
+                  Icon tempIconOne = 
+                        GuiCard.getIcon(cardsInPlay[player.One.ordinal()]);
+                  JLabel tempLabelOne = new JLabel();
+                  tempLabelOne.setIcon(tempIconOne);
+                  
+                  myCardTable.pnlPlayArea.add(playedCardLabels[player.One.ordinal()]);
+                  myCardTable.setVisible(true);
+                  myCardTable.repaint();
+               }
             }
-
-            myCardTable.pnlPlayArea.add(humanLabels[cardIndex]);
-            playedCardLabels[player.One.ordinal()] = humanLabels[cardIndex]; 
+            
+            
             myCardTable.pnlHumanHand.remove(humanButtons[cardIndex]);
             myCardTable.setVisible(true);
             myCardTable.repaint();
-         }
+         } //end of inner if of else clause
          
          Assignment5.numTurns += 1;
          //End game when no more cards in deck
@@ -305,8 +376,8 @@ class EndingListener implements ActionListener
          {
             EndGame();
          }
-      }
-   }
+      } //end of else (action performed)
+   } //ending of action performed
 
    //Method to see if card is one below or above card in pile for play
    private boolean validPlay(Card card)
