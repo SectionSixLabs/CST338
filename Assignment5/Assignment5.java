@@ -117,10 +117,17 @@ public class Assignment5
       myCardTable.setVisible(true);
       
             
-      //JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
-      //myCardTable.pnlButton.add(instruction);
+      JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
+      myCardTable.pnlButton.add(instruction);
       
-      //Socre Panel
+      JButton noPlayButton = new JButton("I cannot play");
+      EndingListener noPlayListener = new EndingListener();
+      noPlayButton.addActionListener(noPlayListener);
+      myCardTable.pnlButton.add(noPlayButton);
+      
+      myCardTable.setVisible(true);
+      
+      //Score Panel
       JLabel compScore = new JLabel(scorePC+"", SwingConstants.CENTER);
       JLabel gameScore = new JLabel("SCORE");
       JLabel humScore = new JLabel(scoreHum+"", SwingConstants.CENTER);
@@ -183,7 +190,7 @@ class EndingListener implements ActionListener
    public void actionPerformed(ActionEvent e)
    {
       String actionCommand = e.getActionCommand();
-      if(actionCommand.equals("Exit"))
+      if(actionCommand.equals("I cannot play"))
       {
          System.out.println("Closing Program. Goodbye!");
          System.exit(0);
@@ -203,6 +210,37 @@ class EndingListener implements ActionListener
             EndGame();
          }
       }
+   }
+   
+   //Method to see if card is one below or above card in pile for play
+   private boolean validPlay(Card card)
+   {
+      //Card to check rank
+      int cardRank = Card.getRank(card);
+      int cardRankAbove = cardRank + 1;
+      int cardRankBelow = cardRank - 1;
+      
+      //Get the card pile rank
+      int pile1Rank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
+      int pile2Rank = Card.getRank(cardsInPlay[player.One.ordinal()]);
+      
+      
+      //valid if is there is a lower card by 1
+      if(cardRankBelow == pile1Rank || cardRankBelow == pile2Rank)
+      {
+         return true;
+      } //Valid if there is a higher card by 1
+      else if (cardRankAbove == pile1Rank || cardRankAbove == pile2Rank)
+      {
+         return true;
+      }
+      else 
+      {
+         return false;
+      }
+      
+      //Need to check for cases when card is lowest or highest rank ie A or X?
+         
    }
    
    private void updateScore()
