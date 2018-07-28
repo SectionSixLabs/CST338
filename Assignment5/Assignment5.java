@@ -148,6 +148,41 @@ public class Assignment5
       System.out.println(cardsInPlay[player.One.ordinal()]);
       
       //TODO display card in field
+      Icon tempIconCPU = 
+            GuiCard.getIcon(cardsInPlay[player.CPU.ordinal()]);
+      JLabel tempLabelCPU = new JLabel(); 
+      tempLabelCPU.setIcon(tempIconCPU);
+      
+      playedCardLabels[player.CPU.ordinal()] = tempLabelCPU;
+      
+      Icon tempIconOne = 
+            GuiCard.getIcon(cardsInPlay[player.One.ordinal()]);
+      JLabel tempLabelOne = new JLabel();
+      tempLabelOne.setIcon(tempIconOne);
+      
+      playedCardLabels[player.One.ordinal()] = tempLabelOne;
+      
+      //Setting JLabel configs
+      playedCardLabels[player.CPU.ordinal()].setHorizontalAlignment(JLabel.CENTER);
+      playedCardLabels[player.CPU.ordinal()].setBorder(null);
+      
+      playedCardLabels[player.One.ordinal()].setHorizontalAlignment(JLabel.CENTER);
+      playedCardLabels[player.One.ordinal()].setBorder(null);
+      
+      //clear cards if any but there shouldn't be atm bc initilizing phase
+      if (playedCardLabels[player.CPU.ordinal()]!=null) {
+         myCardTable.pnlPlayArea.remove(playedCardLabels[player.CPU.ordinal()]);          
+      }
+      
+      if (playedCardLabels[player.One.ordinal()]!=null) {
+         myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);          
+      }
+
+      myCardTable.pnlPlayArea.add(playedCardLabels[player.CPU.ordinal()]);
+      myCardTable.pnlPlayArea.add(playedCardLabels[player.One.ordinal()]);
+      myCardTable.setVisible(true);
+      myCardTable.repaint();
+      
       
       
       //Testing Area
