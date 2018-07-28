@@ -189,11 +189,30 @@ class EndingListener implements ActionListener
    
    public void actionPerformed(ActionEvent e)
    {
+      //when "I cannot play" button gets pressed increment the tally underscore
+      //higher score is losing, kinda like golf
+      
       String actionCommand = e.getActionCommand();
-      if(actionCommand.equals("I cannot play"))
+      if(actionCommand.equals("I cannot play")) //this is human button not cpu
       {
-         System.out.println("Closing Program. Goodbye!");
-         System.exit(0);
+         Assignment5.scoreHum += 1;
+         
+         //Reassign Score Panel Labels
+         myCardTable.pnlScore.removeAll();
+         
+         JLabel compScore = 
+             new JLabel("CPU: "+Assignment5.scorePC, SwingConstants.CENTER);
+         JLabel humScore = 
+             new JLabel("Player: "+Assignment5.scoreHum+"", SwingConstants.CENTER);
+         
+         JLabel gameScore = new JLabel("SCORE");
+         
+         myCardTable.pnlScore.add(compScore);
+         myCardTable.pnlScore.add(gameScore);
+         myCardTable.pnlScore.add(humScore);
+         
+         myCardTable.setVisible(true);
+         myCardTable.repaint();
       }
       else
       {
