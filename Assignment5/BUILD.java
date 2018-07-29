@@ -239,7 +239,7 @@ class EndingListener implements ActionListener
          
          //switch to turns to opponent
          //TODO
-         GameController.cannotPlay() ; 
+         GameController.cannotPlay(GameController.player.One) ; 
       }
       else
       {
@@ -525,7 +525,7 @@ class GameController implements ActionListener
    {
       //TODO Trying to hash out humanPlay first
       
-      //Pseuo
+      //Pseudo
     //Check range for pile on play area
       int pile1Rank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
       
@@ -710,9 +710,10 @@ class GameController implements ActionListener
       endWindow.setVisible(true);  
    }
    
-   public static void cannotPlay() {
+   public static void cannotPlay( player p) {
 
-
+      if (p ==player.One) scoreHum++;
+      else scorePC++; 
       //Reassign Score Panel Labels
       myCardTable.pnlScore.removeAll();
 
