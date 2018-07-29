@@ -173,7 +173,7 @@ public class CardTable extends JFrame
 //      String myDir = System.getProperty("user.dir");
       
       
-      setSize(900, 700);
+      setSize(1000, 800);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setBackground(Color.GREEN);
       setLayout(new BorderLayout());
