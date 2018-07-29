@@ -312,13 +312,6 @@ class GameController
 
    public static void EndGame()
    {
-      int WIDTH = 300;
-      int HEIGHT = 200;
-
-      JFrame endWindow = new JFrame();
-      endWindow.setSize(WIDTH, HEIGHT);
-
-      endWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
       String messageText = "";
       if(scoreHum > scorePC)
@@ -333,17 +326,15 @@ class GameController
       {
          messageText = "Tied Game!";
       }
-      JButton endButton = new JButton(messageText);
-      EndListener buttonEar = new EndListener();
-      endButton.addActionListener(buttonEar);
-      endWindow.add(endButton);
-      endWindow.setVisible(true);  
+      GameView.drawEndGame(messageText);
+
    }
    
    public static void cannotPlay( player p) {
 
       if (p ==player.One) scoreHum++;
       else scorePC++; 
+      GameView.updateScore(scorePC, scoreHum);
 
    }
 
@@ -494,6 +485,20 @@ class GameView{
       myCardTable.pnlButton.add(noPlayButton);
       refresh();
       
+   }
+   public static void drawEndGame(String messageText) {
+      int WIDTH = 300;
+      int HEIGHT = 200;
+
+      JFrame endWindow = new JFrame();
+      endWindow.setSize(WIDTH, HEIGHT);
+
+      endWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      JButton endButton = new JButton(messageText);
+      EndListener buttonEar = new EndListener();
+      endButton.addActionListener(buttonEar);
+      endWindow.add(endButton);
+      endWindow.setVisible(true);  
    }
    
    private static void refresh() {
