@@ -428,7 +428,8 @@ class GameController implements ActionListener
       //TODO fix issue of card be able to be placed in either pile if it is a valid play
       
       //test see if actionCommand for card is valid to play (one higher or lower than card in table)
-      if(validPlay(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex)))
+      if(validPlay(highCardGame.getHand(player.One.ordinal()).
+            inspectCard(cardIndex)))
       {
             
          //Because validPlay is true then one of the piles must be valid for play by the cardIndex
@@ -441,8 +442,14 @@ class GameController implements ActionListener
          int pile1RankAbove = pile1Rank+1;
          
          //if player selected card is valid +/- 1 from pile1 use this pile for playing
-         if(pile1RankBelow == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
-               || pile1RankAbove == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))  );
+         if(
+               pile1RankBelow == 
+               Card.getRank(highCardGame.getHand(player.One.ordinal()).
+                     inspectCard(cardIndex))
+               || 
+               pile1RankAbove == 
+               Card.getRank(highCardGame.getHand(player.One.ordinal()).
+                     inspectCard(cardIndex)))
          {
             //pile1
             cardsInPlay[player.CPU.ordinal()] = 
@@ -452,7 +459,7 @@ class GameController implements ActionListener
                   +cardsInPlay[player.CPU.ordinal()].toString());
             
             usePile1 = true;
-         }  
+         }  else {}
          
          
          int pile2Rank = Card.getRank(cardsInPlay[player.One.ordinal()]);
@@ -461,11 +468,15 @@ class GameController implements ActionListener
          int pile2RankAbove = pile2Rank+1;
          
          //maybe i should use else statement here instead of the following:
-         if((pile2RankBelow == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
-               || pile2RankAbove == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))) 
+         if((pile2RankBelow == Card.getRank(highCardGame.
+                     getHand(player.One.ordinal()).inspectCard(cardIndex))
+               || pile2RankAbove == Card.getRank(highCardGame.
+                     getHand(player.One.ordinal()).inspectCard(cardIndex))) 
                && //negation of the before if statement to ensure not to put in pile1
-               pile1RankBelow != Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
-               || pile1RankAbove != Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))   )
+                  pile1RankBelow != Card.getRank(highCardGame.
+                     getHand(player.One.ordinal()).inspectCard(cardIndex))
+               || pile1RankAbove != Card.getRank(highCardGame.
+                     getHand(player.One.ordinal()).inspectCard(cardIndex)))
          { //pile2
             cardsInPlay[player.One.ordinal()]=
                   highCardGame.playCard(player.One.ordinal(), cardIndex); 
@@ -485,14 +496,16 @@ class GameController implements ActionListener
          {
             if (playedCardLabels[player.CPU.ordinal()]!=null) 
             { //clear pile1 image
-               myCardTable.pnlPlayArea.remove(playedCardLabels[player.CPU.ordinal()]);   
+               myCardTable.pnlPlayArea.
+                  remove(playedCardLabels[player.CPU.ordinal()]);   
                
                Icon tempIconCPU = 
                      GuiCard.getIcon(cardsInPlay[player.CPU.ordinal()]);
                JLabel tempLabelCPU = new JLabel(); 
                tempLabelCPU.setIcon(tempIconCPU);
                
-               myCardTable.pnlPlayArea.add(playedCardLabels[player.CPU.ordinal()]);
+               myCardTable.pnlPlayArea.add
+                  (playedCardLabels[player.CPU.ordinal()]);
                myCardTable.setVisible(true);
                myCardTable.repaint();
             }
@@ -501,14 +514,17 @@ class GameController implements ActionListener
          {
             if (playedCardLabels[player.One.ordinal()]!=null)
             { //clear pile2 image
-               myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);
+               myCardTable.pnlPlayArea.remove
+                  (playedCardLabels[player.One.ordinal()]);
                
                Icon tempIconOne = 
-                     GuiCard.getIcon(cardsInPlay[player.One.ordinal()]);
+                     GuiCard.getIcon
+                        (cardsInPlay[player.One.ordinal()]);
                JLabel tempLabelOne = new JLabel();
                tempLabelOne.setIcon(tempIconOne);
                
-               myCardTable.pnlPlayArea.add(playedCardLabels[player.One.ordinal()]);
+               myCardTable.pnlPlayArea.add
+                  (playedCardLabels[player.One.ordinal()]);
                myCardTable.setVisible(true);
                myCardTable.repaint();
             }
