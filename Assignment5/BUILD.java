@@ -454,7 +454,7 @@ class GameView{
    
    public static void drowPlayAria(Card[] cards) {
       //Initialize Game by flipping two cards from deck into pnlPlayArea
-
+      myCardTable.pnlPlayArea.removeAll();
       
       
       //display the two cards in card playing field
