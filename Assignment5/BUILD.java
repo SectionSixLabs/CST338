@@ -211,9 +211,9 @@ public class BUILD
       System.out.println(cardLeft);
 
       System.out.println("Testing Area");
-      System.out.println("Whose turn?");
-      turn playerTurn = turn.CPU;
-      System.out.println(playerTurn);
+      //System.out.println("Whose turn?");
+      //turn playerTurn = turn.CPU;
+      //System.out.println(playerTurn);
    }
 
 
@@ -424,123 +424,58 @@ class GameController implements ActionListener
    } //ending of action performed
    
    public static void humanPlay(int cardIndex)
-   {
-    //indicator of which pile to use
-      boolean usePile1 = false;
-      boolean usePile2 = false;
+   { //start bracket
+
       
+      player playerIndex = validPlay(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex));
       //TODO fix issue of card be able to be placed in either pile if it is a valid play
       
       //test see if actionCommand for card is valid to play (one higher or lower than card in table)
-      if(validPlay(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex)))
+      if(playerIndex != null)
       {
-            
-         //Because validPlay is true then one of the piles must be valid for play by the cardIndex
-         
-         //Check range for first pile
-         int pile1Rank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
-         
-         //if pile1 (cardsInPlay[player.CPU.ordinal()] is one off (+/- 1) then use this pile
-         int pile1RankBelow = pile1Rank-1;
-         int pile1RankAbove = pile1Rank+1;
-         
-         //if player selected card is valid +/- 1 from pile1 use this pile for playing
-         if(pile1RankBelow == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
-               || pile1RankAbove == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))  );
-         {
-            //pile1
-            cardsInPlay[player.CPU.ordinal()] = 
-                  highCardGame.playCard(player.One.ordinal(), cardIndex);
-            //Testing
-            System.out.println("Neo Playing: "
-                  +cardsInPlay[player.CPU.ordinal()].toString());
-            
-            usePile1 = true;
-         }  
-         
-         
-         int pile2Rank = Card.getRank(cardsInPlay[player.One.ordinal()]);
-         
-         int pile2RankBelow = pile2Rank-1;
-         int pile2RankAbove = pile2Rank+1;
-         
-         //maybe i should use else statement here instead of the following:
-         /*
-         if((pile2RankBelow == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
-               || pile2RankAbove == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))) 
-               && //negation of the before if statement to ensure not to put in pile1
-               pile1RankBelow != Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
-               || pile1RankAbove != Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))   )
-         { //pile2
-            cardsInPlay[player.One.ordinal()]=
-                  highCardGame.playCard(player.One.ordinal(), cardIndex); 
-            System.out.println("Cifer Playing: "
-                  +cardsInPlay[player.One.ordinal()].toString());
-            
-            usePile2 = true;
-         }
-         */
-         
-         //else just use pile2 since pile1 is false
-         usePile2 = true;
-         
-         
+           
          //humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
          //humanLabels[cardIndex].setBorder(null);
          
          
          //Decide which pile to add image label to
-         //TODO issue with card not showing Jlabel in play area
+         //TODO issue with wrong card bbeing played
          //TODO draw card after playing
          
-         if(usePile1)
-         {
-            if (playedCardLabels[player.CPU.ordinal()]!=null) 
-            { //clear pile1 image
-               myCardTable.pnlPlayArea.remove(playedCardLabels[player.CPU.ordinal()]);   
-               
-               Icon tempIconCPU = 
-                     GuiCard.getIcon(cardsInPlay[player.CPU.ordinal()]);
-               JLabel tempLabelCPU = new JLabel(); 
-               tempLabelCPU.setIcon(tempIconCPU);
-               
-               myCardTable.pnlPlayArea.add(playedCardLabels[player.CPU.ordinal()]);
-               myCardTable.setVisible(true);
-               myCardTable.repaint();
-               
-             //testing cards in play
-               System.out.println("Cards in play");
-               System.out.println(cardsInPlay[player.CPU.ordinal()]);
-            }
-         } 
-         else if(usePile2)
-         {
-            if (playedCardLabels[player.One.ordinal()]!=null)
-            { //clear pile2 image
-               myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);
+ 
+            //cards disappear
+            if (playedCardLabels[playerIndex.ordinal()]!=null)
+            { //clear pile image
+               myCardTable.pnlPlayArea.remove(playedCardLabels[playerIndex.ordinal()]);
                
                Icon tempIconOne = 
-                     GuiCard.getIcon(cardsInPlay[player.One.ordinal()]);
+                     GuiCard.getIcon(cardsInPlay[playerIndex.ordinal()]);
                JLabel tempLabelOne = new JLabel();
                tempLabelOne.setIcon(tempIconOne);
                
-               myCardTable.pnlPlayArea.add(playedCardLabels[player.One.ordinal()]);
+               myCardTable.pnlPlayArea.add(playedCardLabels[playerIndex.ordinal()]);
                myCardTable.setVisible(true);
                myCardTable.repaint();
                
                //testing cards in play
-               System.out.println("Cards in play");
+               System.out.println("Card pile test");
+               System.out.println("Pile1");
+               
+               System.out.println(cardsInPlay[player.CPU.ordinal()]);
+               
+               System.out.println("Pile2:");
                System.out.println(cardsInPlay[player.One.ordinal()]);
                
             }
-         }
+            //TODO case for null
+  
          
          
          myCardTable.pnlHumanHand.remove(humanButtons[cardIndex]);
          myCardTable.setVisible(true);
          myCardTable.repaint();
       } //end of inner if of else clause
-   }
+   }//end method bracket
    
    public static void computerPlay()
    {
@@ -573,7 +508,8 @@ class GameController implements ActionListener
    }
 
    //Method to see if card is one below or above card in pile for play
-   public static boolean validPlay(Card card)
+   //chnage to return player based on pile to play
+   public static player validPlay(Card card)
    {
       //Card to check rank
       int cardRank = Card.getRank(card);
@@ -588,15 +524,15 @@ class GameController implements ActionListener
       //valid if is there is a lower card by 1
       if(cardRankBelow == pile1Rank || cardRankBelow == pile2Rank)
       {
-         return true;
+         return player.CPU; //enum index (int)
       } //Valid if there is a higher card by 1
       else if (cardRankAbove == pile1Rank || cardRankAbove == pile2Rank)
       {
-         return true;
+         return player.One; //enum index (int)
       }
       else 
       {
-         return false;
+         return null;
       }
    }
 
