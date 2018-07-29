@@ -200,7 +200,7 @@ public class TimedHighCardGame
 
 }
 
-class EndingListener implements ActionListener
+class GEndingListener implements ActionListener
 {
 
 
@@ -213,7 +213,7 @@ class EndingListener implements ActionListener
       
       if(actionCommand.equals("I cannot play")) //this is human button not cpu
       {
-         GameController.playerCannotPlay(); 
+         GameController.cannotPlay(); 
       }
       else
       {
@@ -242,7 +242,7 @@ class EndingListener implements ActionListener
  
 }
 
-class EndListener implements ActionListener
+class GEndListener implements ActionListener
 {
    public void actionPerformed(ActionEvent e)
    {
@@ -251,7 +251,7 @@ class EndListener implements ActionListener
    }
 }
 
-class GameController {
+class TGameController {
    
    static enum player {CPU, One}; 
    static int NUM_CARDS_PER_HAND;
