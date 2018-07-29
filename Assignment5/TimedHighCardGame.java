@@ -11,7 +11,6 @@
 //Phase 1 Done. (Comment out tests when submitting.)
 
 //Phase1
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import java.util.*;
@@ -23,12 +22,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 //Deleted Assignment6 and using old Assignmnet5 becuase of similar default package class overlap giving issues
-
-//okayBranch has in tact the original Assignment5
-public class Assignment5
+//okayBranch has in tact the original TimedHighCardGame
+public class TimedHighCardGame
 {
-   //Adding a turn enum
-   static enum turn{CPU, One};
    static enum player {CPU, One}; 
    static int NUM_CARDS_PER_HAND = 7;
    static int  NUM_PLAYERS = 2;
@@ -68,16 +64,11 @@ public class Assignment5
       CardTable myCardTable = 
             new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS, c2);
       myCardTable.setVisible(true);
-      
-      //Add 
+
       GameController.initListener(highCardGame, myCardTable, 
             humanButtons,humanLabels,computerLabels,playedCardLabels,
             playLabelText,cardsInPlay,NUM_PLAYERS, NUM_CARDS_PER_HAND, 
             computerFaces); 
-      
-      //GameController
-      
-      
 
       // ADDING Labels TO COMPUTER HAND
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
@@ -127,21 +118,13 @@ public class Assignment5
       myCardTable.setVisible(true);
 
 
-      //JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
-      //myCardTable.pnlButton.add(instruction);
+      JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
+      myCardTable.pnlButton.add(instruction);
 
-    
-      //Time Panel
-      //manually make gui bigger to see clock, 
-      //TODO fix border / size to see 
-      TimeClock myTimeClock = new TimeClock();
-      myCardTable.pnlButton.add(myTimeClock.getContentPane(), BorderLayout.EAST);
-      
       JButton noPlayButton = new JButton("I cannot play");
       EndingListener noPlayListener = new EndingListener();
       noPlayButton.addActionListener(noPlayListener);
       myCardTable.pnlButton.add(noPlayButton);
-      
 
       myCardTable.setVisible(true);
 
@@ -210,9 +193,7 @@ public class Assignment5
       System.out.println(cardLeft);
 
       System.out.println("Testing Area");
-      System.out.println("Whose turn?");
-      turn playerTurn = turn.CPU;
-      System.out.println(playerTurn);
+
    }
 
 
@@ -221,11 +202,8 @@ public class Assignment5
 
 class EndingListener implements ActionListener
 {
-   
 
-   //Retrieve reference to game data
-   //XXX Listner Init
- 
+
    public void actionPerformed(ActionEvent e)
    {
       //when "I cannot play" button gets pressed increment the tally underscore
@@ -235,27 +213,7 @@ class EndingListener implements ActionListener
       
       if(actionCommand.equals("I cannot play")) //this is human button not cpu
       {
-         GameController.set
-
-         //Reassign Score Panel Labels
-         myCardTable.pnlScore.removeAll();
-
-         JLabel compScore = 
-               new JLabel("CPU: "+scorePC, SwingConstants.CENTER);
-         JLabel humScore = 
-               new JLabel("Player: "+scoreHum+"", SwingConstants.CENTER);
-
-         JLabel gameScore = new JLabel("SCORE");
-
-         myCardTable.pnlScore.add(compScore);
-         myCardTable.pnlScore.add(gameScore);
-         myCardTable.pnlScore.add(humScore);
-
-         myCardTable.setVisible(true);
-         myCardTable.repaint();
-         
-         //switch to turns to opponent
-         //TODO
+         GameController.playerCannotPlay(); 
       }
       else
       {
@@ -269,19 +227,19 @@ class EndingListener implements ActionListener
          updateScore();
          */
          
-         //TODO implement turn based
          GameController.humanPlay(cardIndex);
          GameController.computerPlay();
          
-         GameController.getNumTurns() ;
+         TimedHighCardGame.numTurns += 1;
          //End game when no more cards in deck
-         if(highCardGame.getNumCardsRemainingInDeck() == 0)
+         if(GameController.highCardGame.getNumCardsRemainingInDeck() == 0)
          {
             GameController.EndGame();
          }
       } //end of else (action performed)
    } //ending of action performed
-  
+   
+ 
 }
 
 class EndListener implements ActionListener
@@ -293,9 +251,8 @@ class EndListener implements ActionListener
    }
 }
 
-class GameController implements ActionListener
-{
-   static enum turn {CPU, One};
+class GameController {
+   
    static enum player {CPU, One}; 
    static int NUM_CARDS_PER_HAND;
    static int  NUM_PLAYERS;
@@ -308,53 +265,6 @@ class GameController implements ActionListener
    static JLabel[] playLabelText; 
    static Card[] cardsInPlay; 
    static JLabel[] computerFaces;
-   private static int playNum = 0;
-   private static int oldIndex = 0;
-   private static int scorePC = 0;
-   private static int scoreHum = 0;
-   private static  int numTurns = 0;
-   
-   //Accessors + Mutators
-   public int getPlayNum()
-   {
-      return playNum;
-   }
-   
-   public void setPlayNum(int num)
-   {
-      playNum = num;
-   }
-   
-   public int getScorePC()
-   {
-      return scorePC;
-   }
-   
-   public void setScorePC(int num)
-   {
-      scorePC = num;
-   }
-   
-   public int getScoreHum()
-   {
-      return scoreHum;
-   }
-   
-   public void setScoreHum(int num)
-   {
-      scoreHum = num;
-   }
-   
-   public static int getNumTurns()
-   {
-      return numTurns;
-   }
-   
-   public void setNumTurns(int num)
-   {
-      numTurns = num;
-   }
-   
 
    //Retrieve reference to game data
    //XXX Listner Init
@@ -374,62 +284,27 @@ class GameController implements ActionListener
       computerFaces = cF;
 
    }
-
-   public void actionPerformed(ActionEvent e)
+   public static void playerCannotPlay()
    {
-      //when "I cannot play" button gets pressed increment the tally underscore
-      //higher score is losing, kinda like golf
+      TimedHighCardGame.scoreHum += 1;
 
-      String actionCommand = e.getActionCommand();
-      
-      if(actionCommand.equals("I cannot play")) //this is human button not cpu
-      {
-         scoreHum += 1;
+      //Reassign Score Panel Labels
+      myCardTable.pnlScore.removeAll();
 
-         //Reassign Score Panel Labels
-         myCardTable.pnlScore.removeAll();
+      JLabel compScore = 
+            new JLabel("CPU: "+TimedHighCardGame.scorePC, SwingConstants.CENTER);
+      JLabel humScore = 
+            new JLabel("Player: "+TimedHighCardGame.scoreHum+"", SwingConstants.CENTER);
 
-         JLabel compScore = 
-               new JLabel("CPU: "+scorePC, SwingConstants.CENTER);
-         JLabel humScore = 
-               new JLabel("Player: "+scoreHum+"", SwingConstants.CENTER);
+      JLabel gameScore = new JLabel("SCORE");
 
-         JLabel gameScore = new JLabel("SCORE");
+      myCardTable.pnlScore.add(compScore);
+      myCardTable.pnlScore.add(gameScore);
+      myCardTable.pnlScore.add(humScore);
 
-         myCardTable.pnlScore.add(compScore);
-         myCardTable.pnlScore.add(gameScore);
-         myCardTable.pnlScore.add(humScore);
-
-         myCardTable.setVisible(true);
-         myCardTable.repaint();
-         
-         //switch to turns to opponent
-         //TODO
-      }
-      else
-      {
-         int cardIndex = Integer.valueOf(e.getActionCommand()); 
-         System.out.println(actionCommand.toString());
-         
-      
-         /* The method calls from prior assignment //Comment out
-         playerTurn( cardIndex);
-         pcTurn2(cardIndex); //matching card# human chooses
-         updateScore();
-         */
-         
-         //TODO implement turn based
-         humanPlay(cardIndex);
-         computerPlay();
-         
-        numTurns += 1;
-         //End game when no more cards in deck
-         if(highCardGame.getNumCardsRemainingInDeck() == 0)
-         {
-            EndGame();
-         }
-      } //end of else (action performed)
-   } //ending of action performed
+      myCardTable.setVisible(true);
+      myCardTable.repaint();
+   }
    
    public static void humanPlay(int cardIndex)
    {
@@ -472,7 +347,6 @@ class GameController implements ActionListener
          int pile2RankBelow = pile2Rank-1;
          int pile2RankAbove = pile2Rank+1;
          
-         //maybe i should use else statement here instead of the following:
          if((pile2RankBelow == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
                || pile2RankAbove == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))) 
                && //negation of the before if statement to ensure not to put in pile1
@@ -533,34 +407,9 @@ class GameController implements ActionListener
       } //end of inner if of else clause
    }
    
-   public static void computerPlay()
+   public static  void computerPlay()
    {
-      //TODO Trying to hash out humanPlay first
-      
-      //Pseuo
-    //Check range for pile on play area
-      int pile1Rank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
-      
-      int pile2Rank = Card.getRank(cardsInPlay[player.One.ordinal()]);
-      
-      //check for cards in hand
-      //if card in computer hand is playable in any of the piles 
-      
-      //play the card into pile
-      //TODO decide what kind of algorithm to use? Maybe just pick the first card that works? to discuss with team
-      
-      //display JLabel / icon for card
-      
-      //Switch player turn
-      
-      //else if cannt play
-      //hit the "i cannot play" button
-      
-      //switch turn to other player
-      
-      
-      
-      
+      //Trying to hash out humanPlay first
    }
 
    //Method to see if card is one below or above card in pile for play
@@ -589,6 +438,9 @@ class GameController implements ActionListener
       {
          return false;
       }
+
+      //Need to check for cases when card is lowest or highest rank ie A or X?
+
    }
 
    public static void updateScore()
@@ -605,11 +457,11 @@ class GameController implements ActionListener
 
       if(humRank > pcRank)
       {
-         scoreHum += 1;
+         TimedHighCardGame.scoreHum += 1;
       }
       else if (humRank < pcRank)
       {
-         scorePC += 1;
+         TimedHighCardGame.scorePC += 1;
       }
       else 
       {
@@ -619,9 +471,9 @@ class GameController implements ActionListener
       myCardTable.pnlScore.removeAll();
 
       JLabel compScore = 
-            new JLabel("CPU: "+scorePC, SwingConstants.CENTER);
+            new JLabel("CPU: "+TimedHighCardGame.scorePC, SwingConstants.CENTER);
       JLabel humScore = 
-            new JLabel("Player: "+scoreHum+"", SwingConstants.CENTER);
+            new JLabel("Player: "+TimedHighCardGame.scoreHum+"", SwingConstants.CENTER);
 
       JLabel gameScore = new JLabel("SCORE");
 
@@ -637,17 +489,17 @@ class GameController implements ActionListener
 
    public static void pcTurn2(int cardIndex) {
 
-      if(playNum == 0)
+      if(TimedHighCardGame.playNum == 0)
       {
          myCardTable.pnlPlayArea.add(computerFaces[cardIndex]);
          myCardTable.pnlPlayArea.remove(computerLabels[cardIndex]);
-         oldIndex = cardIndex;
+         TimedHighCardGame.oldIndex = cardIndex;
       }
-      else if(playNum > 0)
+      else if(TimedHighCardGame.playNum > 0)
       {
-         myCardTable.pnlPlayArea.remove(computerFaces[oldIndex]);
+         myCardTable.pnlPlayArea.remove(computerFaces[TimedHighCardGame.oldIndex]);
 
-         oldIndex = cardIndex;
+         TimedHighCardGame.oldIndex = cardIndex;
          myCardTable.pnlPlayArea.add(computerFaces[cardIndex]);
 
          //computerFaces = array with card faces
@@ -659,7 +511,7 @@ class GameController implements ActionListener
 
       System.out.println("Smith Playing: "
             +cardsInPlay[player.CPU.ordinal()].toString());
-      playNum++;
+      TimedHighCardGame.playNum++;
 
       myCardTable.pnlComputerHand.remove(computerLabels[cardIndex]);
 
@@ -667,7 +519,7 @@ class GameController implements ActionListener
       myCardTable.repaint();
    } 
 
-   public static void playerTurn(int cardIndex) {
+   private static void playerTurn(int cardIndex) {
       //human action first
 
       //System.out.println("Unexpected Error.");
@@ -703,11 +555,11 @@ class GameController implements ActionListener
       endWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
       String messageText = "";
-      if(scoreHum > scorePC)
+      if(TimedHighCardGame.scoreHum > TimedHighCardGame.scorePC)
       {
          messageText = "You win!";
       }
-      else if(scoreHum < scorePC)
+      else if(TimedHighCardGame.scoreHum < TimedHighCardGame.scorePC)
       {
          messageText = "You lose.";
       }
@@ -722,7 +574,6 @@ class GameController implements ActionListener
       endWindow.setVisible(true);  
    }
 }
-   
 
 
 
