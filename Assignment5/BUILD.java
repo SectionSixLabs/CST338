@@ -244,6 +244,7 @@ class GameController
                highCardGame.getHand(playerIndex.ordinal()).playCard(cardIndex-1);
          cardsInPlay[0] = cardsInPlay[stuckIndex.ordinal()];
          cardsInPlay[1]=cardInPlay; 
+         highCardGame.takeCard(playerIndex.ordinal());
          GameView.drowPlayAria(cardsInPlay);
          if (playerIndex==player.One)
             GameView.drawPlayerHand();
@@ -272,6 +273,7 @@ class GameController
    {
       System.out.println("CPU playing");
       // TODO choos a card from the hand 
+      
       int cardIndex = 1;
       if (!cardPlay(cardIndex,player.CPU)) {
          cannotPlay(player.CPU); 
@@ -352,10 +354,11 @@ class GameView{
    static JLabel[] playLabelText ;
    static CardTable myCardTable; 
    static CardGameFramework highCardGame ;
-   public static void init(CardGameFramework highCG, CardTable myCT, int nUM_PLAYERS2, int nUM_CARDS_PER_HAND2)
+   public static void init(
+         CardGameFramework highCG, CardTable myCT, 
+         int nUM_PLAYERS2, int nUM_CARDS_PER_HAND2)
    {
-      // TODO Auto-generated method stub
-      
+     
       NUM_PLAYERS= nUM_PLAYERS2;
       NUM_CARDS_PER_HAND= nUM_CARDS_PER_HAND2;
       computerLabels = new JLabel[NUM_CARDS_PER_HAND];
