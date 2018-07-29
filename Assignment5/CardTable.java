@@ -225,6 +225,11 @@ public class CardTable extends JFrame
       pnlScore.setLayout(new GridLayout(3, 1));
       add(pnlScore,BorderLayout.WEST);
       
+      
+      //Time Panel
+      TimeClock myTimeClock = new TimeClock();
+      add(myTimeClock.getContentPane(), BorderLayout.EAST);
+      
    } //End of 2nd Constructor
    
    //Accessors for the two instance members
