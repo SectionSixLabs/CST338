@@ -436,10 +436,10 @@ class Hand
 
    //Accessor for an individual card.  
    //Returns a card with errorFlag = true if k is bad.
-   public Card inspectCard(int k) 
+   public Card inspectCard(int index) 
    {
       Card localCard = new Card('0',Card.Suit.HEARTS);
-      if (k<=this.numCards && k>0) localCard=this.myCards[k-1];
+      if (index<=this.numCards && index>-1) localCard=this.myCards[index-1];
       return localCard; 
    }
    

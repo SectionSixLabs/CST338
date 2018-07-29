@@ -241,7 +241,7 @@ class GameController
 
         {
          Card cardInPlay =
-               highCardGame.getHand(playerIndex.ordinal()).playCard(cardIndex);
+               highCardGame.getHand(playerIndex.ordinal()).playCard(cardIndex-1);
          cardsInPlay[0] = cardsInPlay[stuckIndex.ordinal()];
          cardsInPlay[1]=cardInPlay; 
          GameView.drowPlayAria(cardsInPlay);
@@ -479,14 +479,6 @@ class GameView{
       playedCardLabels[player.One.ordinal()].setHorizontalAlignment(JLabel.CENTER);
       playedCardLabels[player.One.ordinal()].setBorder(null);
       
-      //clear cards if any but there shouldn't be atm bc initilizing phase
-      if (playedCardLabels[player.CPU.ordinal()]!=null) {
-         myCardTable.pnlPlayArea.remove(playedCardLabels[player.CPU.ordinal()]);          
-      }
-      
-      if (playedCardLabels[player.One.ordinal()]!=null) {
-         myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);          
-      }
 
       myCardTable.pnlPlayArea.add(playedCardLabels[player.CPU.ordinal()]);
       myCardTable.pnlPlayArea.add(playedCardLabels[player.One.ordinal()]);
