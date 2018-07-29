@@ -11,6 +11,7 @@
 //Phase 1 Done. (Comment out tests when submitting.)
 
 //Phase1
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import java.util.*;
@@ -121,13 +122,21 @@ public class Assignment5
       myCardTable.setVisible(true);
 
 
-      JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
-      myCardTable.pnlButton.add(instruction);
+      //JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
+      //myCardTable.pnlButton.add(instruction);
 
+    
+      //Time Panel
+      //manually make gui bigger to see clock, 
+      //TODO fix border / size to see 
+      TimeClock myTimeClock = new TimeClock();
+      myCardTable.pnlButton.add(myTimeClock.getContentPane(), BorderLayout.EAST);
+      
       JButton noPlayButton = new JButton("I cannot play");
       EndingListener noPlayListener = new EndingListener();
       noPlayButton.addActionListener(noPlayListener);
       myCardTable.pnlButton.add(noPlayButton);
+      
 
       myCardTable.setVisible(true);
 
