@@ -25,7 +25,7 @@ import javax.swing.JFrame;
 //Deleted Assignment6 and using old Assignmnet5 becuase of similar default package class overlap giving issues
 
 //okayBranch has in tact the original Assignment5
-public class Assignment5
+public class BUILD
 {
    //Adding a turn enum
    static enum turn{CPU, One};
@@ -235,27 +235,11 @@ class EndingListener implements ActionListener
       
       if(actionCommand.equals("I cannot play")) //this is human button not cpu
       {
-         GameController.set
 
-         //Reassign Score Panel Labels
-         myCardTable.pnlScore.removeAll();
-
-         JLabel compScore = 
-               new JLabel("CPU: "+scorePC, SwingConstants.CENTER);
-         JLabel humScore = 
-               new JLabel("Player: "+scoreHum+"", SwingConstants.CENTER);
-
-         JLabel gameScore = new JLabel("SCORE");
-
-         myCardTable.pnlScore.add(compScore);
-         myCardTable.pnlScore.add(gameScore);
-         myCardTable.pnlScore.add(humScore);
-
-         myCardTable.setVisible(true);
-         myCardTable.repaint();
          
          //switch to turns to opponent
          //TODO
+         GameController.cannotPlay() ; 
       }
       else
       {
@@ -275,7 +259,7 @@ class EndingListener implements ActionListener
          
          GameController.getNumTurns() ;
          //End game when no more cards in deck
-         if(highCardGame.getNumCardsRemainingInDeck() == 0)
+         if( GameController.getNumCardsInDeck()== 0)
          {
             GameController.EndGame();
          }
@@ -353,6 +337,10 @@ class GameController implements ActionListener
    public void setNumTurns(int num)
    {
       numTurns = num;
+   }
+   public static int getNumCardsInDeck() 
+   {
+      return highCardGame.getNumCardsRemainingInDeck(); 
    }
    
 
@@ -720,6 +708,27 @@ class GameController implements ActionListener
       endButton.addActionListener(buttonEar);
       endWindow.add(endButton);
       endWindow.setVisible(true);  
+   }
+   
+   public static void cannotPlay() {
+
+
+      //Reassign Score Panel Labels
+      myCardTable.pnlScore.removeAll();
+
+      JLabel compScore = 
+            new JLabel("CPU: "+scorePC, SwingConstants.CENTER);
+      JLabel humScore = 
+            new JLabel("Player: "+scoreHum+"", SwingConstants.CENTER);
+
+      JLabel gameScore = new JLabel("SCORE");
+
+      myCardTable.pnlScore.add(compScore);
+      myCardTable.pnlScore.add(gameScore);
+      myCardTable.pnlScore.add(humScore);
+
+      myCardTable.setVisible(true);
+      myCardTable.repaint();
    }
 }
    
