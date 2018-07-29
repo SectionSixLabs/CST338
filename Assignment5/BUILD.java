@@ -28,23 +28,11 @@ import javax.swing.JFrame;
 public class BUILD
 {
    //Adding a turn enum
-   static enum turn{CPU, One};
-   static enum player {CPU, One}; 
+   static enum piles {One,Two};
+   static enum players {CPU, One}; 
    static int NUM_CARDS_PER_HAND = 7;
    static int  NUM_PLAYERS = 2;
-   static JLabel[] computerLabels = new JLabel[NUM_CARDS_PER_HAND];
-   static JLabel[] computerFaces = new JLabel[NUM_CARDS_PER_HAND];
-   static JLabel[] humanLabels = new JLabel[NUM_CARDS_PER_HAND];
-   static JButton[] humanButtons = new JButton [NUM_CARDS_PER_HAND];
    static EndingListener[] humanListner =new EndingListener[NUM_CARDS_PER_HAND]; 
-   static JLabel[] playedCardLabels  = new JLabel[NUM_PLAYERS]; 
-   static JLabel[] playLabelText  = new JLabel[NUM_PLAYERS]; 
-   static Card[] cardsInPlay = new Card[NUM_PLAYERS];
-   static int playNum = 0;
-   static int oldIndex = 0;
-   static int scorePC = 0;
-   static int scoreHum = 0;
-   static int numTurns = 0;
    // a simple main to throw all the JLabels out there for the world to see
    public static void main(String[] args)
    {
@@ -57,77 +45,27 @@ public class BUILD
             numPacksPerDeck, numJokersPerPack,  
             numUnusedCardsPerPack, unusedCardsPerPack, 
             NUM_PLAYERS, NUM_CARDS_PER_HAND);
-
-
-
       GuiCard.loadCardIcons();
-
       highCardGame.deal(); 
-
       boolean c2 = true;
       CardTable myCardTable = 
             new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS, c2);
       myCardTable.setVisible(true);
-      
       //Add 
-      GameController.initListener(highCardGame, myCardTable, 
-            humanButtons,humanLabels,computerLabels,playedCardLabels,
-            playLabelText,cardsInPlay,NUM_PLAYERS, NUM_CARDS_PER_HAND, 
-            computerFaces); 
-      
+     GameController.init(highCardGame, NUM_PLAYERS,NUM_CARDS_PER_HAND); 
+     GameView.init(highCardGame, myCardTable,NUM_PLAYERS,NUM_CARDS_PER_HAND);
       //GameController
-      
-      
-
-      // ADDING Labels TO COMPUTER HAND
-      for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
-      {
-         Icon tempIcon = GuiCard.getBackCardIcon();
-         JLabel temlLabel = new JLabel(); 
-         temlLabel.setIcon(tempIcon); 
-         computerLabels[i]=temlLabel;
-
-         //computerFaces
-         Icon tempIconFace = GuiCard.getIcon(highCardGame.getHand(0).
-               inspectCard(i+1));
-         computerFaces[i] = new JLabel(tempIconFace);
-
-      }
-
-      // ADDING Labels TO HUMAN HAND
-      for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
-      {
-         Icon tempIcon = 
-               GuiCard.getIcon(highCardGame.getHand(player.One.ordinal()).
-                     inspectCard(i+1));
-         JLabel temlLabel = new JLabel(); 
-         JButton tempButton = 
-               new JButton();
-
-         EndingListener tempListner = new EndingListener();
-         tempButton.addActionListener(tempListner);
-         tempButton.setIcon(tempIcon);
-         tempButton.setActionCommand((i)+"");
-         tempButton.setBorder(null);
-         temlLabel.setIcon(tempIcon);
-         humanLabels[i]=temlLabel;
-         humanButtons[i] = tempButton; 
-         humanListner[i] = tempListner; 
-      }
-
-      // ADD LABELS TO PANELS -----------------------------------------
-      
-      for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
-      {
-         myCardTable.pnlComputerHand.add(computerLabels[i]);
-         //myCardTable.pnlHumanHand.add(humanLabels[i]);
-         myCardTable.pnlHumanHand.add(humanButtons[i]);
-      }
-
-      myCardTable.setVisible(true);
+     Card[] cards = new Card[NUM_PLAYERS]; 
+     for (int i= 0 ;i<NUM_PLAYERS;i++) {
+        cards[i] = highCardGame.getCardFromDeck();
+     }
+     GameController.setCardsInPlay(cards);
+     GameView.drawCPUHand();
+     GameView.drawPlayerHand();
+     GameView.updateScore(0, 0);
 
 
-      //JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
+     //JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
       //myCardTable.pnlButton.add(instruction);
 
     
@@ -135,73 +73,9 @@ public class BUILD
       //manually make gui bigger to see clock, 
       //TODO fix border / size to see 
       TimeClock myTimeClock = new TimeClock();
-      myCardTable.pnlButton.add(myTimeClock.getContentPane(), BorderLayout.EAST);
-      
-      JButton noPlayButton = new JButton("I cannot play");
-      EndingListener noPlayListener = new EndingListener();
-      noPlayButton.addActionListener(noPlayListener);
-      myCardTable.pnlButton.add(noPlayButton);
-      
+      GameView.drawTimer(myTimeClock);
 
-      myCardTable.setVisible(true);
 
-      //Score Panel
-      JLabel compScore = new JLabel(scorePC+"", SwingConstants.CENTER);
-      JLabel gameScore = new JLabel("SCORE");
-      JLabel humScore = new JLabel(scoreHum+"", SwingConstants.CENTER);
-
-      myCardTable.pnlScore.add(compScore);
-      myCardTable.pnlScore.add(gameScore);
-      myCardTable.pnlScore.add(humScore);
-      
-      
-      //Initialize Game by flipping two cards from deck into pnlPlayArea
-      cardsInPlay[player.CPU.ordinal()] = highCardGame.getCardFromDeck();
-      cardsInPlay[player.One.ordinal()] = highCardGame.getCardFromDeck();
-      
-      //Testing card drawn from deck
-      System.out.println("The card for cpu pile:");
-      System.out.println(cardsInPlay[player.CPU.ordinal()]);
-      System.out.println("The card for hum pile:");
-      System.out.println(cardsInPlay[player.One.ordinal()]);
-      
-      //display the two cards in card playing field
-      Icon tempIconCPU = 
-            GuiCard.getIcon(cardsInPlay[player.CPU.ordinal()]);
-      JLabel tempLabelCPU = new JLabel(); 
-      tempLabelCPU.setIcon(tempIconCPU);
-      
-      playedCardLabels[player.CPU.ordinal()] = tempLabelCPU;
-      
-      Icon tempIconOne = 
-            GuiCard.getIcon(cardsInPlay[player.One.ordinal()]);
-      JLabel tempLabelOne = new JLabel();
-      tempLabelOne.setIcon(tempIconOne);
-      
-      playedCardLabels[player.One.ordinal()] = tempLabelOne;
-      
-      //Setting JLabel configs
-      playedCardLabels[player.CPU.ordinal()].setHorizontalAlignment(JLabel.CENTER);
-      playedCardLabels[player.CPU.ordinal()].setBorder(null);
-      
-      playedCardLabels[player.One.ordinal()].setHorizontalAlignment(JLabel.CENTER);
-      playedCardLabels[player.One.ordinal()].setBorder(null);
-      
-      //clear cards if any but there shouldn't be atm bc initilizing phase
-      if (playedCardLabels[player.CPU.ordinal()]!=null) {
-         myCardTable.pnlPlayArea.remove(playedCardLabels[player.CPU.ordinal()]);          
-      }
-      
-      if (playedCardLabels[player.One.ordinal()]!=null) {
-         myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);          
-      }
-
-      myCardTable.pnlPlayArea.add(playedCardLabels[player.CPU.ordinal()]);
-      myCardTable.pnlPlayArea.add(playedCardLabels[player.One.ordinal()]);
-      myCardTable.setVisible(true);
-      myCardTable.repaint();
-      
-      
       
       //Testing Area
       System.out.println("Hi from end of Assingment5");
@@ -211,8 +85,7 @@ public class BUILD
 
       System.out.println("Testing Area");
       System.out.println("Whose turn?");
-      turn playerTurn = turn.CPU;
-      System.out.println(playerTurn);
+
    }
 
 
@@ -255,8 +128,8 @@ class EndingListener implements ActionListener
          
          //TODO implement turn based
          System.out.println("human Playing ");
-         GameController.cardPlay(cardIndex,GameController.player.One);
-         System.out.println("CPU playing");
+         GameController.humenPlay(cardIndex);
+
          GameController.computerPlay();
          
          GameController.getNumTurns() ;
@@ -279,23 +152,16 @@ class EndListener implements ActionListener
    }
 }
 
-class GameController implements ActionListener
+class GameController
 {
    static enum turn {CPU, One};
    static enum player {CPU, One}; 
    static int NUM_CARDS_PER_HAND;
    static int  NUM_PLAYERS;
    static CardGameFramework highCardGame;
-   static CardTable myCardTable; 
-   static JButton[] humanButtons; 
-   static JLabel[] humanLabels;
-   static JLabel[] computerLabels;
-   static JLabel[] playedCardLabels; 
-   static JLabel[] playLabelText; 
    static Card[] cardsInPlay; 
    static JLabel[] computerFaces;
    private static int playNum = 0;
-   private static int oldIndex = 0;
    private static int scorePC = 0;
    private static int scoreHum = 0;
    private static  int numTurns = 0;
@@ -346,23 +212,18 @@ class GameController implements ActionListener
       return highCardGame.getNumCardsRemainingInDeck(); 
    }
    
+   public static void setCardsInPlay(Card[] cards) {
+      cardsInPlay = cards; 
+      GameView.drowPlayAria(cards);
+   } 
 
    //Retrieve reference to game data
    //XXX Listner Init
-   static void  initListener (CardGameFramework game, CardTable table, 
-         JButton[] hB, JLabel[] hL, JLabel[] cL, JLabel[] pCL,JLabel[] pLtxt, 
-         Card[] cIP, int nP, int nCPH, JLabel[] cF) {
+   static void  init (CardGameFramework game, int nP, int nCPH) {
       highCardGame = game; 
-      myCardTable = table; 
-      humanButtons = hB; 
-      humanLabels = hL; 
-      computerLabels = cL; 
-      playedCardLabels = pCL;
-      playLabelText = pLtxt;
-      cardsInPlay = cIP; 
       NUM_CARDS_PER_HAND = nCPH;
       NUM_PLAYERS = nP; 
-      computerFaces = cF;
+      cardsInPlay = new Card[NUM_PLAYERS];
 
    }
 
@@ -372,46 +233,49 @@ class GameController implements ActionListener
       //TODO fix issue of card be able to be placed in either pile if it is a valid play
       
       //test see if actionCommand for card is valid to play (one higher or lower than card in table)
-      Card cardInPlay = highCardGame.getHand(playerIndex.ordinal()).
+      Card card2Inspect = highCardGame.getHand(playerIndex.ordinal()).
             inspectCard(cardIndex); 
-      System.out.println("cardInPlay: "+cardInPlay);
-      player stuckIndex = validPlay(cardInPlay); 
+      System.out.println("cardInPlay: "+card2Inspect);
+      player stuckIndex = validPlay(card2Inspect); 
       if(stuckIndex!=null)
 
         {
-            if (playedCardLabels[stuckIndex.ordinal()]!=null)
-            { //clear pile2 image
-               myCardTable.pnlPlayArea.remove
-                  (playedCardLabels[stuckIndex.ordinal()]);
-               
-               Icon tempIconOne = 
-                     GuiCard.getIcon
-                        (cardsInPlay[stuckIndex.ordinal()]);
-               JLabel tempLabelOne = new JLabel();
-               tempLabelOne.setIcon(tempIconOne);
-               
-               myCardTable.pnlPlayArea.add
-                  (playedCardLabels[stuckIndex.ordinal()]);
-            }
-         }
-      else {
-         return false;
-      }
-      myCardTable.setVisible(true);
-      myCardTable.repaint();
+         Card cardInPlay =
+               highCardGame.getHand(playerIndex.ordinal()).playCard(cardIndex);
+         cardsInPlay[0] = cardsInPlay[stuckIndex.ordinal()];
+         cardsInPlay[1]=cardInPlay; 
+         GameView.drowPlayAria(cardsInPlay);
+         if (playerIndex==player.One)
+            GameView.drawPlayerHand();
+         else 
+            GameView.drawCPUHand();
+            return true; 
+        }
+            return false; 
+   }
 
-         if (playerIndex == player.One) {
-         myCardTable.pnlHumanHand.remove(humanButtons[cardIndex]);
-         } 
-         return true;
 
-      } //end of inner if of else clause
+   public static void humenPlay(int cardIndex )
+   {
+      System.out.println("Neo playing");
+      cardIndex++; 
+      
+      if (cardPlay(cardIndex,player.One)) {
+         //TODO refresh human hand 
+      } 
+
+
+   }
+
    
    public static void computerPlay()
    {
+      System.out.println("CPU playing");
       // TODO choos a card from the hand 
-      int cardIndex = 0;
-      cardPlay(cardIndex,player.CPU);
+      int cardIndex = 1;
+      if (!cardPlay(cardIndex,player.CPU)) {
+         cannotPlay(player.CPU); 
+      }
    }
 
    //Method to see if card is one below or above card in pile for play
@@ -445,106 +309,6 @@ class GameController implements ActionListener
       }
    }
 
-   public static void updateScore()
-   {
-      //Testing the card values
-
-      int pcRank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
-      int humRank = Card.getRank(cardsInPlay[player.One.ordinal()]);
-
-      System.out.println("rankHumRank: "+humRank);
-
-      System.out.println("rankPCrank: "+pcRank);
-      //need to check out the card.getRank
-
-      if(humRank > pcRank)
-      {
-         scoreHum += 1;
-      }
-      else if (humRank < pcRank)
-      {
-         scorePC += 1;
-      }
-      else 
-      {
-         //Do update to score
-      }
-      //Reassign Score Panel Labels
-      myCardTable.pnlScore.removeAll();
-
-      JLabel compScore = 
-            new JLabel("CPU: "+scorePC, SwingConstants.CENTER);
-      JLabel humScore = 
-            new JLabel("Player: "+scoreHum+"", SwingConstants.CENTER);
-
-      JLabel gameScore = new JLabel("SCORE");
-
-      myCardTable.pnlScore.add(compScore);
-      myCardTable.pnlScore.add(gameScore);
-      myCardTable.pnlScore.add(humScore);
-
-      myCardTable.setVisible(true);
-      myCardTable.repaint();
-
-   }
-
-
-   public static void pcTurn2(int cardIndex) {
-
-      if(playNum == 0)
-      {
-         myCardTable.pnlPlayArea.add(computerFaces[cardIndex]);
-         myCardTable.pnlPlayArea.remove(computerLabels[cardIndex]);
-         oldIndex = cardIndex;
-      }
-      else if(playNum > 0)
-      {
-         myCardTable.pnlPlayArea.remove(computerFaces[oldIndex]);
-
-         oldIndex = cardIndex;
-         myCardTable.pnlPlayArea.add(computerFaces[cardIndex]);
-
-         //computerFaces = array with card faces
-         //computerLabels = back of card
-
-      }
-      cardsInPlay[player.CPU.ordinal()]=
-            highCardGame.playCard(player.CPU.ordinal(), cardIndex); 
-
-      System.out.println("Smith Playing: "
-            +cardsInPlay[player.CPU.ordinal()].toString());
-      playNum++;
-
-      myCardTable.pnlComputerHand.remove(computerLabels[cardIndex]);
-
-      myCardTable.setVisible(true);
-      myCardTable.repaint();
-   } 
-
-   public static void playerTurn(int cardIndex) {
-      //human action first
-
-      //System.out.println("Unexpected Error.");
-      // making sure we have a card ref
-      cardsInPlay[player.One.ordinal()]=
-            highCardGame.playCard(player.One.ordinal(), cardIndex); 
-      System.out.println("Neo Playing: "
-            +cardsInPlay[player.One.ordinal()].toString());
-
-
-      humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
-      humanLabels[cardIndex].setBorder(null);
-
-      if (playedCardLabels[player.One.ordinal()]!=null) {
-         myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);          
-      }
-
-      myCardTable.pnlPlayArea.add(humanLabels[cardIndex]);
-      playedCardLabels[player.One.ordinal()] = humanLabels[cardIndex]; 
-      myCardTable.pnlHumanHand.remove(humanButtons[cardIndex]);
-      myCardTable.setVisible(true);
-      myCardTable.repaint();
-   } 
 
    public static void EndGame()
    {
@@ -580,6 +344,97 @@ class GameController implements ActionListener
 
       if (p ==player.One) scoreHum++;
       else scorePC++; 
+
+   }
+
+}
+
+class GameView{
+   static enum player {CPU, One}; 
+   static int NUM_CARDS_PER_HAND;
+   static int  NUM_PLAYERS;
+   static JLabel[] computerLabels;
+   static JLabel[] computerFaces ;
+   static JLabel[] humanLabels;
+   static JButton[] humanButtons ;
+   static JLabel[] playedCardLabels ; 
+   static JLabel[] playLabelText ;
+   static CardTable myCardTable; 
+   static CardGameFramework highCardGame ;
+   public static void init(CardGameFramework highCG, CardTable myCT, int nUM_PLAYERS2, int nUM_CARDS_PER_HAND2)
+   {
+      // TODO Auto-generated method stub
+      
+      NUM_PLAYERS= nUM_PLAYERS2;
+      NUM_CARDS_PER_HAND= nUM_CARDS_PER_HAND2;
+      computerLabels = new JLabel[NUM_CARDS_PER_HAND];
+      computerFaces= new JLabel[NUM_CARDS_PER_HAND];
+      humanLabels = new JLabel[NUM_CARDS_PER_HAND];
+      humanButtons= new JButton [NUM_CARDS_PER_HAND];
+      playedCardLabels = new JLabel[NUM_PLAYERS];
+      playLabelText = new JLabel[NUM_PLAYERS];
+      myCardTable = myCT; 
+      highCardGame = highCG; 
+      
+      
+   }
+   
+   public static void drawCPUHand() {
+      //Clear panel
+      myCardTable.pnlComputerHand.removeAll();
+      
+      for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
+      {
+         Icon tempIcon = GuiCard.getBackCardIcon();
+         JLabel temlLabel = new JLabel(); 
+         temlLabel.setIcon(tempIcon); 
+         computerLabels[i]=temlLabel;
+
+         //computerFaces
+         Icon tempIconFace = GuiCard.getIcon(highCardGame.getHand(0).
+               inspectCard(i+1));
+         computerFaces[i] = new JLabel(tempIconFace);
+
+      }
+      for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
+         {
+            myCardTable.pnlComputerHand.add(computerLabels[i]);
+         }
+
+      refresh();
+   }
+   public static void drawPlayerHand() {
+      // ADDING Labels TO HUMAN HAND
+      myCardTable.pnlHumanHand.removeAll();
+      
+      for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
+      {
+         Icon tempIcon = 
+               GuiCard.getIcon(highCardGame.getHand(player.One.ordinal()).
+                     inspectCard(i+1));
+         JLabel temlLabel = new JLabel(); 
+         JButton tempButton = 
+               new JButton();
+
+         EndingListener tempListner = new EndingListener();
+         tempButton.addActionListener(tempListner);
+         tempButton.setIcon(tempIcon);
+         tempButton.setActionCommand((i)+"");
+         tempButton.setBorder(null);
+         temlLabel.setIcon(tempIcon);
+         humanLabels[i]=temlLabel;
+         humanButtons[i] = tempButton; 
+      }
+      for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
+      {
+         myCardTable.pnlHumanHand.add(humanButtons[i]);
+      }
+      
+      refresh();
+      
+   }
+   
+   public static void updateScore(int scorePC, int scoreHum ) {
       //Reassign Score Panel Labels
       myCardTable.pnlScore.removeAll();
 
@@ -593,18 +448,67 @@ class GameController implements ActionListener
       myCardTable.pnlScore.add(compScore);
       myCardTable.pnlScore.add(gameScore);
       myCardTable.pnlScore.add(humScore);
+      
+      refresh();
+   }
+   
+   public static void drowPlayAria(Card[] cards) {
+      //Initialize Game by flipping two cards from deck into pnlPlayArea
 
+      
+      
+      //display the two cards in card playing field
+      Icon tempIconCPU = 
+            GuiCard.getIcon(cards[0]);
+      JLabel tempLabelCPU = new JLabel(); 
+      tempLabelCPU.setIcon(tempIconCPU);
+      
+      playedCardLabels[player.CPU.ordinal()] = tempLabelCPU;
+      
+      Icon tempIconOne = 
+            GuiCard.getIcon(cards[1]);
+      JLabel tempLabelOne = new JLabel();
+      tempLabelOne.setIcon(tempIconOne);
+      
+      playedCardLabels[player.One.ordinal()] = tempLabelOne;
+      
+      //Setting JLabel configs
+      playedCardLabels[player.CPU.ordinal()].setHorizontalAlignment(JLabel.CENTER);
+      playedCardLabels[player.CPU.ordinal()].setBorder(null);
+      
+      playedCardLabels[player.One.ordinal()].setHorizontalAlignment(JLabel.CENTER);
+      playedCardLabels[player.One.ordinal()].setBorder(null);
+      
+      //clear cards if any but there shouldn't be atm bc initilizing phase
+      if (playedCardLabels[player.CPU.ordinal()]!=null) {
+         myCardTable.pnlPlayArea.remove(playedCardLabels[player.CPU.ordinal()]);          
+      }
+      
+      if (playedCardLabels[player.One.ordinal()]!=null) {
+         myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);          
+      }
+
+      myCardTable.pnlPlayArea.add(playedCardLabels[player.CPU.ordinal()]);
+      myCardTable.pnlPlayArea.add(playedCardLabels[player.One.ordinal()]);
+
+      refresh();
+   }
+   
+   public static void drawTimer(TimeClock myTimeClock ){
+      myCardTable.pnlButton.add(myTimeClock.getContentPane(), BorderLayout.EAST);
+      JButton noPlayButton = new JButton("I cannot play");
+      EndingListener noPlayListener = new EndingListener();
+      noPlayButton.addActionListener(noPlayListener);
+      myCardTable.pnlButton.add(noPlayButton);
+      refresh();
+      
+   }
+   
+   private static void refresh() {
       myCardTable.setVisible(true);
       myCardTable.repaint();
    }
 
-
-   @Override
-   public void actionPerformed(ActionEvent arg0)
-   {
-      // TODO Auto-generated method stub
-      
-   }
 }
    
 
