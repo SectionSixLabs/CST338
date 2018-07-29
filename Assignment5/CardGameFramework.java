@@ -396,15 +396,25 @@ class Hand
    
    //returns and removes the card in the top occupied position of the array.
    public Card playCard(int cardIndex) 
-   {
-      if (this.numCards>0) 
       {
-         Card cardLocal = this.myCards[cardIndex]; 
-         this.myCards[cardIndex] = null; 
-         this.numCards-=1;
-         return cardLocal; 
-      } else return null; 
-   } //If hand is empty return NULL
+      if ( numCards == 0 ) //error
+         {
+            //Creates a card that does not work
+            return new Card('M', Card.Suit.SPADES);
+         }
+      //Decreases numCards.
+      Card card = myCards[cardIndex];
+      
+      numCards--;
+      for(int i = cardIndex; i < numCards; i++)
+      {
+         myCards[i] = myCards[i+1];
+      }
+      
+      myCards[numCards] = null;
+      
+      return card;
+   }
 
    //a stringizer that the client can use prior to displaying the entire hand.
    public String toString() 
