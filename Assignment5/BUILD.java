@@ -138,7 +138,8 @@ public class BUILD
       myCardTable.pnlButton.add(myTimeClock.getContentPane(), BorderLayout.EAST);
       
       JButton noPlayButton = new JButton("I cannot play");
-      EndingListener noPlayListener = new EndingListener();
+      GameController noPlayListener = new GameController();
+      //EndingListener noPlayListener = new EndingListener();
       noPlayButton.addActionListener(noPlayListener);
       myCardTable.pnlButton.add(noPlayButton);
       
@@ -373,6 +374,9 @@ class GameController implements ActionListener
       if(actionCommand.equals("I cannot play")) //this is human button not cpu
       {
          scoreHum += 1;
+         
+         //Test
+         System.out.println(scoreHum);
 
          //Reassign Score Panel Labels
          myCardTable.pnlScore.removeAll();
@@ -461,6 +465,7 @@ class GameController implements ActionListener
          int pile2RankAbove = pile2Rank+1;
          
          //maybe i should use else statement here instead of the following:
+         /*
          if((pile2RankBelow == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
                || pile2RankAbove == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))) 
                && //negation of the before if statement to ensure not to put in pile1
@@ -474,12 +479,19 @@ class GameController implements ActionListener
             
             usePile2 = true;
          }
+         */
          
-         humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
-         humanLabels[cardIndex].setBorder(null);
+         //else just use pile2 since pile1 is false
+         usePile2 = true;
+         
+         
+         //humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
+         //humanLabels[cardIndex].setBorder(null);
          
          
          //Decide which pile to add image label to
+         //TODO issue with card not showing Jlabel in play area
+         //TODO draw card after playing
          
          if(usePile1)
          {
@@ -495,6 +507,10 @@ class GameController implements ActionListener
                myCardTable.pnlPlayArea.add(playedCardLabels[player.CPU.ordinal()]);
                myCardTable.setVisible(true);
                myCardTable.repaint();
+               
+             //testing cards in play
+               System.out.println("Cards in play");
+               System.out.println(cardsInPlay[player.CPU.ordinal()]);
             }
          } 
          else if(usePile2)
@@ -511,6 +527,11 @@ class GameController implements ActionListener
                myCardTable.pnlPlayArea.add(playedCardLabels[player.One.ordinal()]);
                myCardTable.setVisible(true);
                myCardTable.repaint();
+               
+               //testing cards in play
+               System.out.println("Cards in play");
+               System.out.println(cardsInPlay[player.One.ordinal()]);
+               
             }
          }
          
@@ -691,11 +712,13 @@ class GameController implements ActionListener
       endWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
       String messageText = "";
-      if(scoreHum > scorePC)
+      //Remember current score is how mnay times "I cannot play" is called
+      //lower score is better
+      if(scoreHum < scorePC)
       {
          messageText = "You win!";
       }
-      else if(scoreHum < scorePC)
+      else if(scoreHum > scorePC)
       {
          messageText = "You lose.";
       }
