@@ -428,7 +428,7 @@ class GameController implements ActionListener
 
       
       player playerIndex = validPlay(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex));
-      //TODO fix issue of card be able to be placed in either pile if it is a valid play
+    
       
       //test see if actionCommand for card is valid to play (one higher or lower than card in table)
       if(playerIndex != null)
@@ -466,8 +466,13 @@ class GameController implements ActionListener
                System.out.println("Pile2:");
                System.out.println(cardsInPlay[player.One.ordinal()]);
                
+               System.out.println("Reaches here!");
+               
             }
-            //TODO case for null
+            else 
+            { //seems like its dead code and doesn't reach 
+               System.out.println("Cannot play a card!!!");
+            }
   
          
          
