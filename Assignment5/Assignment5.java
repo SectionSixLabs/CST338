@@ -68,11 +68,16 @@ public class Assignment5
       CardTable myCardTable = 
             new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS, c2);
       myCardTable.setVisible(true);
-
-      EndingListener.initListener(highCardGame, myCardTable, 
+      
+      //Add 
+      GameController.initListener(highCardGame, myCardTable, 
             humanButtons,humanLabels,computerLabels,playedCardLabels,
             playLabelText,cardsInPlay,NUM_PLAYERS, NUM_CARDS_PER_HAND, 
             computerFaces); 
+      
+      //GameController
+      
+      
 
       // ADDING Labels TO COMPUTER HAND
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
@@ -216,39 +221,11 @@ public class Assignment5
 
 class EndingListener implements ActionListener
 {
-   static enum turn {CPU, One};
-   static enum player {CPU, One}; 
-   static int NUM_CARDS_PER_HAND;
-   static int  NUM_PLAYERS;
-   static CardGameFramework highCardGame;
-   static CardTable myCardTable; 
-   static JButton[] humanButtons; 
-   static JLabel[] humanLabels;
-   static JLabel[] computerLabels;
-   static JLabel[] playedCardLabels; 
-   static JLabel[] playLabelText; 
-   static Card[] cardsInPlay; 
-   static JLabel[] computerFaces;
+   
 
    //Retrieve reference to game data
    //XXX Listner Init
-   static void  initListener (CardGameFramework game, CardTable table, 
-         JButton[] hB, JLabel[] hL, JLabel[] cL, JLabel[] pCL,JLabel[] pLtxt, 
-         Card[] cIP, int nP, int nCPH, JLabel[] cF) {
-      highCardGame = game; 
-      myCardTable = table; 
-      humanButtons = hB; 
-      humanLabels = hL; 
-      computerLabels = cL; 
-      playedCardLabels = pCL;
-      playLabelText = pLtxt;
-      cardsInPlay = cIP; 
-      NUM_CARDS_PER_HAND = nCPH;
-      NUM_PLAYERS = nP; 
-      computerFaces = cF;
-
-   }
-
+ 
    public void actionPerformed(ActionEvent e)
    {
       //when "I cannot play" button gets pressed increment the tally underscore
@@ -258,15 +235,15 @@ class EndingListener implements ActionListener
       
       if(actionCommand.equals("I cannot play")) //this is human button not cpu
       {
-         Assignment5.scoreHum += 1;
+         GameController.set
 
          //Reassign Score Panel Labels
          myCardTable.pnlScore.removeAll();
 
          JLabel compScore = 
-               new JLabel("CPU: "+Assignment5.scorePC, SwingConstants.CENTER);
+               new JLabel("CPU: "+scorePC, SwingConstants.CENTER);
          JLabel humScore = 
-               new JLabel("Player: "+Assignment5.scoreHum+"", SwingConstants.CENTER);
+               new JLabel("Player: "+scoreHum+"", SwingConstants.CENTER);
 
          JLabel gameScore = new JLabel("SCORE");
 
@@ -293,310 +270,18 @@ class EndingListener implements ActionListener
          */
          
          //TODO implement turn based
-         humanPlay(cardIndex);
-         computerPlay();
+         GameController.humanPlay(cardIndex);
+         GameController.computerPlay();
          
-         Assignment5.numTurns += 1;
+         GameController.numTurns += 1;
          //End game when no more cards in deck
          if(highCardGame.getNumCardsRemainingInDeck() == 0)
          {
-            EndGame();
+            GameController.EndGame();
          }
       } //end of else (action performed)
    } //ending of action performed
-   
-   private void humanPlay(int cardIndex)
-   {
-    //indicator of which pile to use
-      boolean usePile1 = false;
-      boolean usePile2 = false;
-      
-      //TODO fix issue of card be able to be placed in either pile if it is a valid play
-      
-      //test see if actionCommand for card is valid to play (one higher or lower than card in table)
-      if(validPlay(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex)))
-      {
-            
-         //Because validPlay is true then one of the piles must be valid for play by the cardIndex
-         
-         //Check range for first pile
-         int pile1Rank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
-         
-         //if pile1 (cardsInPlay[player.CPU.ordinal()] is one off (+/- 1) then use this pile
-         int pile1RankBelow = pile1Rank-1;
-         int pile1RankAbove = pile1Rank+1;
-         
-         //if player selected card is valid +/- 1 from pile1 use this pile for playing
-         if(pile1RankBelow == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
-               || pile1RankAbove == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))  );
-         {
-            //pile1
-            cardsInPlay[player.CPU.ordinal()] = 
-                  highCardGame.playCard(player.One.ordinal(), cardIndex);
-            //Testing
-            System.out.println("Neo Playing: "
-                  +cardsInPlay[player.CPU.ordinal()].toString());
-            
-            usePile1 = true;
-         }  
-         
-         
-         int pile2Rank = Card.getRank(cardsInPlay[player.One.ordinal()]);
-         
-         int pile2RankBelow = pile2Rank-1;
-         int pile2RankAbove = pile2Rank+1;
-         
-         if((pile2RankBelow == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
-               || pile2RankAbove == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))) 
-               && //negation of the before if statement to ensure not to put in pile1
-               pile1RankBelow != Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
-               || pile1RankAbove != Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))   )
-         { //pile2
-            cardsInPlay[player.One.ordinal()]=
-                  highCardGame.playCard(player.One.ordinal(), cardIndex); 
-            System.out.println("Cifer Playing: "
-                  +cardsInPlay[player.One.ordinal()].toString());
-            
-            usePile2 = true;
-         }
-         
-         humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
-         humanLabels[cardIndex].setBorder(null);
-         
-         
-         //Decide which pile to add image label to
-         
-         if(usePile1)
-         {
-            if (playedCardLabels[player.CPU.ordinal()]!=null) 
-            { //clear pile1 image
-               myCardTable.pnlPlayArea.remove(playedCardLabels[player.CPU.ordinal()]);   
-               
-               Icon tempIconCPU = 
-                     GuiCard.getIcon(cardsInPlay[player.CPU.ordinal()]);
-               JLabel tempLabelCPU = new JLabel(); 
-               tempLabelCPU.setIcon(tempIconCPU);
-               
-               myCardTable.pnlPlayArea.add(playedCardLabels[player.CPU.ordinal()]);
-               myCardTable.setVisible(true);
-               myCardTable.repaint();
-            }
-         } 
-         else if(usePile2)
-         {
-            if (playedCardLabels[player.One.ordinal()]!=null)
-            { //clear pile2 image
-               myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);
-               
-               Icon tempIconOne = 
-                     GuiCard.getIcon(cardsInPlay[player.One.ordinal()]);
-               JLabel tempLabelOne = new JLabel();
-               tempLabelOne.setIcon(tempIconOne);
-               
-               myCardTable.pnlPlayArea.add(playedCardLabels[player.One.ordinal()]);
-               myCardTable.setVisible(true);
-               myCardTable.repaint();
-            }
-         }
-         
-         
-         myCardTable.pnlHumanHand.remove(humanButtons[cardIndex]);
-         myCardTable.setVisible(true);
-         myCardTable.repaint();
-      } //end of inner if of else clause
-   }
-   
-   private void computerPlay()
-   {
-      //TODO Trying to hash out humanPlay first
-      
-      //Pseuo
-    //Check range for pile on play area
-      int pile1Rank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
-      
-      int pile2Rank = Card.getRank(cardsInPlay[player.One.ordinal()]);
-      
-      //check for cards in hand
-      //if card in computer hand is playable in any of the piles 
-      
-      //play the card into pile
-      //TODO decide what kind of algorithm to use? Maybe just pick the first card that works? to discuss with team
-      
-      //display JLabel / icon for card
-      
-      //Switch player turn
-      
-      //else if cannt play
-      //hit the "i cannot play" button
-      
-      //switch turn to other player
-      
-      
-      
-      
-   }
-
-   //Method to see if card is one below or above card in pile for play
-   private boolean validPlay(Card card)
-   {
-      //Card to check rank
-      int cardRank = Card.getRank(card);
-      int cardRankAbove = cardRank + 1;
-      int cardRankBelow = cardRank - 1;
-
-      //Get the card pile rank
-      int pile1Rank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
-      int pile2Rank = Card.getRank(cardsInPlay[player.One.ordinal()]);
-
-
-      //valid if is there is a lower card by 1
-      if(cardRankBelow == pile1Rank || cardRankBelow == pile2Rank)
-      {
-         return true;
-      } //Valid if there is a higher card by 1
-      else if (cardRankAbove == pile1Rank || cardRankAbove == pile2Rank)
-      {
-         return true;
-      }
-      else 
-      {
-         return false;
-      }
-
-      //Need to check for cases when card is lowest or highest rank ie A or X?
-
-   }
-
-   private void updateScore()
-   {
-      //Testing the card values
-
-      int pcRank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
-      int humRank = Card.getRank(cardsInPlay[player.One.ordinal()]);
-
-      System.out.println("rankHumRank: "+humRank);
-
-      System.out.println("rankPCrank: "+pcRank);
-      //need to check out the card.getRank
-
-      if(humRank > pcRank)
-      {
-         Assignment5.scoreHum += 1;
-      }
-      else if (humRank < pcRank)
-      {
-         Assignment5.scorePC += 1;
-      }
-      else 
-      {
-         //Do update to score
-      }
-      //Reassign Score Panel Labels
-      myCardTable.pnlScore.removeAll();
-
-      JLabel compScore = 
-            new JLabel("CPU: "+Assignment5.scorePC, SwingConstants.CENTER);
-      JLabel humScore = 
-            new JLabel("Player: "+Assignment5.scoreHum+"", SwingConstants.CENTER);
-
-      JLabel gameScore = new JLabel("SCORE");
-
-      myCardTable.pnlScore.add(compScore);
-      myCardTable.pnlScore.add(gameScore);
-      myCardTable.pnlScore.add(humScore);
-
-      myCardTable.setVisible(true);
-      myCardTable.repaint();
-
-   }
-
-
-   private void pcTurn2(int cardIndex) {
-
-      if(Assignment5.playNum == 0)
-      {
-         myCardTable.pnlPlayArea.add(computerFaces[cardIndex]);
-         myCardTable.pnlPlayArea.remove(computerLabels[cardIndex]);
-         Assignment5.oldIndex = cardIndex;
-      }
-      else if(Assignment5.playNum > 0)
-      {
-         myCardTable.pnlPlayArea.remove(computerFaces[Assignment5.oldIndex]);
-
-         Assignment5.oldIndex = cardIndex;
-         myCardTable.pnlPlayArea.add(computerFaces[cardIndex]);
-
-         //computerFaces = array with card faces
-         //computerLabels = back of card
-
-      }
-      cardsInPlay[player.CPU.ordinal()]=
-            highCardGame.playCard(player.CPU.ordinal(), cardIndex); 
-
-      System.out.println("Smith Playing: "
-            +cardsInPlay[player.CPU.ordinal()].toString());
-      Assignment5.playNum++;
-
-      myCardTable.pnlComputerHand.remove(computerLabels[cardIndex]);
-
-      myCardTable.setVisible(true);
-      myCardTable.repaint();
-   } 
-
-   private void playerTurn(int cardIndex) {
-      //human action first
-
-      //System.out.println("Unexpected Error.");
-      // making sure we have a card ref
-      cardsInPlay[player.One.ordinal()]=
-            highCardGame.playCard(player.One.ordinal(), cardIndex); 
-      System.out.println("Neo Playing: "
-            +cardsInPlay[player.One.ordinal()].toString());
-
-
-      humanLabels[cardIndex].setHorizontalAlignment(JLabel.CENTER);
-      humanLabels[cardIndex].setBorder(null);
-
-      if (playedCardLabels[player.One.ordinal()]!=null) {
-         myCardTable.pnlPlayArea.remove(playedCardLabels[player.One.ordinal()]);          
-      }
-
-      myCardTable.pnlPlayArea.add(humanLabels[cardIndex]);
-      playedCardLabels[player.One.ordinal()] = humanLabels[cardIndex]; 
-      myCardTable.pnlHumanHand.remove(humanButtons[cardIndex]);
-      myCardTable.setVisible(true);
-      myCardTable.repaint();
-   } 
-
-   private void EndGame()
-   {
-      int WIDTH = 300;
-      int HEIGHT = 200;
-
-      JFrame endWindow = new JFrame();
-      endWindow.setSize(WIDTH, HEIGHT);
-
-      endWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-      String messageText = "";
-      if(Assignment5.scoreHum > Assignment5.scorePC)
-      {
-         messageText = "You win!";
-      }
-      else if(Assignment5.scoreHum < Assignment5.scorePC)
-      {
-         messageText = "You lose.";
-      }
-      else
-      {
-         messageText = "Tied Game!";
-      }
-      JButton endButton = new JButton(messageText);
-      EndListener buttonEar = new EndListener();
-      endButton.addActionListener(buttonEar);
-      endWindow.add(endButton);
-      endWindow.setVisible(true);  
-   }
+  
 }
 
 class EndListener implements ActionListener
@@ -608,7 +293,7 @@ class EndListener implements ActionListener
    }
 }
 
-class GameController
+class GameController implements ActionListener
 {
    static enum turn {CPU, One};
    static enum player {CPU, One}; 
@@ -623,6 +308,53 @@ class GameController
    static JLabel[] playLabelText; 
    static Card[] cardsInPlay; 
    static JLabel[] computerFaces;
+   private static int playNum = 0;
+   private static int oldIndex = 0;
+   private static int scorePC = 0;
+   private static int scoreHum = 0;
+   private static  int numTurns = 0;
+   
+   //Accessors + Mutators
+   public int getPlayNum()
+   {
+      return playNum;
+   }
+   
+   public void setPlayNum(int num)
+   {
+      playNum = num;
+   }
+   
+   public int getScorePC()
+   {
+      return scorePC;
+   }
+   
+   public void setScorePC(int num)
+   {
+      scorePC = num;
+   }
+   
+   public int getScoreHum()
+   {
+      return scoreHum;
+   }
+   
+   public void setScoreHum(int num)
+   {
+      scoreHum = num;
+   }
+   
+   public int getNumTurns()
+   {
+      return numTurns;
+   }
+   
+   public void setNumturns(int num)
+   {
+      numTurns = num;
+   }
+   
 
    //Retrieve reference to game data
    //XXX Listner Init
@@ -652,15 +384,15 @@ class GameController
       
       if(actionCommand.equals("I cannot play")) //this is human button not cpu
       {
-         Assignment5.scoreHum += 1;
+         scoreHum += 1;
 
          //Reassign Score Panel Labels
          myCardTable.pnlScore.removeAll();
 
          JLabel compScore = 
-               new JLabel("CPU: "+Assignment5.scorePC, SwingConstants.CENTER);
+               new JLabel("CPU: "+scorePC, SwingConstants.CENTER);
          JLabel humScore = 
-               new JLabel("Player: "+Assignment5.scoreHum+"", SwingConstants.CENTER);
+               new JLabel("Player: "+scoreHum+"", SwingConstants.CENTER);
 
          JLabel gameScore = new JLabel("SCORE");
 
@@ -690,7 +422,7 @@ class GameController
          humanPlay(cardIndex);
          computerPlay();
          
-         Assignment5.numTurns += 1;
+        numTurns += 1;
          //End game when no more cards in deck
          if(highCardGame.getNumCardsRemainingInDeck() == 0)
          {
@@ -699,7 +431,7 @@ class GameController
       } //end of else (action performed)
    } //ending of action performed
    
-   private void humanPlay(int cardIndex)
+   public static void humanPlay(int cardIndex)
    {
     //indicator of which pile to use
       boolean usePile1 = false;
@@ -740,6 +472,7 @@ class GameController
          int pile2RankBelow = pile2Rank-1;
          int pile2RankAbove = pile2Rank+1;
          
+         //maybe i should use else statement here instead of the following:
          if((pile2RankBelow == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))
                || pile2RankAbove == Card.getRank(highCardGame.getHand(player.One.ordinal()).inspectCard(cardIndex))) 
                && //negation of the before if statement to ensure not to put in pile1
@@ -800,7 +533,7 @@ class GameController
       } //end of inner if of else clause
    }
    
-   private void computerPlay()
+   public static void computerPlay()
    {
       //TODO Trying to hash out humanPlay first
       
@@ -831,7 +564,7 @@ class GameController
    }
 
    //Method to see if card is one below or above card in pile for play
-   private boolean validPlay(Card card)
+   public static boolean validPlay(Card card)
    {
       //Card to check rank
       int cardRank = Card.getRank(card);
@@ -856,12 +589,9 @@ class GameController
       {
          return false;
       }
-
-      //Need to check for cases when card is lowest or highest rank ie A or X?
-
    }
 
-   private void updateScore()
+   public static void updateScore()
    {
       //Testing the card values
 
@@ -875,11 +605,11 @@ class GameController
 
       if(humRank > pcRank)
       {
-         Assignment5.scoreHum += 1;
+         scoreHum += 1;
       }
       else if (humRank < pcRank)
       {
-         Assignment5.scorePC += 1;
+         scorePC += 1;
       }
       else 
       {
@@ -889,9 +619,9 @@ class GameController
       myCardTable.pnlScore.removeAll();
 
       JLabel compScore = 
-            new JLabel("CPU: "+Assignment5.scorePC, SwingConstants.CENTER);
+            new JLabel("CPU: "+scorePC, SwingConstants.CENTER);
       JLabel humScore = 
-            new JLabel("Player: "+Assignment5.scoreHum+"", SwingConstants.CENTER);
+            new JLabel("Player: "+scoreHum+"", SwingConstants.CENTER);
 
       JLabel gameScore = new JLabel("SCORE");
 
@@ -905,19 +635,19 @@ class GameController
    }
 
 
-   private void pcTurn2(int cardIndex) {
+   public static void pcTurn2(int cardIndex) {
 
-      if(Assignment5.playNum == 0)
+      if(playNum == 0)
       {
          myCardTable.pnlPlayArea.add(computerFaces[cardIndex]);
          myCardTable.pnlPlayArea.remove(computerLabels[cardIndex]);
-         Assignment5.oldIndex = cardIndex;
+         oldIndex = cardIndex;
       }
-      else if(Assignment5.playNum > 0)
+      else if(playNum > 0)
       {
-         myCardTable.pnlPlayArea.remove(computerFaces[Assignment5.oldIndex]);
+         myCardTable.pnlPlayArea.remove(computerFaces[oldIndex]);
 
-         Assignment5.oldIndex = cardIndex;
+         oldIndex = cardIndex;
          myCardTable.pnlPlayArea.add(computerFaces[cardIndex]);
 
          //computerFaces = array with card faces
@@ -929,7 +659,7 @@ class GameController
 
       System.out.println("Smith Playing: "
             +cardsInPlay[player.CPU.ordinal()].toString());
-      Assignment5.playNum++;
+      playNum++;
 
       myCardTable.pnlComputerHand.remove(computerLabels[cardIndex]);
 
@@ -937,7 +667,7 @@ class GameController
       myCardTable.repaint();
    } 
 
-   private void playerTurn(int cardIndex) {
+   public static void playerTurn(int cardIndex) {
       //human action first
 
       //System.out.println("Unexpected Error.");
@@ -962,7 +692,7 @@ class GameController
       myCardTable.repaint();
    } 
 
-   private void EndGame()
+   public static void EndGame()
    {
       int WIDTH = 300;
       int HEIGHT = 200;
@@ -973,11 +703,11 @@ class GameController
       endWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
       String messageText = "";
-      if(Assignment5.scoreHum > Assignment5.scorePC)
+      if(scoreHum > scorePC)
       {
          messageText = "You win!";
       }
-      else if(Assignment5.scoreHum < Assignment5.scorePC)
+      else if(scoreHum < scorePC)
       {
          messageText = "You lose.";
       }
