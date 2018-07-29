@@ -71,7 +71,6 @@ public class BUILD
     
       //Time Panel
       //manually make gui bigger to see clock, 
-      //TODO fix border / size to see 
       TimeClock myTimeClock = new TimeClock();
       GameView.drawTimer(myTimeClock);
 
@@ -95,10 +94,6 @@ public class BUILD
 class EndingListener implements ActionListener
 {
    
-
-   //Retrieve reference to game data
-   //XXX Listner Init
- 
    public void actionPerformed(ActionEvent e)
    {
       //when "I cannot play" button gets pressed increment the tally underscore
@@ -109,24 +104,14 @@ class EndingListener implements ActionListener
       if(actionCommand.equals("I cannot play")) //this is human button not cpu
       {
 
-         
-         //switch to turns to opponent
-         //TODO
          GameController.cannotPlay(GameController.player.One) ; 
       }
       else
       {
          int cardIndex = Integer.valueOf(e.getActionCommand()); 
          System.out.println("Card Index: "+cardIndex);
+
          
-      
-         /* The method calls from prior assignment //Comment out
-         playerTurn( cardIndex);
-         pcTurn2(cardIndex); //matching card# human chooses
-         updateScore();
-         */
-         
-         //TODO implement turn based
          System.out.println("human Playing ");
          GameController.humenPlay(cardIndex);
 
@@ -218,7 +203,6 @@ class GameController
    } 
 
    //Retrieve reference to game data
-   //XXX Listner Init
    static void  init (CardGameFramework game, int nP, int nCPH) {
       highCardGame = game; 
       NUM_CARDS_PER_HAND = nCPH;
@@ -230,7 +214,7 @@ class GameController
    public static boolean cardPlay(int cardIndex, player playerIndex)
    {
       
-      //TODO fix issue of card be able to be placed in either pile if it is a valid play
+    
       
       //test see if actionCommand for card is valid to play (one higher or lower than card in table)
       Card card2Inspect = highCardGame.getHand(playerIndex.ordinal()).
@@ -272,10 +256,22 @@ class GameController
    public static void computerPlay()
    {
       System.out.println("CPU playing");
-      // TODO choos a card from the hand 
+      // TODO choose a card from the hand 
+      highCardGame.getHand(player.CPU.ordinal()).sort();
       
-      int cardIndex = 1;
-      if (!cardPlay(cardIndex,player.CPU)) {
+      Card[] myHand = highCardGame.getHand(player.CPU.ordinal()).getCards();
+
+     //Set default to no cards to play
+     boolean cardPlayed = false; 
+     
+     //Check if we can play any of the cards
+      for (int i=0; i< myHand.length;i++) {
+         cardPlayed=cardPlay(i,player.CPU); 
+         //if card was played exit
+         if (cardPlayed) break; 
+      }
+      // if no cards to play run cannot play
+      if (!cardPlayed) {
          cannotPlay(player.CPU); 
       }
    }

@@ -446,6 +446,15 @@ class Hand
    void sort() {
       Card.arraySort(this.myCards, this.myCards.length);
    }
+   
+   public Card[] getCards () {
+      Card[] returnCards = new Card[this.numCards]; 
+      for (int i =0; i<this.numCards;i++) {
+         returnCards[i]=this.myCards[i]; 
+      }
+      return returnCards; 
+      
+   }
 }
 
 
