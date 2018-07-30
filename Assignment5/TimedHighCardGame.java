@@ -7,6 +7,7 @@
  */
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import java.util.*;
@@ -100,50 +101,6 @@ class HightListener implements ActionListener
          
       }
    }
-
-//   private void updateScore()
-//   {
-//      //Testing the card values
-//
-//      int pcRank = Card.getRank(cardsInPlay[player.CPU.ordinal()]);
-//      int humRank = Card.getRank(cardsInPlay[player.One.ordinal()]);
-//
-//      System.out.println("rankHumRank: "+humRank);
-//
-//      System.out.println("rankPCrank: "+pcRank);
-//      //need to check out the card.getRank
-//
-//      if(humRank > pcRank)
-//      {
-//         Assignment5.scoreHum += 1;
-//      }
-//      else if (humRank < pcRank)
-//      {
-//         Assignment5.scorePC += 1;
-//      }
-//      else 
-//      {
-//         //Do update to score
-//      }
-//      //Reassign Score Panel Labels
-//      myCardTable.pnlScore.removeAll();
-//
-//      JLabel compScore = 
-//            new JLabel("CPU: "+Assignment5.scorePC, SwingConstants.CENTER);
-//      JLabel humScore = 
-//            new JLabel("Player: "+Assignment5.scoreHum+"", SwingConstants.CENTER);
-//
-//      JLabel gameScore = new JLabel("SCORE");
-//
-//      myCardTable.pnlScore.add(compScore);
-//      myCardTable.pnlScore.add(gameScore);
-//      myCardTable.pnlScore.add(humScore);
-//
-//      myCardTable.setVisible(true);
-//      myCardTable.repaint();
-//
-//   }
-//
 }
 
 class HiEndListener implements ActionListener
@@ -316,21 +273,13 @@ class HightView{
       
    }
    public static void drawEndGame(String messageText) throws Exception {
-      int WIDTH = 1000;
-      int HEIGHT = 800;
-
-      JFrame endWindow = new JFrame();
-      endWindow.setSize(WIDTH, HEIGHT);
-
-      endWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      JButton endButton = new JButton(messageText);
-      HiEndListener buttonEar = new HiEndListener();
-      endButton.addActionListener(buttonEar);
-      endWindow.add(endButton);
-      myCardTable.setVisible(false);  
-      endWindow.setVisible(true); 
-      endWindow.repaint();
-      Thread.sleep(10000);
+      
+      EndWindow myEnd = new EndWindow(messageText,
+            HightController.getScorePC(),HightController.getScoreHum()); 
+      myCardTable.removeAll();
+      myCardTable.setTitle(messageText);
+      refresh(); 
+      Thread.sleep(4000);
       System.exit(0); 
    }
    
@@ -351,38 +300,28 @@ class HightController
    static CardGameFramework highCardGame;
    static Card[] cardsInPlay; 
    static JLabel[] computerFaces;
-   private static int playNum = 0;
    private static int scorePC = 0;
    private static int scoreHum = 0;
 
    
    //Accessors + Mutators
-   public int getPlayNum()
-   {
-      return playNum;
-   }
-
-   public void setPlayNum(int num)
-   {
-      playNum = num;
-   }
-   
-   public int getScorePC()
+  
+   public static int getScorePC()
    {
       return scorePC;
    }
    
-   public void setScorePC(int num)
+   public static void setScorePC(int num)
    {
       scorePC = num;
    }
    
-   public int getScoreHum()
+   public static int getScoreHum()
    {
       return scoreHum;
    }
    
-   public void setScoreHum(int num)
+   public static void setScoreHum(int num)
    {
       scoreHum = num;
    }
@@ -409,7 +348,7 @@ class HightController
    public static void EndGame() throws Exception
    {
 
-      String messageText = "";
+      String messageText = "Frack";
       if(scoreHum > scorePC)
       {
          messageText = "You win!";

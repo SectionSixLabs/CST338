@@ -14,6 +14,7 @@
 //TODO Phase 3
 //TODO Phase 4
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -253,4 +254,32 @@ public class CardTable extends JFrame
      myCardTable.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      myCardTable.setVisible(true);
   }
+}
+
+
+class EndWindow extends JFrame {
+   private static final long serialVersionUID = 1L;
+   public JPanel pnEndGame; 
+   
+   public EndWindow(String title, int scorePC, int scorePlayer) {
+      super(title);
+      setSize(800, 500);
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setBackground(Color.RED);
+      setLayout(new BorderLayout());
+      
+      JButton endButton = new JButton(title);
+      HiEndListener buttonEar = new HiEndListener();
+      
+      JLabel scorePCLabel = new JLabel("PC: "+scorePC, JLabel.CENTER);
+      JLabel scorePlayerLabel = new JLabel("You: "+scorePlayer, JLabel.CENTER);
+      
+      pnEndGame = new JPanel();
+      pnEndGame.setLayout(new GridLayout(1,2));
+      endButton.addActionListener(buttonEar);
+      pnEndGame.add(endButton,BorderLayout.CENTER);
+      pnEndGame.add(scorePCLabel,BorderLayout.CENTER);
+      pnEndGame.add(scorePlayerLabel,BorderLayout.CENTER);
+   }
+   
 }
