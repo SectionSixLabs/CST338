@@ -354,7 +354,7 @@ class HightController
    private static int playNum = 0;
    private static int scorePC = 0;
    private static int scoreHum = 0;
-   private static  boolean[] cannotPlay;
+
    
    //Accessors + Mutators
    public int getPlayNum()
@@ -403,7 +403,7 @@ class HightController
       NUM_CARDS_PER_HAND = nCPH;
       NUM_PLAYERS = nP; 
       cardsInPlay = new Card[NUM_PLAYERS];
-      cannotPlay  = new boolean[NUM_PLAYERS];
+
    }
 
    public static void EndGame() throws Exception
