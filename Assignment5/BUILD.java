@@ -103,13 +103,21 @@ class EndingListener implements ActionListener
          GameController.setCannotPlay(playerCantPlay,GameController.player.One);
          GameController.cannotPlay(GameController.player.One) ; 
          GameController.computerPlay();
+         
          boolean pcCannotPlay = 
                GameController.getCannotPlay(GameController.player.CPU); 
-         if( GameController.getNumCardsInDeck()== 0)
-         {
-            GameController.EndGame();
-         }
          if (playerCantPlay&&pcCannotPlay) {
+            if( GameController.getNumCardsInDeck()== 0)
+            {
+               try
+               {
+                  GameController.EndGame();
+               } catch (Exception e1)
+               {
+                  // TODO Auto-generated catch block
+                  e1.printStackTrace();
+               }
+            }
             GameController.dealCards2table();
          }
       }
@@ -122,11 +130,6 @@ class EndingListener implements ActionListener
          System.out.println("human Playing ");
          GameController.humenPlay(cardIndex);
 
-         //End game when no more cards in deck
-         if( GameController.getNumCardsInDeck()== 0)
-         {
-            GameController.EndGame();
-         }
       } //end of else (action performed)
    } //ending of action performed
   
@@ -268,6 +271,7 @@ class GameController
             break;
             } 
       }
+      cannotPlay[player.CPU.ordinal()] = true;
 
    }
 
@@ -303,7 +307,7 @@ class GameController
    }
 
 
-   public static void EndGame()
+   public static void EndGame() throws Exception
    {
 
       String messageText = "";
@@ -502,7 +506,7 @@ class GameView{
       refresh();
       
    }
-   public static void drawEndGame(String messageText) {
+   public static void drawEndGame(String messageText) throws Exception {
       int WIDTH = 300;
       int HEIGHT = 200;
 
@@ -514,7 +518,10 @@ class GameView{
       EndListener buttonEar = new EndListener();
       endButton.addActionListener(buttonEar);
       endWindow.add(endButton);
+      
       endWindow.setVisible(true);  
+      Thread.sleep(4000);
+      System.exit(0); 
    }
    
    private static void refresh() {
