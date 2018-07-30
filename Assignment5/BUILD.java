@@ -105,6 +105,11 @@ class EndingListener implements ActionListener
       {
 
          GameController.cannotPlay(GameController.player.One) ; 
+         GameController.computerPlay();
+         if( GameController.getNumCardsInDeck()== 0)
+         {
+            GameController.EndGame();
+         }
       }
       else
       {
@@ -115,9 +120,6 @@ class EndingListener implements ActionListener
          System.out.println("human Playing ");
          GameController.humenPlay(cardIndex);
 
-         GameController.computerPlay();
-         
-         GameController.getNumTurns() ;
          //End game when no more cards in deck
          if( GameController.getNumCardsInDeck()== 0)
          {
@@ -215,17 +217,17 @@ class GameController
    {
       
     
-      
+
       //test see if actionCommand for card is valid to play (one higher or lower than card in table)
       Card card2Inspect = highCardGame.getHand(playerIndex.ordinal()).
-            inspectCard(cardIndex); 
+            inspectCard(cardIndex+1); 
       System.out.println("cardInPlay: "+card2Inspect);
       player stuckIndex = validPlay(card2Inspect); 
       if(stuckIndex!=null)
 
         {
          Card cardInPlay =
-               highCardGame.getHand(playerIndex.ordinal()).playCard(cardIndex-1);
+               highCardGame.getHand(playerIndex.ordinal()).playCard(cardIndex);
          cardsInPlay[0] = cardsInPlay[stuckIndex.ordinal()];
          cardsInPlay[1]=cardInPlay; 
          highCardGame.takeCard(playerIndex.ordinal());
@@ -243,10 +245,9 @@ class GameController
    public static void humenPlay(int cardIndex )
    {
       System.out.println("Neo playing");
-      cardIndex++; 
       
       if (cardPlay(cardIndex,player.One)) {
-         //TODO refresh human hand 
+         GameController.computerPlay();
       } 
 
 
@@ -273,6 +274,10 @@ class GameController
       // if no cards to play run cannot play
       if (!cardPlayed) {
          cannotPlay(player.CPU); 
+         if( GameController.getNumCardsInDeck()== 0)
+         {
+            GameController.EndGame();
+         }
       }
    }
 
