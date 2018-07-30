@@ -55,11 +55,7 @@ public class BUILD
      GameController.init(highCardGame, NUM_PLAYERS,NUM_CARDS_PER_HAND); 
      GameView.init(highCardGame, myCardTable,NUM_PLAYERS,NUM_CARDS_PER_HAND);
       //GameController
-     Card[] cards = new Card[NUM_PLAYERS]; 
-     for (int i= 0 ;i<NUM_PLAYERS;i++) {
-        cards[i] = highCardGame.getCardFromDeck();
-     }
-     GameController.setCardsInPlay(cards);
+     GameController.dealCards2table();
      GameView.drawCPUHand();
      GameView.drawPlayerHand();
      GameView.updateScore(0, 0);
@@ -103,12 +99,18 @@ class EndingListener implements ActionListener
       
       if(actionCommand.equals("I cannot play")) //this is human button not cpu
       {
-
+         boolean playerCantPlay = true;  
+         GameController.setCannotPlay(playerCantPlay,GameController.player.One);
          GameController.cannotPlay(GameController.player.One) ; 
          GameController.computerPlay();
+         boolean pcCannotPlay = 
+               GameController.getCannotPlay(GameController.player.CPU); 
          if( GameController.getNumCardsInDeck()== 0)
          {
             GameController.EndGame();
+         }
+         if (playerCantPlay&&pcCannotPlay) {
+            GameController.dealCards2table();
          }
       }
       else
@@ -151,7 +153,7 @@ class GameController
    private static int playNum = 0;
    private static int scorePC = 0;
    private static int scoreHum = 0;
-   private static  int numTurns = 0;
+   private static  boolean[] cannotPlay;
    
    //Accessors + Mutators
    public int getPlayNum()
@@ -184,16 +186,7 @@ class GameController
    {
       scoreHum = num;
    }
-   
-   public static int getNumTurns()
-   {
-      return numTurns;
-   }
-   
-   public void setNumTurns(int num)
-   {
-      numTurns = num;
-   }
+ 
    public static int getNumCardsInDeck() 
    {
       return highCardGame.getNumCardsRemainingInDeck(); 
@@ -201,7 +194,7 @@ class GameController
    
    public static void setCardsInPlay(Card[] cards) {
       cardsInPlay = cards; 
-      GameView.drowPlayAria(cards);
+      GameView.drawPlayAria(cards);
    } 
 
    //Retrieve reference to game data
@@ -210,7 +203,7 @@ class GameController
       NUM_CARDS_PER_HAND = nCPH;
       NUM_PLAYERS = nP; 
       cardsInPlay = new Card[NUM_PLAYERS];
-
+      cannotPlay  = new boolean[NUM_PLAYERS];
    }
 
    public static boolean cardPlay(int cardIndex, player playerIndex)
@@ -231,7 +224,7 @@ class GameController
          cardsInPlay[0] = cardsInPlay[stuckIndex.ordinal()];
          cardsInPlay[1]=cardInPlay; 
          highCardGame.takeCard(playerIndex.ordinal());
-         GameView.drowPlayAria(cardsInPlay);
+         GameView.drawPlayAria(cardsInPlay);
          if (playerIndex==player.One)
             GameView.drawPlayerHand();
          else 
@@ -248,6 +241,7 @@ class GameController
       
       if (cardPlay(cardIndex,player.One)) {
          GameController.computerPlay();
+         cannotPlay[player.One.ordinal()] = false; 
       } 
 
 
@@ -269,10 +263,14 @@ class GameController
       for (int i=0; i< myHand.length;i++) {
          cardPlayed=cardPlay(i,player.CPU); 
          //if card was played exit
-         if (cardPlayed) break; 
+         if (cardPlayed) {
+            cannotPlay[player.CPU.ordinal()] = false; 
+            break;
+            } 
       }
       // if no cards to play run cannot play
       if (!cardPlayed) {
+         cannotPlay[player.CPU.ordinal()] = true; 
          cannotPlay(player.CPU); 
          if( GameController.getNumCardsInDeck()== 0)
          {
@@ -339,6 +337,25 @@ class GameController
       else scorePC++; 
       GameView.updateScore(scorePC, scoreHum);
 
+   }
+
+
+   public static boolean getCannotPlay(player index)
+   {
+      return cannotPlay[index.ordinal()];
+   }
+
+
+   public static void setCannotPlay(boolean canPlay, player index)
+   {
+      cannotPlay[index.ordinal()] = canPlay;
+   }
+   
+   public static void dealCards2table(){
+      for (int i= 0 ;i<NUM_PLAYERS;i++) {
+         cardsInPlay[i] = highCardGame.getCardFromDeck();
+      }
+      GameView.drawPlayAria(cardsInPlay);
    }
 
 }
@@ -447,7 +464,7 @@ class GameView{
       refresh();
    }
    
-   public static void drowPlayAria(Card[] cards) {
+   public static void drawPlayAria(Card[] cards) {
       //Initialize Game by flipping two cards from deck into pnlPlayArea
       myCardTable.pnlPlayArea.removeAll();
       
@@ -482,7 +499,7 @@ class GameView{
    }
    
    public static void drawTimer(TimeClock myTimeClock ){
-      myCardTable.pnlButton.add(myTimeClock.getContentPane(), BorderLayout.EAST);
+      myCardTable.pnlButton.add(myTimeClock.getContentPane(),BorderLayout.EAST);
       JButton noPlayButton = new JButton("I cannot play");
       EndingListener noPlayListener = new EndingListener();
       noPlayButton.addActionListener(noPlayListener);
