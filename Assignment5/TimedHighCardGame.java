@@ -44,9 +44,7 @@ public class TimedHighCardGame
             numPacksPerDeck, numJokersPerPack,  
             numUnusedCardsPerPack, unusedCardsPerPack, 
             NUM_PLAYERS, NUM_CARDS_PER_HAND);
-
-
-
+      HightController.init(highCardGame, NUM_PLAYERS, NUM_CARDS_PER_HAND);
       GuiCard.loadCardIcons();
 
       highCardGame.deal(); 
@@ -55,6 +53,16 @@ public class TimedHighCardGame
       CardTable myCardTable = 
             new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS, c2);
       myCardTable.setVisible(true);
+      HightView.init(highCardGame, myCardTable, NUM_PLAYERS, NUM_CARDS_PER_HAND);
+      HightView.drawCPUHand();
+      HightView.drawPlayerHand();
+      HightView.drawPlayAria();
+      HightView.updateScore(0, 0);
+      //Time Panel
+      //manually make gui bigger to see clock, 
+      TimeClock myTimeClock = new TimeClock();
+      HightView.drawTimer(myTimeClock);
+
       
 
    }
@@ -179,7 +187,8 @@ class HightView{
       
       
    }
-   
+
+
    public static void drawCPUHand() {
       //Clear panel
       myCardTable.pnlComputerHand.removeAll();
@@ -254,6 +263,15 @@ class HightView{
       myCardTable.pnlScore.add(cards);
       
       refresh();
+   }
+   
+   
+   public static void drawPlayAria()
+   {
+      //Initialize Game by flipping two cards from deck into pnlPlayArea
+      myCardTable.pnlPlayArea.removeAll();
+      refresh();
+      
    }
    
    public static void drawPlayAria(Card[] cards) {
@@ -345,14 +363,6 @@ class HightController
    {
       return playNum;
    }
-   
-
-   public static void updateScore()
-   {
-      // TODO Auto-generated method stub
-      
-   }
-
 
    public void setPlayNum(int num)
    {
@@ -414,7 +424,7 @@ class HightController
       {
          messageText = "Tied Game!";
       }
-      GameView.drawEndGame(messageText);
+      HightView.drawEndGame(messageText);
 
    }
    
@@ -425,6 +435,18 @@ class HightController
 
       System.out.println("Smith Playing: "
             +cardsInPlay[player.CPU.ordinal()].toString());
+      HightView.drawCPUHand();
+      HightView.drawPlayAria(cardsInPlay);
+      if (highCardGame.getHand(player.CPU.ordinal()).numCards()==0) {
+         try
+         {
+            EndGame();
+         } catch (Exception e)
+         {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+         } 
+      }
    } 
 
    public static void playerTurn(int cardIndex) {
@@ -435,8 +457,25 @@ class HightController
       cardsInPlay[player.One.ordinal()]=
             highCardGame.playCard(player.One.ordinal(), cardIndex); 
       System.out.println("Neo Playing: "
-            +cardsInPlay[player.One.ordinal()].toString());
+            +cardsInPlay[player.One.ordinal()].toString());      
+            HightView.drawPlayerHand();
    } 
+   public static void updateScore()
+   {
+      
+      if (
+            Card.getRank(cardsInPlay[player.One.ordinal()])
+            >
+            Card.getRank(cardsInPlay[player.CPU.ordinal()]))
+         scoreHum++;   
+      else if (
+            Card.getRank(cardsInPlay[player.One.ordinal()])
+            <
+            Card.getRank(cardsInPlay[player.CPU.ordinal()])
+            ) scorePC++; 
+      HightView.updateScore(scorePC, scoreHum);
+      
+   }
 
 
 }
