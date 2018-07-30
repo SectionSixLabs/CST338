@@ -347,7 +347,7 @@ class Deck
    //return the number of cards remaining in the deck.
    public int getNumCards() {
      
-      return this.cards.length;
+      return this.topCard;
       
    }
 }
@@ -624,6 +624,12 @@ class Card
 
       default: return false;
       }
+   }
+
+
+   public boolean isValidCard()
+   {
+      return isValid(this.value, this.suit); 
    }
 
 }

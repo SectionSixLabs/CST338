@@ -268,15 +268,7 @@ class GameController
             break;
             } 
       }
-      // if no cards to play run cannot play
-      if (!cardPlayed) {
-         cannotPlay[player.CPU.ordinal()] = true; 
-         cannotPlay(player.CPU); 
-         if( GameController.getNumCardsInDeck()== 0)
-         {
-            GameController.EndGame();
-         }
-      }
+
    }
 
    //Method to see if card is one below or above card in pile for play
@@ -400,12 +392,10 @@ class GameView{
          Icon tempIcon = GuiCard.getBackCardIcon();
          JLabel temlLabel = new JLabel(); 
          temlLabel.setIcon(tempIcon); 
-         computerLabels[i]=temlLabel;
-
-         //computerFaces
-         Icon tempIconFace = GuiCard.getIcon(highCardGame.getHand(0).
-               inspectCard(i+1));
-         computerFaces[i] = new JLabel(tempIconFace);
+         Card card = highCardGame.getHand(player.CPU.ordinal()).
+               inspectCard(i+1); 
+         if (card.isValidCard()) 
+            computerLabels[i]=temlLabel;
 
       }
       for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
@@ -456,10 +446,15 @@ class GameView{
             new JLabel("Player: "+scoreHum+"", SwingConstants.CENTER);
 
       JLabel gameScore = new JLabel("SCORE");
+      
+      JLabel cards = new JLabel(
+            highCardGame.getNumCardsRemainingInDeck()+" cards left"); 
+      myCardTable.pnlButton.add(cards,BorderLayout.EAST);
 
       myCardTable.pnlScore.add(compScore);
       myCardTable.pnlScore.add(gameScore);
       myCardTable.pnlScore.add(humScore);
+      myCardTable.pnlScore.add(cards);
       
       refresh();
    }
@@ -526,6 +521,7 @@ class GameView{
       myCardTable.setVisible(true);
       myCardTable.repaint();
    }
+   
 
 }
    
