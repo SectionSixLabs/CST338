@@ -193,7 +193,8 @@ class HightView{
       //Clear panel
       myCardTable.pnlComputerHand.removeAll();
       
-      for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
+      for (int i = 0; i < 
+            highCardGame.getHand(player.CPU.ordinal()).numCards(); i++)
       {
          Icon tempIcon = GuiCard.getBackCardIcon();
          JLabel temlLabel = new JLabel(); 
@@ -204,7 +205,8 @@ class HightView{
             computerLabels[i]=temlLabel;
 
       }
-      for (int i = 0; i < myCardTable.getNumCardsPerHand(); i++)
+      for (int i = 0; i < 
+            highCardGame.getHand(player.CPU.ordinal()).numCards(); i++)
          {
             myCardTable.pnlComputerHand.add(computerLabels[i]);
          }
@@ -310,10 +312,6 @@ class HightView{
    
    public static void drawTimer(TimeClock myTimeClock ){
       myCardTable.pnlButton.add(myTimeClock.getContentPane(),BorderLayout.EAST);
-      JButton noPlayButton = new JButton("I cannot play");
-      HightListener noPlayListener = new HightListener();
-      noPlayButton.addActionListener(noPlayListener);
-      myCardTable.pnlButton.add(noPlayButton);
       refresh();
       
    }
