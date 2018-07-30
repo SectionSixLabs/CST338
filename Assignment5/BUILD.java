@@ -271,7 +271,10 @@ class GameController
             break;
             } 
       }
+      if (!cardPlayed) {
       cannotPlay[player.CPU.ordinal()] = true;
+      cannotPlay(player.CPU);
+      }
 
    }
 
@@ -507,8 +510,8 @@ class GameView{
       
    }
    public static void drawEndGame(String messageText) throws Exception {
-      int WIDTH = 300;
-      int HEIGHT = 200;
+      int WIDTH = 1000;
+      int HEIGHT = 800;
 
       JFrame endWindow = new JFrame();
       endWindow.setSize(WIDTH, HEIGHT);
@@ -518,9 +521,10 @@ class GameView{
       EndListener buttonEar = new EndListener();
       endButton.addActionListener(buttonEar);
       endWindow.add(endButton);
-      
-      endWindow.setVisible(true);  
-      Thread.sleep(4000);
+      myCardTable.setVisible(false);  
+      endWindow.setVisible(true); 
+      endWindow.repaint();
+      Thread.sleep(10000);
       System.exit(0); 
    }
    
