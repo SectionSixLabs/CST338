@@ -15,6 +15,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 //import java.util.*;
+import java.awt.event.WindowEvent;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -311,7 +312,7 @@ class GameController
    }
 
 
-   public static void EndGame() throws Exception
+   public static void EndGame() 
    {
 
       String messageText = "";
@@ -512,9 +513,10 @@ class GameView{
       refresh();
       
    }
-   public static void drawEndGame(String messageText) throws Exception {
-      int WIDTH = 1000;
-      int HEIGHT = 800;
+   public static void drawEndGame(String messageText)  {
+      //XXX We are working here
+      int WIDTH = 600;
+      int HEIGHT = 400;
 
       JFrame endWindow = new JFrame();
       endWindow.setSize(WIDTH, HEIGHT);
@@ -524,11 +526,11 @@ class GameView{
       EndListener buttonEar = new EndListener();
       endButton.addActionListener(buttonEar);
       endWindow.add(endButton);
-      myCardTable.setVisible(false);  
+      //If we cannot push it 
+      myCardTable.setSize(0,0);
+      myCardTable.dispose();
       endWindow.setVisible(true); 
       endWindow.repaint();
-      Thread.sleep(10000);
-      System.exit(0); 
    }
    
    private static void refresh() {

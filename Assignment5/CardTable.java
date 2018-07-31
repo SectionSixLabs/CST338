@@ -19,11 +19,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.GridLayout;
+
 import java.awt.FlowLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.border.TitledBorder;
+
+
 
 //TODO add the Clock Timer which extends Thread
 
@@ -233,7 +236,6 @@ public class CardTable extends JFrame
       //add(myTimeClock.getContentPane(), BorderLayout.EAST);
    
    } //End of 2nd Constructor
-   
    //Accessors for the two instance members
   public int getNumCardsPerHand()
   {
@@ -253,33 +255,7 @@ public class CardTable extends JFrame
      myCardTable.setLocationRelativeTo(null);
      myCardTable.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      myCardTable.setVisible(true);
+     
   }
 }
 
-
-class EndWindow extends JFrame {
-   private static final long serialVersionUID = 1L;
-   public JPanel pnEndGame; 
-   
-   public EndWindow(String title, int scorePC, int scorePlayer) {
-      super(title);
-      setSize(800, 500);
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      setBackground(Color.RED);
-      setLayout(new BorderLayout());
-      
-      JButton endButton = new JButton(title);
-      HiEndListener buttonEar = new HiEndListener();
-      
-      JLabel scorePCLabel = new JLabel("PC: "+scorePC, JLabel.CENTER);
-      JLabel scorePlayerLabel = new JLabel("You: "+scorePlayer, JLabel.CENTER);
-      
-      pnEndGame = new JPanel();
-      pnEndGame.setLayout(new GridLayout(1,2));
-      endButton.addActionListener(buttonEar);
-      pnEndGame.add(endButton,BorderLayout.CENTER);
-      pnEndGame.add(scorePCLabel,BorderLayout.CENTER);
-      pnEndGame.add(scorePlayerLabel,BorderLayout.CENTER);
-   }
-   
-}

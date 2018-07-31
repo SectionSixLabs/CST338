@@ -272,15 +272,23 @@ class HightView{
       refresh();
       
    }
-   public static void drawEndGame(String messageText) throws Exception {
-      
-      EndWindow myEnd = new EndWindow(messageText,
-            HightController.getScorePC(),HightController.getScoreHum()); 
-      myCardTable.removeAll();
-      myCardTable.setTitle(messageText);
-      refresh(); 
-      Thread.sleep(4000);
-      System.exit(0); 
+   public static void drawEndGame(String messageText) {
+      //XXX We are working here
+      int WIDTH = 600;
+      int HEIGHT = 400;
+
+      JFrame endWindow = new JFrame();
+      endWindow.setSize(WIDTH, HEIGHT);
+
+      endWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      JButton endButton = new JButton(messageText);
+      EndListener buttonEar = new EndListener();
+      endButton.addActionListener(buttonEar);
+      endWindow.add(endButton);
+      myCardTable.setSize(0,0);
+      myCardTable.dispose();
+      endWindow.setVisible(true); 
+      endWindow.repaint();
    }
    
    private static void refresh() {
@@ -345,7 +353,7 @@ class HightController
 
    }
 
-   public static void EndGame() throws Exception
+   public static void EndGame() 
    {
 
       String messageText = "Frack";
