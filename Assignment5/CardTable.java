@@ -14,7 +14,7 @@
 //TODO Phase 3
 //TODO Phase 4
 
-import javax.swing.JButton;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -42,7 +42,7 @@ public class CardTable extends JFrame
    private int numCardsPerHand;
    private int numPlayers;
 
-   public JPanel pnlComputerHand, pnlHumanHand, pnlPlayArea, pnlButton, pnlScore;
+   public JPanel pnlComputerHand, pnlHumanHand, pnlPlayArea, pnlButton,pnlScore;
    
    public CardTable(String title, int numCardsPerHand, int numPlayers)
    {
@@ -68,84 +68,37 @@ public class CardTable extends JFrame
       this.numCardsPerHand = numCardsPerHand;
       this.numPlayers = numPlayers;
       
-//      String myDir = System.getProperty("user.dir");
-      
-      
       setSize(800, 500);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
       setBackground(Color.GREEN);
       setLayout(new BorderLayout());
       
       
-//      // COMPUTER HAND  
+      // COMPUTER HAND  
       TitledBorder computerHandBorder = new TitledBorder("Computer Hand");
       computerHandBorder.setTitleJustification(TitledBorder.LEFT);
       computerHandBorder.setTitlePosition(TitledBorder.TOP);
-//      
+
       pnlComputerHand = new JPanel();
       pnlComputerHand.setBorder(computerHandBorder);
       pnlComputerHand.setLayout(new FlowLayout());
       add(pnlComputerHand,BorderLayout.NORTH);
-//      
-//      // ADDING CARDS TO COMPUTER HAND
-//      int i;
-//      for (i = 0; i <= numCardsPerHand; i++)
-//      {
-//         JLabel computerCardsLabel = new JLabel();
-//         ImageIcon computerCardsIcon = new ImageIcon(myDir+"/Assignment5/images/BK.gif");
-//         computerCardsLabel.setIcon(computerCardsIcon);
-//         pnlComputerHand.add(computerCardsLabel);  
-//      }
-//      
-//      
-//      
-//      // Play Area
-//      
-//      /*But we also need to some text below each of the two center icons 
-//       * to we know who played which card ( "Computer" or "You", so, we'll 
-//       * really need four labels in this central play JPanel : two for card images
-//       *  and two for text "Computer" and "You". Since we want the text 
-//       *  directly below the icon, one way to do this is to make your 
-//       *  central playing panel a 2x2 Grid Layout, where the top two positions
-//       *   will be images and the bottom two will be text that describe the 
-//       *   images. Hint: to center text in a label, use
-//
-//            myLabel = new JLabel( "My Text", JLabel.CENTER );
-//      */
-//      
-//      
+    
       TitledBorder playAreaBorder = new TitledBorder("Play Area");
       playAreaBorder.setTitleJustification(TitledBorder.LEFT);
       playAreaBorder.setTitlePosition(TitledBorder.TOP);
-//      
+      
       pnlPlayArea = new JPanel();
       pnlPlayArea.setBorder(playAreaBorder);
       pnlPlayArea.setLayout(new GridLayout(2,2));
       add(pnlPlayArea,BorderLayout.CENTER);
-//      
-//      JLabel playedCardLabel1, playedCardLabel2;
-//      
-//      playedCardLabel1 = new JLabel();
-//      playedCardLabel1.setHorizontalAlignment(JLabel.CENTER);
-//      ImageIcon playedCard1Icon = new ImageIcon(myDir+"/Assignment5/images/3D.gif");
-//      playedCardLabel1.setIcon(playedCard1Icon);
-//      playArea.add(playedCardLabel1);
-//      
-//      playedCardLabel2 = new JLabel();
-//      playedCardLabel2.setHorizontalAlignment(JLabel.CENTER);
-//      ImageIcon playedCard2Icon = new ImageIcon(myDir+"/Assignment5/images/4H.gif");
-//      playedCardLabel2.setIcon(playedCard2Icon);
-//      playArea.add(playedCardLabel2);
-//      
-//      
+  
       JLabel computerPlayArea = new JLabel("Computer", JLabel.CENTER);
       pnlPlayArea.add(computerPlayArea);
-//      
+      
       JLabel youPlayArea = new JLabel("You", JLabel.CENTER);
       pnlPlayArea.add(youPlayArea);
-//      
-//      
-//      
+
       // HUMAN HAND
       TitledBorder humanHandBorder = new TitledBorder("Your Hand");
       humanHandBorder.setTitleJustification(TitledBorder.LEFT);
@@ -155,27 +108,15 @@ public class CardTable extends JFrame
       pnlHumanHand.setBorder(humanHandBorder);
       pnlHumanHand.setLayout(new FlowLayout());
       add(pnlHumanHand,BorderLayout.SOUTH);
-//      
-//      // ADDING CARDS TO HUMAN HAND
-//      for (i = 0; i <= numCardsPerHand; i++)
-//      {
-//         JLabel humanCardsLabel = new JLabel();
-//         ImageIcon humanCardsIcon = new ImageIcon(myDir+"/Assignment5/images/BK.gif");
-//         humanCardsLabel.setIcon(humanCardsIcon);
-//         pnlHumanHand.add(humanCardsLabel);  
-//      }
    }
    
-   //Second Constructor
- //Second Constructor for Phase3
-   public CardTable(String title, int numCardsPerHand, int numPlayers, boolean x)
+
+   public CardTable(String title, int numCardsPerHand, int numPlayers, 
+                    boolean x)
    {
       super(title);
       this.numCardsPerHand = numCardsPerHand;
       this.numPlayers = numPlayers;
-      
-//      String myDir = System.getProperty("user.dir");
-      
       
       setSize(1000, 800);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -183,7 +124,7 @@ public class CardTable extends JFrame
       setLayout(new BorderLayout());
       
       
-//      // COMPUTER HAND  
+      // COMPUTER HAND  
       TitledBorder computerHandBorder = new TitledBorder("Computer Hand");
       computerHandBorder.setTitleJustification(TitledBorder.LEFT);
       computerHandBorder.setTitlePosition(TitledBorder.TOP);
@@ -230,13 +171,9 @@ public class CardTable extends JFrame
       pnlScore = new JPanel();
       pnlScore.setLayout(new GridLayout(3, 1));
       add(pnlScore,BorderLayout.WEST);
-      
-      //Time Panel
-      //TimeClock myTimeClock = new TimeClock();
-      //add(myTimeClock.getContentPane(), BorderLayout.EAST);
    
    } //End of 2nd Constructor
-   //Accessors for the two instance members
+
   public int getNumCardsPerHand()
   {
      return this.numCardsPerHand;

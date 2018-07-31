@@ -54,7 +54,7 @@ public class TimedHighCardGame
       CardTable myCardTable = 
             new CardTable("my card table", NUM_CARDS_PER_HAND, NUM_PLAYERS, c2);
       myCardTable.setVisible(true);
-      HightView.init(highCardGame, myCardTable, NUM_PLAYERS, NUM_CARDS_PER_HAND);
+      HightView.init(highCardGame, myCardTable,NUM_PLAYERS, NUM_CARDS_PER_HAND);
       HightView.drawCPUHand();
       HightView.drawPlayerHand();
       HightView.drawPlayAria();
@@ -254,10 +254,12 @@ class HightView{
       playedCardLabels[player.One.ordinal()] = tempLabelOne;
       
       //Setting JLabel configs
-      playedCardLabels[player.CPU.ordinal()].setHorizontalAlignment(JLabel.CENTER);
+      playedCardLabels[
+                    player.CPU.ordinal()].setHorizontalAlignment(JLabel.CENTER);
       playedCardLabels[player.CPU.ordinal()].setBorder(null);
       
-      playedCardLabels[player.One.ordinal()].setHorizontalAlignment(JLabel.CENTER);
+      playedCardLabels[
+                    player.One.ordinal()].setHorizontalAlignment(JLabel.CENTER);
       playedCardLabels[player.One.ordinal()].setBorder(null);
       
 

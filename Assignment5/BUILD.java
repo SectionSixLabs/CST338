@@ -24,18 +24,17 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-//Deleted Assignment6 and using old Assignmnet5 becuase of similar default package class overlap giving issues
 
 //okayBranch has in tact the original Assignment5
 public class BUILD
 {
-   //Adding a turn enum
+
    static enum piles {One,Two};
    static enum players {CPU, One}; 
    static int NUM_CARDS_PER_HAND = 7;
    static int  NUM_PLAYERS = 2;
    static EndingListener[] humanListner =new EndingListener[NUM_CARDS_PER_HAND]; 
-   // a simple main to throw all the JLabels out there for the world to see
+
    public static void main(String[] args)
    {
       // going to add something
@@ -62,11 +61,6 @@ public class BUILD
      GameView.drawPlayerHand();
      GameView.updateScore(0, 0);
 
-
-     //JLabel instruction = new JLabel("Play:", SwingConstants.CENTER);
-      //myCardTable.pnlButton.add(instruction);
-
-    
       //Time Panel
       //manually make gui bigger to see clock, 
       TimeClock myTimeClock = new TimeClock();
@@ -94,8 +88,6 @@ class EndingListener implements ActionListener
    
    public void actionPerformed(ActionEvent e)
    {
-      //when "I cannot play" button gets pressed increment the tally underscore
-      //higher score is losing, kinda like golf
 
       String actionCommand = e.getActionCommand();
       
@@ -110,16 +102,8 @@ class EndingListener implements ActionListener
                GameController.getCannotPlay(GameController.player.CPU); 
          if (playerCantPlay&&pcCannotPlay) {
             if( GameController.getNumCardsInDeck()== 0)
-            {
-               try
-               {
                   GameController.EndGame();
-               } catch (Exception e1)
-               {
-                  // TODO Auto-generated catch block
-                  e1.printStackTrace();
-               }
-            }
+
             GameController.dealCards2table();
          }
       }
@@ -213,10 +197,9 @@ class GameController
 
    public static boolean cardPlay(int cardIndex, player playerIndex)
    {
-      
-    
 
-      //test see if actionCommand for card is valid to play (one higher or lower than card in table)
+      //test see if actionCommand for card is valid to play 
+      //(one higher or lower than card in table)
       Card card2Inspect = highCardGame.getHand(playerIndex.ordinal()).
             inspectCard(cardIndex+1); 
       System.out.println("cardInPlay: "+card2Inspect);
@@ -491,10 +474,12 @@ class GameView{
       playedCardLabels[player.One.ordinal()] = tempLabelOne;
       
       //Setting JLabel configs
-      playedCardLabels[player.CPU.ordinal()].setHorizontalAlignment(JLabel.CENTER);
+      playedCardLabels[
+                    player.CPU.ordinal()].setHorizontalAlignment(JLabel.CENTER);
       playedCardLabels[player.CPU.ordinal()].setBorder(null);
       
-      playedCardLabels[player.One.ordinal()].setHorizontalAlignment(JLabel.CENTER);
+      playedCardLabels[
+                    player.One.ordinal()].setHorizontalAlignment(JLabel.CENTER);
       playedCardLabels[player.One.ordinal()].setBorder(null);
       
 
