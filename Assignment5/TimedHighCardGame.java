@@ -286,6 +286,7 @@ class HightView{
       endButton.addActionListener(buttonEar);
       endWindow.add(endButton);
       myCardTable.setSize(0,0);
+      myCardTable.setVisible(false);
       myCardTable.dispose();
       endWindow.setVisible(true); 
       endWindow.repaint();
@@ -383,14 +384,7 @@ class HightController
       HightView.drawCPUHand();
       HightView.drawPlayAria(cardsInPlay);
       if (highCardGame.getHand(player.CPU.ordinal()).numCards()==0) {
-         try
-         {
             EndGame();
-         } catch (Exception e)
-         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-         } 
       }
    } 
 

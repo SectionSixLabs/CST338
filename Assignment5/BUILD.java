@@ -526,8 +526,9 @@ class GameView{
       EndListener buttonEar = new EndListener();
       endButton.addActionListener(buttonEar);
       endWindow.add(endButton);
-      //If we cannot push it 
+      //If we cannot push it back we will shrink it. 
       myCardTable.setSize(0,0);
+      myCardTable.setVisible(false);
       myCardTable.dispose();
       endWindow.setVisible(true); 
       endWindow.repaint();
